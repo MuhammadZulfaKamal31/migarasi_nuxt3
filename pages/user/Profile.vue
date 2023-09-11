@@ -61,7 +61,8 @@
                     <div class=" h-full w-full bg-white mb-10 rounded-md p-6">
                         <h1 class=" text-2xl">Circle</h1>
                         <div class=" flex items-center my-3">
-                            <img class=" h-[70px] w-[70px] rounded-full" src="./../../assets/Ellipse21.png" alt="">
+                            <img class=" h-[70px] w-[70px] rounded-full"
+                                :src="`${baseImageUrl}` + userProfil.data.user_profile_picture" alt="">
                             <div class=" mx-3">
                                 <h1 class=" text-xl mb-3">Komune</h1>
                                 <p class=" text-[13px]">
