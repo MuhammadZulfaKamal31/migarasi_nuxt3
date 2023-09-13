@@ -54,31 +54,31 @@
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
-                        to="/Layeout/Crackincode"><span class="fa-solid fa-gauge hidden md:block"></span>
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
+                            class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             JRU INSTITUT
                         </span>
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
-                        to="/Layeout/CRACKIN_CODE_Pendamping"><span class="fa-solid fa-gauge hidden md:block"></span>
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
+                            class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             JRUWORK
                         </span>
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
-                        to="/Layeout/Crackin_code_Asset"><span class="fa-solid fa-gauge hidden md:block"></span>
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
+                            class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             JRUPOS
                         </span>
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/"><span
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
                             class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             Stok Undangan

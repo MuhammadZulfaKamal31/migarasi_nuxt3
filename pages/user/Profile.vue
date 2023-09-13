@@ -11,23 +11,23 @@
                     </div>
                     <div class=" my-5">
                         <label class="text-gray-400 text-[13px]">Nama</label>
-                        <p class=" text-[15px] font-[600]">{{ userProfil.data.user_full_name }}</p>
+                        <p class=" text-[15px] font-[600]">{{ nama }}</p>
                     </div>
                     <div class=" my-5">
                         <label class="text-gray-400 text-[13px]">Email</label>
-                        <p class=" text-[15px] font-[600]">{{ userProfil.data.user.email }}</p>
+                        <p class=" text-[15px] font-[600]">{{ email }}</p>
                     </div>
                     <div class=" my-5">
                         <label class="text-gray-400 text-[13px]">Nomor Telepon</label>
-                        <p class=" text-[15px] font-[600]">{{ userProfil.data.user_phone }}</p>
+                        <p class=" text-[15px] font-[600]">{{ noTelp }}</p>
                     </div>
                     <div class=" my-5">
                         <label class="text-gray-400 text-[13px]">Alamat</label>
-                        <p class=" text-[13px] font-[400]">{{ userProfil.data.user_address }}</p>
+                        <p class=" text-[13px] font-[400]">{{ alamat }}</p>
                     </div>
                     <div class=" my-5">
                         <label class="text-gray-400 text-[13px]">Tahun Lahir</label>
-                        <p class=" text-[15px] font-[600]">{{ userProfil.data.user_birth_date }}</p>
+                        <p class=" text-[15px] font-[600]">{{ thnLahir }}</p>
                     </div>
                 </div>
                 <div class=" h-full w-full flex flex-col  gap-6">
@@ -35,7 +35,7 @@
                         <!-- lingkaran -->
                         <div class="  w-full h-[230px]  md:w-[90%] bg-white flex justify-center items-center rounded-md">
                             <img class=" h-[175px] w-[175px] rounded-full object-cover"
-                                :src="`${baseImageUrl}` + userProfil.data.user_profile_picture" alt="">
+                                :src="`${baseImageUrl}` + fotoProfile" alt="">
                         </div>
                         <!-- pendapatan -->
                         <div class=" w-full px-3 md:px-10 bg-white py-3 md:p-6 rounded-md">
@@ -61,8 +61,8 @@
                     <div class=" h-full w-full bg-white mb-10 rounded-md p-6">
                         <h1 class=" text-2xl">Circle</h1>
                         <div class=" flex items-center my-3">
-                            <img class=" h-[70px] w-[70px] rounded-full"
-                                :src="`${baseImageUrl}` + userProfil.data.user_profile_picture" alt="">
+                            <img class=" h-[70px] w-[70px] rounded-full object-cover" :src="`${baseImageUrl}` + fotoProfile"
+                                alt="">
                             <div class=" mx-3">
                                 <h1 class=" text-xl mb-3">Komune</h1>
                                 <p class=" text-[13px]">
@@ -81,6 +81,7 @@
             </div>
         </div>
         <div class=" w-full text-start p-5 pl-[65px] shadow-sm">
+            {{ circle }}
             <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
         </div>
     </div>
@@ -94,17 +95,48 @@ import { useSidebarStore } from '../../stores/Store';
 
 const sideBar = useSidebarStore()
 
-//==================================== useFetch api ==================================================
+//=====================================UseFetch Api======================================
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
-const token = localStorage.getItem('token');
 
-console.log(token)
-const { data: userProfil } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/user/my-profile`, {
-    method: "GET",
-    headers: {
-        'Authorization': `Bearer ${token}`,
-    },
+const nama = ref(null);
+const email = ref(null);
+const noTelp = ref(null);
+const alamat = ref(null);
+const thnLahir = ref(null);
+
+const fotoProfile = ref(null)
+
+async function getProfile() {
+    const token = localStorage.getItem("token");
+    console.log(token)
+    const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile`;
+
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            console.log(res.data)
+            nama.value = res.data.value.data.user_full_name;
+            email.value = res.data.value.data.user.email;
+            noTelp.value = res.data.value.data.user_phone;
+            alamat.value = res.data.value.data.user_address;
+            thnLahir.value = res.data.value.data.user_birth_date;
+
+            fotoProfile.value = res.data.value.data.user_profile_picture;
+        }, 1000)
+
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+onBeforeMount(async () => {
+    await getProfile();
 })
+
 </script>
 
 <style></style>

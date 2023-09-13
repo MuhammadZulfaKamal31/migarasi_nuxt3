@@ -6,9 +6,9 @@
         <div class=" w-full h-[700px] md:h-full bg-white rounded-md p-7">
             <div class=" flex justify-between">
                 <div class=" flex items-center md:h-[150px]">
-                    <img class=" h-11 md:h-32" :src="`${baseImageUrl}` + bisnisDetail.data.business.business_logo" alt="">
+                    <img class=" h-11 md:h-32" :src="`${baseImageUrl}` + logo" alt="">
                     <div class="p-4">
-                        <h2 class=" text-[20px] md:text-[40px] font-[700]">{{ bisnisDetail.data.business.business_name }}
+                        <h2 class=" text-[20px] md:text-[40px] font-[700]">{{ namaBisnis }}
                         </h2>
                         <p class=" text-[15px] md:text-[20px] md:w-[300]">Est.30 juni 2022</p>
                     </div>
@@ -16,7 +16,7 @@
                 <span class="fa-solid fa-pen-to-square md:text-[25px]"></span>
             </div>
             <p class=" text-[14px] md:text-[17px] p-2 md:p-9 w-full">
-                {{ bisnisDetail.data.business.business_description }}
+                {{ deskripsiBisnis }}
             </p>
         </div>
         <div class=" flex flex-col md:flex-row gap-12 w-full h-full md:h-[505px] md:px-4">
@@ -24,7 +24,7 @@
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Pemilik</h4>
-                    <router-link :to="`/bisnis/detail/detailpemilik/${bisnisDetail.data.business.id}`"
+                    <router-link :to="`/bisnis/detail/detailpemilik/${router}`"
                         class="fa-solid fa-up-right-from-square text-xl">
                     </router-link>
                 </div>
@@ -35,7 +35,7 @@
                             <th class="text-[16px] font-[600] text-start">Share</th>
                         </tr>
                     </thead>
-                    <tbody v-for="  i  in  bisnisDetail.data.business_owners ">
+                    <!-- <tbody v-for="  i  in  bisnisDetail.data.business_owners ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -45,15 +45,15 @@
                             <td class="text-[15px] font-[600]">{{ i.owner_shares }}%</td>
                         </tr>
 
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
             <!-- pendamping -->
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Pendamping</h4>
-                    <router-link :to="`/bisnis/detail/detailpendamping/${bisnisDetail.data.business.id}`"
-                        class="fa-solid fa-up-right-from-square text-xl"></router-link>
+                    <!-- <router-link :to="`/bisnis/detail/detailpendamping/${bisnisDetail.data.business.id}`"
+                        class="fa-solid fa-up-right-from-square text-xl"></router-link> -->
                 </div>
                 <table class="w-full mt-9">
                     <thead>
@@ -62,7 +62,7 @@
                             <th class="text-[16px] font-[600] text-start">Jenis Pendamping</th>
                         </tr>
                     </thead>
-                    <tbody v-for="i in bisnisDetail.data.business_companion ">
+                    <!-- <tbody v-for="i in bisnisDetail.data.business_companion ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -71,7 +71,7 @@
                             </td>
                             <td class="text-[15px] font-[600]">{{ i.companion_as.name }}</td>
                         </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
@@ -80,8 +80,8 @@
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Karyawan</h4>
-                    <router-link :to="`/bisnis/detail/detailkaryawan/${bisnisDetail.data.business.id}`"
-                        class="fa-solid fa-up-right-from-square text-xl"></router-link>
+                    <!-- <router-link :to="`/bisnis/detail/detailkaryawan/${bisnisDetail.data.business.id}`"
+                        class="fa-solid fa-up-right-from-square text-xl"></router-link> -->
                 </div>
                 <table class="w-full mt-9">
                     <thead>
@@ -90,7 +90,7 @@
                             <th class="text-[18px] font-[600] text-start">Posisi</th>
                         </tr>
                     </thead>
-                    <tbody v-for="  i  in  bisnisDetail.data.business_employees ">
+                    <!-- <tbody v-for="  i  in  bisnisDetail.data.business_employees ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -99,15 +99,15 @@
                             </td>
                             <td class="text-[15px] font-[600]">{{ i.employee_position.jabatan }}</td>
                         </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
             <!-- asset -->
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Asset</h4>
-                    <router-link :to="`/bisnis/detail/detailasset/${bisnisDetail.data.business.id}`"
-                        class="fa-solid fa-up-right-from-square text-xl"></router-link>
+                    <!-- <router-link :to="`/bisnis/detail/detailasset/${bisnisDetail.data.business.id}`"
+                        class="fa-solid fa-up-right-from-square text-xl"></router-link> -->
                 </div>
                 <table class="w-full mt-9">
                     <thead>
@@ -116,7 +116,7 @@
                             <th class="text-[18px] font-[600] text-start">Kondisi</th>
                         </tr>
                     </thead>
-                    <tbody v-for="  i  in  bisnisDetail.data.business_assets ">
+                    <!-- <tbody v-for="  i  in  bisnisDetail.data.business_assets ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -126,7 +126,7 @@
                             <td class=" text-[15px] font-[600]">{{ i.asset_condition }}
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
@@ -141,7 +141,7 @@
                         <th class="text-[17px] md:text-[20px] font-[600] text-start">Share</th>
                     </tr>
                 </thead>
-                <tbody v-for=" i in bisnisDetail.data.business_target">
+                <!-- <tbody v-for=" i in bisnisDetail.data.business_target">
                     <tr class="">
                         <td class=" py-4  flex items-center gap-3 text-[14px] md:text-[15px] font-[600]">
                             {{ i.target_description }}
@@ -151,11 +151,12 @@
                             <span class=" bg-[#00FFFF] p-2">{{ i.target_status.name }}</span>
                         </td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[65px] shadow-sm bg-slate-200">
+        {{ logo }}
         <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
     </div>
 </template>
@@ -166,27 +167,75 @@ definePageMeta({
 
 import { useSidebarStore } from '../../../stores/Store';
 
-import DetailAsset from './detailasset/[DetailAsset].vue';
+// import DetailAsset from './detailasset/[DetailAsset].vue';
 
 const openSideBar = useSidebarStore();
 
 
 //======================usefect data===============================================
 
-const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
-import { useRoute } from 'vue-router';
+// const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+// import { useRoute } from 'vue-router';
 
-const route = useRoute();
-const id_bisnis = route.params.My_Business;
-const { data: bisnisDetail } = useFetch(`https://admin.jruhub.com/api/v1/business/detail/${id_bisnis}`, {
-    method: "GET",
-    headers: {
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-    },
+// const route = useRoute();
+// const id_bisnis = route.params.My_Business;
+// const { data: bisnisDetail } = useFetch(`https://admin.jruhub.com/api/v1/business/detail/${id_bisnis}`, {
+//     method: "GET",
+//     headers: {
+//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
+//     },
+// })
+
+// console.log(bisnisDetail);
+
+//==============================Usefect Data =======================================
+const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+import { useRoute } from "vue-router";
+
+const route = useRoute()
+const id_bisnis = route.params.My_Business
+
+const logo = ref(null);
+const namaBisnis = ref(null);
+const deskripsiBisnis = ref(null);
+
+const pemilik = ref(null)
+
+const router = ref(null)
+
+async function getDetailCircle() {
+    const token = localStorage.getItem("token");
+    const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}`;
+
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            // deskripsi
+            logo.value = res.data.value.data.business.business_logo;
+            namaBisnis.value = res.data.value.data.business.business_name;
+            deskripsiBisnis.value = res.data.value.data.business.business_description;
+            //ruote
+            router.value = res.data.value.data.business.id;
+            //owner
+            pemilik.value = res.data.value.data.business.id;
+
+
+
+        }, 1000)
+
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+onBeforeMount(async () => {
+    await getDetailCircle();
 })
 
-
-// console.log(bisnisDetail)
 
 </script>
 <style ></style>
