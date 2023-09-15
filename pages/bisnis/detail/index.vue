@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
+            <span class=" text-2xl font-[500]">Bisnis Saya</span>
+        </div>
+
         <div class='w-full h-full md:h-[564px] bg-slate-200  rounded-md overflow-auto pt-20 md:pt-14'
             :class="sideBar.openSideBar ? ' md:pr-[350px] md:pl-10' : ' md:px-20'">
             <div class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
@@ -14,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm">
+    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
         <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
     </div>
 </template>
