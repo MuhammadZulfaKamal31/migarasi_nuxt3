@@ -77,11 +77,9 @@
             </div>
             <div class=' h-[552px] w-full bg-white rounded-md'>
                 <h1 class=" text-xl p-7">History</h1>
-                {{ userProfil }}
             </div>
         </div>
         <div class=" w-full text-start p-5 pl-[65px] shadow-sm">
-            {{ circle }}
             <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
         </div>
     </div>

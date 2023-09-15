@@ -7,9 +7,9 @@
                 <!-- Alamat -->
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Alamat</label>
-                    <input v-model="alamat" type="text" placeholder="Alamat" class="h-12 bg-[#FAFAFA] text-[15px] border">
+                    <input v-model="alamat" type="text" placeholder="Alamat"
+                        class="h-12 bg-[#FAFAFA] text-[15px] border outline-none px-2 focus:border-blue-500 rounded-md">
                 </div>
-
                 <!-- Telephone -->
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Nomor Telephone</label>

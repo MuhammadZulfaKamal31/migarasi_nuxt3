@@ -15,7 +15,7 @@
                             <th class="text-[16px] font-[600] text-start">Pendamping</th>
                         </tr>
                     </thead>
-                    <tbody v-for="i in pendamping.companions">
+                    <tbody v-for="i in pendamping">
                         <tr class="">
                             <td class=" py-4 pt-6  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -24,7 +24,6 @@
                             </td>
                             <td class="text-[15px] font-[600]">{{ i.companion_as.name }}</td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -56,7 +55,7 @@
         <!-- Detail Pendamping -->
         <div class=" flex md:w-[48%] h-[600px] gap-10">
             <div class=" h-full w-full bg-white p-8 rounded-md">
-                <div class=" flex flex-col items-center" v-for="i in pendamping.companions">
+                <div class=" flex flex-col items-center" v-for="i in pendamping">
                     <h1 class=" text-[29px] md:text-[32px] font-semibold py-6">Detail Pendamping</h1>
                     <div class=" py-5">
                         <div class=" h-[241px] w-[241px] bg-[#D9D9D9] rounded-full">
@@ -90,17 +89,51 @@ const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
 
 //================================== useFetch api ===============================
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 
+// const route = useRoute();
+// const id_business = route.params.DetailPendamping;
+
+// const { data: pendamping } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/companion`, {
+//     method: "GET",
+//     headers: {
+//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
+//     },
+// })
+
+//===================================useFetch Api ================================
+
+import { useRoute } from 'vue-router';
 const route = useRoute();
-const id_business = route.params.DetailPendamping
+const id_bisnis = route.params.DetailPendamping;
+const pendamping = ref([]);
+const pendampingDetail = ref(null);
 
-const { data: pendamping } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/companion`, {
-    method: "GET",
-    headers: {
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-    },
-})
+async function getBisnis() {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/companion`;
+
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            console.log(res.data)
+            pendampingDetail.value = res.data.value;
+            pendamping.value = res.data.value.companions;
+        }, 1000);
+
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+onBeforeMount(async () => {
+    await getBisnis();
+});
 
 </script>
 <style ></style>

@@ -5,7 +5,8 @@
             <!-- chart -->
             <div class="  h-[250px]  md:w-full md:h-full bg-white flex items-center justify-center rounded-md">
                 <div class="">
-                    <DoughnutChart :chart-data="data" :options="options" css-classes="chart-container" />
+                    <DoughnutChart :chart-data="data" :options="options" css-classes="chart-container"
+                        class=" h-[210px] md:h-[400px]" />
                 </div>
             </div>
             <!-- form isi -->
@@ -55,7 +56,7 @@
                                 <td class=" text-[17px] font-[600]">Share</td>
                             </tr>
                         </thead>
-                        <tbody v-for=" i in pemilik.owners">
+                        <tbody v-for=" i in owner">
                             <tr class="">
                                 <td class=" py-3 text-red-600 text-[15px] font-[600]">{{ i.owner_user.user_full_name }}</td>
                                 <td class=" font-[600] text-[15px]">{{ i.owner_shares }}%</td>
@@ -75,13 +76,13 @@
                 <h1 class=" text-[27px] md:text-[30px] font-[600]">Nama Bisnis</h1>
                 <div class=" md:pl-10 mt-14 flex flex-col items-center md:items-start ">
                     <div class=" w-[200px] h-[200px] md:w-[241px] md:h-[241px] rounded-full bg-[#D9D9D9]">
-                        <img :src="`${baseImageUrl}` + pemilik.business_id.business_logo" alt="">
+                        <img :src="`${baseImageUrl}` + gambarBisnis" alt="">
                     </div>
                     <div class=" flex justify-start">
                         <div class=" py-10 flex flex-col items-center">
-                            <h2 class=" text-[25px] md:text-[29px] font-[500] py-2">{{ pemilik.business_id.business_name }}
+                            <h2 class=" text-[25px] md:text-[29px] font-[500] py-2">{{ namaBisnis }}
                             </h2>
-                            <p class="text-[13px] font-[500]">{{ pemilik.business_id.business_email }}</p>
+                            <p class="text-[13px] font-[500]">{{ deskripsiBisnis }}</p>
                         </div>
                     </div>
                 </div>
@@ -91,6 +92,7 @@
 
     </div>
     <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
+        {{ dataValues }}
         <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
     </div>
 </template>
@@ -162,26 +164,65 @@ const onInputChange = () => {
 
 
 //============================================useFetch Api====================================
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 
+// const route = useRoute();
+// const id_business = route.params.DetailPemilik
+// const token = localStorage.getItem("token");
+
+// const { data: pemilik } = useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/owners`, {
+//     method: "GET",
+//     headers: {
+//         'Authorization': `Bearer ${token}`,
+//     },
+// });
+
+// onMounted(() => {
+//     // Perbarui dataValues setiap kali pemilik.value berubah
+//     dataValues.value = pemilik.value.owners.map((item) => parseFloat(item.owner_shares));
+//     dataValues.value.push(parseFloat(pemilik.value.empty_shares));
+// });
+//===========================================useFetch Api=========================================
+
+import { useRoute } from 'vue-router';
 const route = useRoute();
-const id_business = route.params.DetailPemilik
-const token = localStorage.getItem("token");
+const id_bisnis = route.params.DetailPemilik;
+const owner = ref([]);
 
-const { data: pemilik } = useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/owners`, {
-    method: "GET",
-    headers: {
-        'Authorization': `Bearer ${token}`,
-    },
+const namaBisnis = ref([]);
+const deskripsiBisnis = ref([])
+const gambarBisnis = ref([])
+const persen = ref([]);
+console.log("bsbdjasbkjda" + dataValues)
+
+async function getBisnis() {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/owners`;
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            console.log(res.data)
+            owner.value = res.data.value.owners;
+            gambarBisnis.value = res.data.value.business_id.business_logo
+            namaBisnis.value = res.data.value.business_id.business_name;
+            deskripsiBisnis.value = res.data.value.business_id.business_name
+            //dougnut chart
+            dataValues.value = res.data.value.owners.map(owner => parseFloat(owner.owner_shares));
+            dataValues.value.push(parseFloat(res.data.value.empty_shares));
+        }, 1000);
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+onBeforeMount(async () => {
+    await getBisnis();
 });
-
-onMounted(() => {
-    // Perbarui dataValues setiap kali pemilik.value berubah
-    dataValues.value = pemilik.value.owners.map((item) => parseFloat(item.owner_shares));
-    dataValues.value.push(parseFloat(pemilik.value.empty_shares));
-});
-
-
 
 
 </script>

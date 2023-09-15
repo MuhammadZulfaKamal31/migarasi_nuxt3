@@ -88,7 +88,6 @@ async function getDetailCircle() {
             totalBisnis.value = res.data.value.data.circle_info.total_business;
             totalProject.value = res.data.value.data.circle_info.total_project;
             bisnis.value = res.data.value.data.business;
-
         }, 1000)
 
     }).catch(err => {

@@ -35,25 +35,24 @@
                             <th class="text-[16px] font-[600] text-start">Share</th>
                         </tr>
                     </thead>
-                    <!-- <tbody v-for="  i  in  bisnisDetail.data.business_owners ">
+                    <tbody v-for="  i  in pemilik ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
                                     :src="`${baseImageUrl}` + i.owner_user.user_profile_picture" alt="">
-                                {{ i.owner_user.user.username }}
+                                {{ i.owner_user.user_full_name }}
                             </td>
                             <td class="text-[15px] font-[600]">{{ i.owner_shares }}%</td>
                         </tr>
-
-                    </tbody> -->
+                    </tbody>
                 </table>
             </div>
             <!-- pendamping -->
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Pendamping</h4>
-                    <!-- <router-link :to="`/bisnis/detail/detailpendamping/${bisnisDetail.data.business.id}`"
-                        class="fa-solid fa-up-right-from-square text-xl"></router-link> -->
+                    <router-link :to="`/bisnis/detail/detailpendamping/${router}`"
+                        class="fa-solid fa-up-right-from-square text-xl"></router-link>
                 </div>
                 <table class="w-full mt-9">
                     <thead>
@@ -62,7 +61,7 @@
                             <th class="text-[16px] font-[600] text-start">Jenis Pendamping</th>
                         </tr>
                     </thead>
-                    <!-- <tbody v-for="i in bisnisDetail.data.business_companion ">
+                    <tbody v-for="i in pendamping ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -71,7 +70,7 @@
                             </td>
                             <td class="text-[15px] font-[600]">{{ i.companion_as.name }}</td>
                         </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -80,8 +79,8 @@
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Karyawan</h4>
-                    <!-- <router-link :to="`/bisnis/detail/detailkaryawan/${bisnisDetail.data.business.id}`"
-                        class="fa-solid fa-up-right-from-square text-xl"></router-link> -->
+                    <router-link :to="`/bisnis/detail/detailkaryawan/${router}`"
+                        class="fa-solid fa-up-right-from-square text-xl"></router-link>
                 </div>
                 <table class="w-full mt-9">
                     <thead>
@@ -90,7 +89,7 @@
                             <th class="text-[18px] font-[600] text-start">Posisi</th>
                         </tr>
                     </thead>
-                    <!-- <tbody v-for="  i  in  bisnisDetail.data.business_employees ">
+                    <tbody v-for="  i  in  karyawan ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -99,15 +98,15 @@
                             </td>
                             <td class="text-[15px] font-[600]">{{ i.employee_position.jabatan }}</td>
                         </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
             </div>
             <!-- asset -->
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Asset</h4>
-                    <!-- <router-link :to="`/bisnis/detail/detailasset/${bisnisDetail.data.business.id}`"
-                        class="fa-solid fa-up-right-from-square text-xl"></router-link> -->
+                    <router-link :to="`/bisnis/detail/detailasset/${router}`"
+                        class="fa-solid fa-up-right-from-square text-xl"></router-link>
                 </div>
                 <table class="w-full mt-9">
                     <thead>
@@ -116,7 +115,7 @@
                             <th class="text-[18px] font-[600] text-start">Kondisi</th>
                         </tr>
                     </thead>
-                    <!-- <tbody v-for="  i  in  bisnisDetail.data.business_assets ">
+                    <tbody v-for="  i  in  asset ">
                         <tr class="">
                             <td class=" py-4  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
@@ -126,7 +125,7 @@
                             <td class=" text-[15px] font-[600]">{{ i.asset_condition }}
                             </td>
                         </tr>
-                    </tbody> -->
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -141,7 +140,7 @@
                         <th class="text-[17px] md:text-[20px] font-[600] text-start">Share</th>
                     </tr>
                 </thead>
-                <!-- <tbody v-for=" i in bisnisDetail.data.business_target">
+                <tbody v-for=" i in target">
                     <tr class="">
                         <td class=" py-4  flex items-center gap-3 text-[14px] md:text-[15px] font-[600]">
                             {{ i.target_description }}
@@ -151,12 +150,11 @@
                             <span class=" bg-[#00FFFF] p-2">{{ i.target_status.name }}</span>
                         </td>
                     </tr>
-                </tbody> -->
+                </tbody>
             </table>
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[65px] shadow-sm bg-slate-200">
-        {{ logo }}
         <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
     </div>
 </template>
@@ -193,15 +191,19 @@ const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 import { useRoute } from "vue-router";
 
 const route = useRoute()
-const id_bisnis = route.params.My_Business
+const id_bisnis = route.params.My_Business;
+
+const router = ref(null)
 
 const logo = ref(null);
 const namaBisnis = ref(null);
 const deskripsiBisnis = ref(null);
 
 const pemilik = ref(null)
-
-const router = ref(null)
+const pendamping = ref([]);
+const karyawan = ref([]);
+const asset = ref([]);
+const target = ref([])
 
 async function getDetailCircle() {
     const token = localStorage.getItem("token");
@@ -221,10 +223,15 @@ async function getDetailCircle() {
             //ruote
             router.value = res.data.value.data.business.id;
             //owner
-            pemilik.value = res.data.value.data.business.id;
-
-
-
+            pemilik.value = res.data.value.data.business_owners;
+            //pendamping
+            pendamping.value = res.data.value.data.business_companion;
+            //karyawan
+            karyawan.value = res.data.value.data.business_employees;
+            //asset
+            asset.value = res.data.value.data.business_assets;
+            //terget
+            target.value = res.data.value.data.business_target;
         }, 1000)
 
     }).catch(err => {
