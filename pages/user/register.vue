@@ -85,7 +85,7 @@ const register = async () => {
             console.log(err)
         }
     }
-}
+};
 
 </script>
 <style></style>

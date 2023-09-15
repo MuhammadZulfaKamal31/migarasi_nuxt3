@@ -85,10 +85,9 @@ const login = async () => {
             error.value = "Login gagal. Periksa username dan password Anda.";
             console.error(err);
         }
-
     }
 }
 </script>
 
 <style></style>
-const token = response.data._rawValue.access;
+<!-- const token = response.data._rawValue.access; -->

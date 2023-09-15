@@ -15,8 +15,8 @@
                             <th class="text-[16px] font-[600] text-end">Kondisi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr v-for="i in asset.assets" class="">
+                    <tbody v-for="i in assetDetail">
+                        <tr class="">
                             <td class=" py-4 pt-8  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full" :src="`${baseImageUrl}` + i.asset_photo"
                                     alt="">
@@ -71,7 +71,7 @@
         <div class=" md:h-[744px] w-full bg-white rounded-md p-10">
             <h1 class=" text-[32px] font-semibold"> Detail Asset</h1>
             <div class=" h-full w-full flex gap-10">
-                <div v-for="i in asset.assets" class=" w-full h-full">
+                <div v-for="i in assetDetail" class=" w-full h-full">
                     <div class=" my-10 mb-[80px] md:mb-0">
                         <label for="" class=" text-[14px] font-semibold py-5"> Nama Asset</label>
                         <p class=" text-[29px] md:text-[32px] font-semibold"> {{ i.asset_name }}</p>
@@ -89,7 +89,7 @@
                         <p class=" text-[27px] md:text-[32px] font-semibold"> {{ i.asset_buy_date }}</p>
                     </div>
                 </div>
-                <div v-for="i in asset.assets" class=" h-full w-full">
+                <div v-for="i in assetDetail" class=" h-full w-full">
                     <div>
                         <p class=" text-[14px] font-semibold my-9"> Foto Nota Pembelian</p>
                         <img :src="`${baseImageUrl}` + i.asset_receipt" alt="" class=" w-[170px] h-[125px]">
@@ -120,23 +120,51 @@ definePageMeta({
 import { useSidebarStore } from '../../stores/Store';
 // const token = localStorage.getItem("token")
 
-import { useRoute } from "vue-router";
-
 // import { useAssetBusines } from '../../stores/Bisnis/AssetBisnis'
 
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 const sideBar = useSidebarStore();
 
-//===================================== useFetch API ============================
+//===================================== useFetch API =====================================
 
+// const id_business = route.params.DetailAsset;
+
+// const { data: asset } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/assets`, {
+//     method: "GET",
+//     headers: {
+//         'Authorization': `Bearer ${localStorage.getItem('token')}`
+//     }
+// });
+
+//================================= useFetch Api =============================================
+import { useRoute } from 'vue-router';
 const route = useRoute();
-const id_business = route.params.DetailAsset;
+const id_bisnis = route.params.DetailAsset;
+const assetDetail = ref(null);
 
-const { data: asset } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/assets`, {
-    method: "GET",
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
+async function getBisnis() {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/assets`;
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            console.log(res.data)
+            assetDetail.value = res.data.value.assets;
+        }, 1000);
+
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+onBeforeMount(async () => {
+    await getBisnis();
 });
+
 </script>
 <style></style>

@@ -12,7 +12,7 @@
                             <td class=" text-[17px] font-[600]">Jabatan</td>
                         </tr>
                     </thead>
-                    <tbody v-for=" i in karyawan.employees">
+                    <tbody v-for=" i in karyawanDetail">
                         <tr class="">
                             <td class=" py-3 text-red-600 text-[15px] font-[600]">{{ i.employee_user.user_full_name }}</td>
                             <td class=" font-[600] text-[15px]">{{ i.employee_position.jabatan }}</td>
@@ -28,7 +28,7 @@
             </div>
             <!-- detil karyawan -->
             <div class=" w-full h-full bg-white p-10 rounded-md">
-                <div v-for="i in karyawan.employees">
+                <div v-for="i in karyawanDetail">
                     <h1 class=" text-[32px] font-[600]"> Detil Karyawan</h1>
                     <div class=" md:pl-7 mt-7">
                         <div class=" w-[241px] h-[241px] rounded-full bg-[#D9D9D9]">
@@ -63,6 +63,7 @@
                     </div>
 
                 </div>
+
             </div>
         </div>
         <!-- Tambah Karyawan -->
@@ -105,20 +106,51 @@ definePageMeta({
     layout: "layouts"
 })
 import { useSidebarStore } from '../../stores/Store';
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 
 
 const sideBar = useSidebarStore();
 
 //=====================================USEfETCH API ==========================
-const route = useRoute();
-const id_business = route.params.DetailKaryawan;
+// const route = useRoute();
+// const id_business = route.params.DetailKaryawan;
 
-const { data: karyawan } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/employees`, {
-    method: "GET",
-    headers: {
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-    },
+// const { data: karyawan } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/employees`, {
+//     method: "GET",
+//     headers: {
+//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
+//     },
+// })
+
+//=================================== UsefeFetch API =================================
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const id_bisnis = route.params.DetailKaryawan;
+const karyawanDetail = ref([]);
+
+async function getBisnis() {
+    const token = localStorage.getItem("token");
+    console.log(token)
+    const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/employees`;
+
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            karyawanDetail.value = res.data.value.employees
+            console.log(res.data)
+        }, 500)
+
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+onBeforeMount(async () => {
+    await getBisnis();
 })
 
 </script>

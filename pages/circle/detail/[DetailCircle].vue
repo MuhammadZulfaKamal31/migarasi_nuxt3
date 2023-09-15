@@ -7,7 +7,7 @@
                 <div>
                     <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Anggota</span>
                     <div class=" h-[20px] md:h-[25px] text-[17px] md:text-[20px] font-[800]">
-                        {{ circleDetail.data.data.circle_info.total_employee }}
+                        {{ totalAnggota }}
                     </div>
                 </div>
             </div>
@@ -16,7 +16,7 @@
                 <div>
                     <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Bisnis</span>
                     <div class=" h-[20px] md:h-[25px] text-[17px] md:text-[20px] font-[800]">
-                        {{ circleDetail.data.data.circle_info.total_project }}
+                        {{ totalBisnis }}
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div>
                     <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Project</span>
                     <div class=" h-[20px] md:h-[25px] text-[17px] md:text-[20px] font-[800]">
-                        {{ circleDetail.data.data.circle_info.total_project }}
+                        {{ totalProject }}
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
         <div class='w-full h-full md:h-[564px] bg-slate-200  rounded-md overflow-auto'
             :class="sideBar.openSideBar ? ' md:pr-[350px] md:pl-10' : ' md:px-20'">
             <div class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
-                <div v-for="i in circleDetail.data.data.business" class=" w-1/2 md:w-1/5 px-4 mb-4">
+                <div v-for="i in bisnis" class=" w-1/2 md:w-1/5 px-4 mb-4">
                     <div class="h-full border rounded-md overflow-hidden shadow-xl">
                         <img :src="`${baseImageUrl}` + i.business.business_logo" alt="" class="object-cover w-full">
                         <h5 class="p-4 text-[14px] font-semibold">{{ i.business.business_name }}</h5>
@@ -44,7 +44,6 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[85px] shadow-sm bg-slate-200">
-        {{ circleDetail.data.data.circle }}
         <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
     </div>
 </template>
@@ -62,44 +61,43 @@ const sideBar = useSidebarStore();
 //====================================useFetch api =============================================
 
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+
 import { useRoute } from 'vue-router';
-
 const route = useRoute();
-const { DetailCircle } = route.params;
-// const route = useRoute();
-// const { DetailCircle } = useRoute().params
-// const url = `${import.meta.env.VITE_BASE_API_URL}/circle/detail/${DetailCircle}`;
+const id_circle = route.params.DetailCircle;
 
-// const { data: circleDetail } = await useFetch(url, {
-//     method: "GET",
-//     headers: {
-//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-//     },
-// })
+const totalAnggota = ref(null);
+const totalBisnis = ref(null);
+const totalProject = ref(null);
+const bisnis = ref(null)
 
-const circleDetail = ref([]);
 
-const url = `${import.meta.env.VITE_BASE_API_URL}/circle/detail/${DetailCircle}`;
+async function getDetailCircle() {
+    const token = localStorage.getItem("token");
+    const url = `${import.meta.env.VITE_BASE_API_URL}/circle/detail/${id_circle}`;
 
-const fetchData = async () => {
-    try {
-        const data = await useFetch(url, {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-            },
-        })
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            console.log(res.data)
+            totalAnggota.value = res.data.value.data.circle_info.total_employee
+            totalBisnis.value = res.data.value.data.circle_info.total_business;
+            totalProject.value = res.data.value.data.circle_info.total_project;
+            bisnis.value = res.data.value.data.business;
+        }, 1000)
 
-        circleDetail.value = data
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-};
+    }).catch(err => {
+        console.log(err)
+    })
+}
 
-watchEffect(() => {
-    // Memanggil fetchData saat parameter DetailCircle berubah
-    fetchData();
-});
+onBeforeMount(async () => {
+    await getDetailCircle();
+})
 
 </script>
 <style></style>
