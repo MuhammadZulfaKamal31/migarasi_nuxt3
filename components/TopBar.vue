@@ -15,11 +15,11 @@
             </div>
             <div>
                 <!-- penyesuaian dashboard -->
-                <div class=" h-[80px] bg-white rounded-md flex items-center justify-start px-6"
+                <!-- <div class=" h-[80px] bg-white rounded-md flex items-center justify-start px-6"
                     :class="openSideBar ? ' mr-[20rem] w-[1010px] duration-300' : 'w-[1245px] duration-300'">
 
                     <span class=" text-2xl font-[500]">{{ $route.params.judul }}</span>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- dropdown profile -->
