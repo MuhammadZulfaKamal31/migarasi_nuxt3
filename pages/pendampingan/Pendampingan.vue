@@ -2,6 +2,10 @@
     <div>
         <div class='w-full h-full md:h-[564px] bg-slate-200  rounded-md overflow-auto pt-20 md:pt-14'
             :class="sideBar.openSideBar ? ' md:pr-[350px] md:pl-10' : ' md:px-20'">
+            <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+                :class="sideBar.openSideBar ? ' duration-300 md:w-[1037px]' : 'duration-300  md:w-[1235px]'">
+                <span class=" text-2xl font-[500]">Pendampingan</span>
+            </div>
             <div class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
                 <div v-for="i in 10" class=" w-1/2 md:w-1/5 px-4 mb-4">
                     <div class="h-full border rounded-md overflow-hidden shadow-xl">

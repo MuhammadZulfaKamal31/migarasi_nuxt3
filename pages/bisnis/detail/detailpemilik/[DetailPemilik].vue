@@ -1,6 +1,10 @@
 <template >
     <div class=" h-[2000px] md:h-full w-full gap-7 font-inter p-7 md:p-12 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:px-10 md:pr-[25%] duration-300' : 'md:px-[7%] duration-300'">
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:w-[1037px]' : 'duration-300  md:w-[1235px]'">
+            <span class=" text-2xl font-[500]">{{ pageName }}</span>
+        </div>
         <div class="  md:h-[487px] gap-10 flex flex-col md:flex-row mb-6 pt-14 md:pt-0">
             <!-- chart -->
             <div class="  h-[250px]  md:w-full md:h-full bg-white flex items-center justify-center rounded-md">
@@ -15,7 +19,7 @@
                     <h1 class=" text-[32px] font-[700] mb-5">Tambah Pemilik</h1>
                     <div class=" my-8">
                         <input @input="onInputChange" v-model="searchQuery" placeholder=" Pilih User" type="text"
-                            class=" w-full h-[57px] border-[2px] bg-[#FAFAFA]">
+                            class=" border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[57px] bg-[#FAFAFA]">
                         <ul v-if="showUserList" class=" mt-2 absolute w-[450px] z-10">
                             <li class=" bg-opacity-70 bg-black text-white rounded-b-sm p-2 cursor-pointer"
                                 v-for="user in filteredUsers" :key="user.id" @click="selectUser(user)">{{ user.name }}
@@ -24,7 +28,7 @@
                     </div>
                     <div class=" my-8 -z-10">
                         <input placeholder=" Pesentase Kepemilikan" type="text"
-                            class=" w-full h-[57px] border-[2px] bg-[#FAFAFA]">
+                            class="border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[57px] bg-[#FAFAFA]">
                     </div>
                     <div class=" flex items-center gap-2 my-3">
                         <input type="checkbox" class=" w-[19px] h-[19px] bg-slate-300">
@@ -92,7 +96,6 @@
 
     </div>
     <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
-        {{ dataValues }}
         <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
     </div>
 </template>
@@ -162,26 +165,6 @@ const onInputChange = () => {
     showUserList.value = !!searchQuery.value; //search query di sini mengahasilkan tanda false 
 };
 
-
-//============================================useFetch Api====================================
-// import { useRoute } from "vue-router";
-
-// const route = useRoute();
-// const id_business = route.params.DetailPemilik
-// const token = localStorage.getItem("token");
-
-// const { data: pemilik } = useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/owners`, {
-//     method: "GET",
-//     headers: {
-//         'Authorization': `Bearer ${token}`,
-//     },
-// });
-
-// onMounted(() => {
-//     // Perbarui dataValues setiap kali pemilik.value berubah
-//     dataValues.value = pemilik.value.owners.map((item) => parseFloat(item.owner_shares));
-//     dataValues.value.push(parseFloat(pemilik.value.empty_shares));
-// });
 //===========================================useFetch Api=========================================
 
 import { useRoute } from 'vue-router';
@@ -191,9 +174,8 @@ const owner = ref([]);
 
 const namaBisnis = ref([]);
 const deskripsiBisnis = ref([])
-const gambarBisnis = ref([])
-const persen = ref([]);
-console.log("bsbdjasbkjda" + dataValues)
+const gambarBisnis = ref([]);
+const pageName = ref(null)
 
 async function getBisnis() {
     const token = localStorage.getItem("token");
@@ -210,10 +192,12 @@ async function getBisnis() {
             owner.value = res.data.value.owners;
             gambarBisnis.value = res.data.value.business_id.business_logo
             namaBisnis.value = res.data.value.business_id.business_name;
-            deskripsiBisnis.value = res.data.value.business_id.business_name
+            deskripsiBisnis.value = res.data.value.business_id.business_name;
+            pageName.value = res.data.value.business_id.business_name;
             //dougnut chart
             dataValues.value = res.data.value.owners.map(owner => parseFloat(owner.owner_shares));
             dataValues.value.push(parseFloat(res.data.value.empty_shares));
+
         }, 1000);
     }).catch(err => {
         console.log(err);

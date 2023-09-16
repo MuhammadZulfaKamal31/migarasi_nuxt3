@@ -2,6 +2,10 @@
     <div class=" h-[1900px] md:h-[1160px] bg-slate-200">
         <div class=' flex flex-col gap-5 font-inter pr-[10%] pt-10 md:pt-2 '
             :class="sideBar.openSideBar ? 'md:px-[5%] md:pr-[26%] duration-300' : 'px-[7%] duration-300'">
+            <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+                :class="sideBar.openSideBar ? ' duration-300 md:w-[995px]' : 'duration-300 md:w-[1200px]'">
+                <span class=" text-2xl font-[500]">Profile</span>
+            </div>
             <div class='flex md:flex-row flex-col md:h-[474px] mt-[40px] justify-between gap-6'>
                 <!-- profile -->
                 <div class=" h-full md:w-[70%] bg-[#FFFFFF] p-7 rounded-md">

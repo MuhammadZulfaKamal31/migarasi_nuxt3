@@ -1,6 +1,10 @@
 <template>
     <div class=" flex flex-col gap-4 py-[5%] font-inter px-5 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:pr-[350px] pr-[8%]' : 'md:px-[10%]'">
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:ml-7 md:w-[1010px]' : 'duration-300 md:w-[1200px]'">
+            <span class=" text-2xl font-[500]">Pendapatan</span>
+        </div>
         <div class=" flex md:flex-row flex-col justify-around gap-10 md:gap-20 md:h-[180px] w-full pt-20 md:pt-0 px-7">
             <div class=" flex justify-center items-center w-full h-full bg-white rounded">
                 <div>

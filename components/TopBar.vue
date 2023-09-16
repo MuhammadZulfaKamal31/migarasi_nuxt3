@@ -5,7 +5,9 @@
             <div class=" w-full mb-14 flex justify-between mx-7">
                 <div class=" flex gap-10 items-center">
                     <i @click="toggleSideBar" class="fa-solid fa-bars text-white text-2xl"></i>
-                    <input type="text" class=" w-[375px] h-[55px]" placeholder="Search">
+                    <input type="text"
+                        class=" w-[375px] h-[55px] border-2 outline-none px-2 focus:border-red-400 focus:rounded-md "
+                        placeholder="Search">
                 </div>
                 <!-- profile -->
                 <div @click="toggleDropDown"

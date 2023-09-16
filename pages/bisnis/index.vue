@@ -1,13 +1,12 @@
 <template>
     <div class=" bg-slate-200 ">
-
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
-            <span class=" text-2xl font-[500]">DashBoard</span>
+            <span class=" text-2xl font-[500]">Dashboard</span>
         </div>
 
         <div class=" flex flex-col items-center md:items-start
-         md:flex-row md:h-[580px] gap-5 md:ml-[40px] px-5 py-20 md:py-12 "
+        md:flex-row md:h-[580px] gap-5 md:ml-[40px] px-5 py-20 md:py-12 "
             :class="sideBar.openSideBar ? 'md:px-[14px] duration-300' : 'md:px-[4%] duration-300'">
             <div class="flex items-center h-[100px]  md:h-[82px] w-[300px] md:w-[200px] bg-white rounded-md">
                 <div class=" h-[60px] w-[60px] bg-red-600 m-7 md:m-2"></div>

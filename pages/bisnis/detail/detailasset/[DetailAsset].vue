@@ -1,6 +1,10 @@
 <template >
     <div class=" h-full w-full p-7 pt-20 md:p-14 flex flex-col gap-8 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:pr-[375px] ' : ' md:px-24'">
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1240px]'">
+            <span class=" text-2xl font-[500]">{{ pageName }}</span>
+        </div>
         <div class=" md:h-[855px] w-full flex flex-col md:flex-row gap-8">
             <!-- Asset -->
             <div class=" bg-white w-full md:h-[748px] p-10 md:px-20 rounded-md">
@@ -32,25 +36,28 @@
                 <h1 class=" text-[32px] font-semibold mb-11"> Tambah Asset</h1>
                 <form action="">
                     <div class=" py-3">
-                        <input type="text" placeholder=" Nama Asset" alt="" class=" h-[60px] w-full border bg-[#FAFAFA]">
+                        <input type="text" placeholder=" Nama Asset" alt=""
+                            class=" h-[60px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                     </div>
                     <div class=" py-3">
-                        <input type="text" placeholder=" Jumlah Asset" alt="" class=" h-[60px] w-full border bg-[#FAFAFA]">
+                        <input type="text" placeholder=" Jumlah Asset" alt=""
+                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
                     </div>
                     <div class=" py-3">
                         <input type="text" placeholder=" Tanggal Pembelian" alt=""
-                            class=" h-[60px] w-full border bg-[#FAFAFA]">
+                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
                     </div>
                     <div class=" py-3">
-                        <input type="text" placeholder=" Kondisi Asset" alt="" class=" h-[60px] w-full border bg-[#FAFAFA]">
+                        <input type="text" placeholder=" Kondisi Asset" alt=""
+                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
                     </div>
                     <div class=" py-3">
                         <input type="text" placeholder=" Nota Pembelian" alt=""
-                            class=" h-[60px] w-full border bg-[#FAFAFA]">
+                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
                     </div>
                     <div class=" py-3">
                         <input type="text" placeholder=" Pilih Gamabar Asset" alt=""
-                            class=" h-[60px] w-full border bg-[#FAFAFA]">
+                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
                     </div>
                     <div class=" flex items-center gap-2 py-3">
                         <input type="checkbox" class=" h-[17px] w-[17px]">
@@ -141,6 +148,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const id_bisnis = route.params.DetailAsset;
 const assetDetail = ref(null);
+const pageName = ref([]);
 
 async function getBisnis() {
     const token = localStorage.getItem("token");
@@ -155,6 +163,7 @@ async function getBisnis() {
         setTimeout(() => {
             console.log(res.data)
             assetDetail.value = res.data.value.assets;
+            pageName.value = res.data.value.business_id.business_name;
         }, 1000);
 
     }).catch(err => {

@@ -1,6 +1,10 @@
 <template >
     <div class=" w-full h-full md:p-11 px-7 pt-24 md:pt-14 flex flex-col md:flex-row gap-7 bg-slate-200"
         :class="sideBar.openSideBar ? ' md:pr-[375px] duration-300' : ' md:px-24 duration-300'">
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1240px]'">
+            <span class=" text-2xl font-[500]">{{ pageName }}</span>
+        </div>
         <div class=" md:w-[90%] h-full flex flex-col gap-10">
             <!-- karyawan -->
             <div class=" w-full h-[428px] bg-white p-10 rounded-md">
@@ -71,19 +75,24 @@
             <h1 class=" text-[32px] font-[500] pb-5">Tambah Karyawan</h1>
             <form action="">
                 <div class=" py-4">
-                    <input placeholder=" Pilih User" type="text" class=" h-[58px] w-full bg-[#FAFAFA] border">
+                    <input placeholder=" Pilih User" type="text"
+                        class=" h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
                 <div class=" py-4">
-                    <input placeholder=" Posisi" type="text" class=" h-[58px] w-full bg-[#FAFAFA] border">
+                    <input placeholder=" Posisi" type="text"
+                        class=" h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
                 <div class=" py-4">
-                    <input placeholder=" Gaji Pokok" type="text" class=" h-[58px] w-full bg-[#FAFAFA] border">
+                    <input placeholder=" Gaji Pokok" type="text"
+                        class=" h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
                 <div class=" py-4">
-                    <input placeholder=" Uang Makan" type="text" class=" h-[58px] w-full bg-[#FAFAFA] border">
+                    <input placeholder=" Uang Makan" type="text"
+                        class=" h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
                 <div class=" py-4">
-                    <input placeholder=" Tahun Masuk" type="text" class=" h-[58px] w-full bg-[#FAFAFA] border">
+                    <input placeholder=" Tahun Masuk" type="text"
+                        class=" h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
                 <div class=" flex items-center gap-2 my-3">
                     <input type="checkbox" class=" w-[19px] h-[19px] bg-slate-300">
@@ -108,7 +117,6 @@ definePageMeta({
 import { useSidebarStore } from '../../stores/Store';
 // import { useRoute } from "vue-router";
 
-
 const sideBar = useSidebarStore();
 
 //=====================================USEfETCH API ==========================
@@ -127,6 +135,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const id_bisnis = route.params.DetailKaryawan;
 const karyawanDetail = ref([]);
+const pageName = ref(null)
 
 async function getBisnis() {
     const token = localStorage.getItem("token");
@@ -140,7 +149,8 @@ async function getBisnis() {
         }
     }).then(res => {
         setTimeout(() => {
-            karyawanDetail.value = res.data.value.employees
+            karyawanDetail.value = res.data.value.employees;
+            pageName.value = res.data.value.business_id.business_name;
             console.log(res.data)
         }, 500)
 

@@ -13,19 +13,23 @@
                 </p>
                 <div class=" md:mb-7 md:mt-19">
                     <div class=" my-5">
-                        <input v-model="username" class="border w-full  h-[55px] md:h-[60px] bg-[#FAFAFA]" type="text"
-                            placeholder=" Username">
+                        <input v-model="username"
+                            class="border-2 outline-none px-2 focus:border-red-500 rounded-md w-full  h-[55px] md:h-[60px] bg-[#FAFAFA] "
+                            type="text" placeholder=" Username">
                     </div>
                     <div class=" my-5">
-                        <input v-model="email" class="border w-full h-[55px] md:h-[60px] bg-[#FAFAFA]" type="email"
-                            placeholder=" Email">
+                        <input v-model="email"
+                            class="border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[55px] md:h-[60px] bg-[#FAFAFA]"
+                            type="email" placeholder=" Email">
                     </div>
                     <div class=" my-5">
-                        <input v-model="password" class="border w-full h-[55px] md:h-[60px] bg-[#FAFAFA]" type="password"
-                            placeholder=" Password">
+                        <input v-model="password"
+                            class="border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[55px] md:h-[60px] bg-[#FAFAFA]"
+                            type="password" placeholder=" Password">
                     </div>
                     <div class=" my-5">
-                        <input v-model="password_confirm" class=" border w-full h-[55px] md:h-[60px] bg-[#FAFAFA]"
+                        <input v-model="password_confirm"
+                            class=" border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[55px] md:h-[60px] bg-[#FAFAFA]"
                             type="password" placeholder=" Confirm Password">
                     </div>
                     <p v-if="error" class=" text-red-600 text-center -my-2">{{ error }}</p>

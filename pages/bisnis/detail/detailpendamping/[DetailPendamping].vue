@@ -1,6 +1,10 @@
 <template>
     <div class=" h-full w-full pt-20 px-7  md:p-14  gap-6 flex flex-col bg-slate-200 "
-        :class="sideBar.openSideBar ? 'md:pr-[375px]' : ' md:px-24'">
+        :class="sideBar.openSideBar ? 'md:pr-[375px] duration-300' : ' md:px-24 duration-300'">
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1245px]'">
+            <span class=" text-2xl font-[500]">{{ pageName }}</span>
+        </div>
         <div class=" md:h-[487px] w-full flex flex-col md:flex-row gap-10">
             <!-- Pendamping -->
             <div class="h-full  w-full bg-white p-8 rounded-md">
@@ -32,10 +36,12 @@
                 <h1 class=" text-[29px] md:text-[32px] font-semibold"> Tambah Pendamping</h1>
                 <form action="">
                     <div class=" py-4 pt-12">
-                        <input type="text" placeholder=" Pilih User" class="h-[58px] w-full bg-[#FAFAFA] border">
+                        <input type="text" placeholder=" Pilih User"
+                            class="h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                     </div>
                     <div class=" py-4">
-                        <input type="text" placeholder=" Pilih User" class="h-[58px] w-full bg-[#FAFAFA] border">
+                        <input type="text" placeholder=" Pilih User"
+                            class="h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                     </div>
                     <div class=" flex items-center gap-2 py-3">
                         <input type="checkbox" class=" h-[17px] w-[17px]">
@@ -79,7 +85,7 @@
 <script setup>
 definePageMeta({
     layout: "layouts"
-})
+});
 // import { onMounted } from 'vue';
 import { useSidebarStore } from '../../stores/Store';
 // import { useDetailPendamping } from '../../stores/Bisnis/DetailPendamping.mjs';
@@ -108,6 +114,7 @@ const route = useRoute();
 const id_bisnis = route.params.DetailPendamping;
 const pendamping = ref([]);
 const pendampingDetail = ref(null);
+const pageName = ref(null);
 
 async function getBisnis() {
     const token = localStorage.getItem("token");
@@ -124,6 +131,7 @@ async function getBisnis() {
             console.log(res.data)
             pendampingDetail.value = res.data.value;
             pendamping.value = res.data.value.companions;
+            pageName.value = res.data.value.business_id.business_name
         }, 1000);
 
     }).catch(err => {

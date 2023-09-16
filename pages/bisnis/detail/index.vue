@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class=" h-screen md:h-full">
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
             <span class=" text-2xl font-[500]">Bisnis Saya</span>

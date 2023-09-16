@@ -1,7 +1,11 @@
 <template>
     <div :class="sideBar.openSideBar ? '' : 'duration-300'">
-        <div class=" flex flex-col items-center md:items-start md:flex-row gap-5 md:pl-[70px] px-5 py-20 md:py-12 bg-slate-200"
-            :class="sideBar.openSideBar ? 'md:px-[14px] duration-300' : 'md:px-[4%] duration-300'">
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:ml-12 md:w-[1020px]' : 'duration-300  md:ml-24 md:w-[1250px]'">
+            <span class=" text-2xl font-[500]">Komune</span>
+        </div>
+        <div class=" flex flex-col items-center md:items-start md:flex-row gap-5  px-5 py-20 md:py-12 bg-slate-200"
+            :class="sideBar.openSideBar ? 'md:px-[14px] duration-300 md:pl-[50px]' : 'md:px-[4%] duration-300 md:pl-[100px]'">
             <div class="flex items-center h-[100px]  md:h-[82px] w-[300px] md:w-[200px] bg-white rounded-md">
                 <div class=" h-[60px] w-[60px] bg-red-600 m-7 md:m-2"></div>
                 <div>

@@ -15,11 +15,13 @@
                     </p>
                     <div class=" mb-7 mt-19">
                         <div class=" my-8">
-                            <input v-model="userName" class="border w-full md:w-[329px] h-[60px] bg-[#FAFAFA]" type="text"
-                                placeholder=" Username">
+                            <input v-model="userName"
+                                class="w-full md:w-[329px] h-[60px] bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md"
+                                type="text" placeholder=" Username">
                         </div>
                         <div>
-                            <input v-model="password" class=" border w-full md:w-[329px] h-[60px] bg-[#FAFAFA]"
+                            <input v-model="password"
+                                class=" border-2 outline-none px-2 focus:border-red-500 rounded-md w-full md:w-[329px] h-[60px] bg-[#FAFAFA]"
                                 type="password" placeholder=" Password">
                         </div>
                     </div>

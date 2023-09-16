@@ -3,8 +3,8 @@
     <div class=" pt-20 md:pt-16  flex flex-col gap-8 flex-wrap bg-slate-200"
         :class="openSideBar.openSideBar ? ' p-12  md:pr-[370px] duration-300' : 'p-12 md:p-20 md:pl-24 md:pr-24 duration-300 '">
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
-            :class="openSideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
-            <span class=" text-2xl font-[500]">DashBoard</span>
+            :class="openSideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1250px]'">
+            <span class=" text-2xl font-[500]">Bisnis Saya</span>
         </div>
 
         <!-- crackinCode -->
@@ -53,7 +53,7 @@
                 </table>
             </div>
             <!-- pendamping -->
-            <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
+            <div class=" w-full h-full bg-white rounded-md px-5 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Pendamping</h4>
                     <router-link :to="`/bisnis/detail/detailpendamping/${router}`"

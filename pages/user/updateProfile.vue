@@ -1,6 +1,10 @@
 <template>
     <div class="w-full h-full flex justify-center items-center font-inter bg-slate-200"
         :class="sideBar.openSideBar ? 'pr-[300px] duration-300' : 'duration-300'">
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:w-[995px]' : 'duration-300 md:w-[1200px]'">
+            <span class=" text-2xl font-[500]">Profile</span>
+        </div>
         <div class="md:h-full w-[90%] md:w-[900px] border border-slate-300 rounded-md md:p-10 p-3 bg-white my-20">
             <form action="" @submit.prevent="update">
                 <h1 class="text-2xl font-semibold pb-10">Update Profile</h1>
@@ -8,12 +12,13 @@
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Alamat</label>
                     <input v-model="alamat" type="text" placeholder="Alamat"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border outline-none px-2 focus:border-blue-500 rounded-md">
+                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
                 <!-- Telephone -->
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Nomor Telephone</label>
-                    <input v-model="telephone" type="text" placeholder="No." class="h-12 bg-[#FAFAFA] text-[15px] border">
+                    <input v-model="telephone" type="text" placeholder="No."
+                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
 
                 <!-- Profile Picture (Input Tipe File) -->
@@ -26,13 +31,13 @@
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Nama Lengkap</label>
                     <input v-model="namaLengkap" type="text" placeholder="Nama Lengkap"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border">
+                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
 
                 <!-- Jenis Kelamin -->
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Jenis Kelamin</label>
-                    <select class="h-12 bg-[#FAFAFA] text-[16px] border" v-model="jenisKelamin">
+                    <select class="h-12 bg-[#FAFAFA] text-[16px] border outline-none" v-model="jenisKelamin">
                         <option value="L">Laki-laki</option>
                         <option value="P">Perempuan</option>
                     </select>
@@ -42,26 +47,28 @@
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Tanggal Lahir</label>
                     <input v-model="tanggaLahir" type="text" placeholder="YYYY-MM-DD"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border">
+                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
 
                 <!-- Tempat Lahir -->
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">Tempat Lahir</label>
                     <input v-model="tempatLahir" type="text" placeholder="Tempat Lahir"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border">
+                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
 
                 <!-- NPWP -->
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">NPWP</label>
-                    <input v-model="npwp" type="text" placeholder="NPWP" class="h-12 bg-[#FAFAFA] text-[15px] border">
+                    <input v-model="npwp" type="text" placeholder="NPWP"
+                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
 
                 <!-- No. KTP -->
                 <div class="flex flex-col py-2 gap-3">
                     <label for="" class="text-[18px] font-[500]">No.Ktp</label>
-                    <input v-model="noKtp" type="text" placeholder="No.Ktp" class="h-12 bg-[#FAFAFA] text-[15px] border">
+                    <input v-model="noKtp" type="text" placeholder="No.Ktp"
+                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                 </div>
                 {{ error }}
 
