@@ -1,10 +1,10 @@
 <!-- hati hati dalam penggunaan lang, karena itu masalah error  -->
 <template>
     <div class=" pt-20 md:pt-16  flex flex-col gap-8 flex-wrap bg-slate-200"
-        :class="openSideBar.openSideBar ? ' p-12  md:pr-[370px] duration-300' : 'p-12 md:p-20 md:pl-24 md:pr-24 duration-300 '">
+        :class="openSideBar.openSideBar ? ' p-12  md:pr-[65px] duration-300' : 'p-12 md:p-20 md:pl-24 md:pr-24 duration-300 '">
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="openSideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1250px]'">
-            <span class=" text-2xl font-[500]">Bisnis Saya</span>
+            <span class=" text-2xl font-[500]">Usaha Saya</span>
         </div>
 
         <!-- crackinCode -->
@@ -160,7 +160,8 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[65px] shadow-sm bg-slate-200">
-        <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
+            reserved.</span>
     </div>
 </template>
 <script setup>
@@ -173,23 +174,6 @@ import { useSidebarStore } from '../../../stores/Store';
 // import DetailAsset from './detailasset/[DetailAsset].vue';
 
 const openSideBar = useSidebarStore();
-
-
-//======================usefect data===============================================
-
-// const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
-// import { useRoute } from 'vue-router';
-
-// const route = useRoute();
-// const id_bisnis = route.params.My_Business;
-// const { data: bisnisDetail } = useFetch(`https://admin.jruhub.com/api/v1/business/detail/${id_bisnis}`, {
-//     method: "GET",
-//     headers: {
-//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-//     },
-// })
-
-// console.log(bisnisDetail);
 
 //==============================Usefect Data =======================================
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
@@ -250,4 +234,11 @@ onBeforeMount(async () => {
 
 
 </script>
-<style ></style>
+<style >
+.active-link {
+    background-color: #007bff;
+    /* Atur warna latar belakang untuk tautan yang aktif */
+    color: #fff;
+    /* Atur warna teks untuk tautan yang aktif */
+}
+</style>

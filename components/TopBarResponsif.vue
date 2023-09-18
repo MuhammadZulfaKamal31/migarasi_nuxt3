@@ -6,7 +6,7 @@
         </div>
 
         <div @click="toggleDropDown" class="h-[35px] w-[35px] bg-white flex items-center rounded-full">
-            <img src="./../assets/Rectangle38.png" alt="" class=" rounded-full" />
+            <img :src="`${baseImageUrl}` + fotoProfile" alt="" class=" rounded-full" />
         </div>
 
         <!-- profile dropdown -->
@@ -36,6 +36,31 @@ const toggleDropDown = () => {
     showDropDown.value = !showDropDown.value;
 };
 
+//=========================== get useFetch Profile ============================================
 
+const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+const fotoProfile = ref(null);
+
+async function getCircle() {
+    const token = localStorage.getItem("token");
+    const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile`;
+
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            fotoProfile.value = res.data.value.data.user_profile_picture
+        }, 700)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+onBeforeMount(async () => {
+    await getCircle();
+})
 </script>
 <style></style>

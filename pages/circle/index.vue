@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class='w-full h-full md:h-[564px] bg-slate-200  rounded-md overflow-auto pt-20 md:pt-14'
-            :class="sideBar.openSideBar ? ' md:pr-[350px] md:pl-10 duration-300' : ' md:px-20 duration-300'">
+            :class="sideBar.openSideBar ? ' md:pr-[37px] md:pl-10 duration-300' : ' md:px-20 duration-300'">
             <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
                 :class="sideBar.openSideBar ? ' duration-300 md:ml-4 md:w-[1020px]' : 'duration-300  md:ml-4 md:w-[1250px]'">
                 <span class=" text-2xl font-[500]">Circle</span>
             </div>
-            <div v-if="circle" class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
+            <div class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
                 <!-- {{ circle }} -->
                 <div v-for="i in circle" class=" w-1/2 md:w-1/5 px-4 mb-4">
                     <router-link :to="`/circle/detail/${i.circle.id}`">
@@ -20,8 +20,8 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
-        <!-- {{ circle.value.data }} -->
-        <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
+            reserved.</span>
     </div>
 </template>
 <script setup>
@@ -75,4 +75,4 @@ onBeforeMount(async () => {
 })
 
 </script>
-<style></style>
+<style></style> v-if="circle"

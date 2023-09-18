@@ -1,6 +1,7 @@
 <template>
     <div class="w-full h-full flex justify-center items-center font-inter bg-slate-200"
-        :class="sideBar.openSideBar ? 'pr-[300px] duration-300' : 'duration-300'">
+        :class="sideBar.openSideBar ? ' duration-300' : 'duration-300'">
+        <!-- pageName -->
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[995px]' : 'duration-300 md:w-[1200px]'">
             <span class=" text-2xl font-[500]">Profile</span>

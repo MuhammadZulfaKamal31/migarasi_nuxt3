@@ -1,6 +1,6 @@
 <template>
     <div class=" h-full w-full pt-20 px-7  md:p-14  gap-6 flex flex-col bg-slate-200 "
-        :class="sideBar.openSideBar ? 'md:pr-[375px] duration-300' : ' md:px-24 duration-300'">
+        :class="sideBar.openSideBar ? 'md:pr-[65px] duration-300' : ' md:px-24 duration-300'">
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1245px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
@@ -79,7 +79,8 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
-        <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
+            reserved.</span>
     </div>
 </template>
 <script setup>
@@ -93,19 +94,6 @@ import { useSidebarStore } from '../../stores/Store';
 const sideBar = useSidebarStore();
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
-
-//================================== useFetch api ===============================
-// import { useRoute } from "vue-router";
-
-// const route = useRoute();
-// const id_business = route.params.DetailPendamping;
-
-// const { data: pendamping } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/companion`, {
-//     method: "GET",
-//     headers: {
-//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-//     },
-// })
 
 //===================================useFetch Api ================================
 

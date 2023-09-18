@@ -7,20 +7,20 @@
             'w-full duration-300': !openSideBar.openSideBar
         }">
             <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
-                :openSideBar="openSideBar.openSideBar" />
+                :openSideBar="openSideBar.openSideBar"
+                :class="openSideBar.openSideBar ? 'w-[1125px] duration-300' : 'w-[1425px] duration-300'" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
 
             <div @click="toggleCloseBar">
                 <router-view></router-view>
             </div>
-
         </div>
     </div>
 </template>
 
 <script setup>
-import TopBar from '../../components/TopBar.vue'
+// import TopBar from '../../components/TopBar.vue'
 import TopBarResponsif from '../../components/TopBarResponsif.vue';
 import Sidebar from '../../components/SideBar.vue'
 import { useSidebarStore } from '../stores/Store';

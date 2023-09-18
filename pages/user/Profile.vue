@@ -1,7 +1,8 @@
 <template>
-    <div class=" h-[1900px] md:h-[1160px] bg-slate-200">
+    <div class=" h-full md:h-full bg-slate-200">
         <div class=' flex flex-col gap-5 font-inter pr-[10%] pt-10 md:pt-2 '
-            :class="sideBar.openSideBar ? 'md:px-[5%] md:pr-[26%] duration-300' : 'px-[7%] duration-300'">
+            :class="sideBar.openSideBar ? 'md:px-[5%] md:pr-[7%] duration-300' : 'px-[6%] duration-300'">
+            <!-- pageName -->
             <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
                 :class="sideBar.openSideBar ? ' duration-300 md:w-[995px]' : 'duration-300 md:w-[1200px]'">
                 <span class=" text-2xl font-[500]">Profile</span>
@@ -49,15 +50,15 @@
                             </div>
                             <div class="m-1">
                                 <label class=" font-[500] text-[13px] text-slate-400" for="">Gaji</label>
-                                <p class=" text-[15px] font-[700]">RP5.000.000</p>
+                                <p class=" text-[15px] font-[700]"> Rp {{ totalGaji }}</p>
                             </div>
                             <div class="m-1">
                                 <label class=" font-[500] text-[13px] text-slate-400" for="">SHU</label>
-                                <p class=" text-[15px] font-[700]">RP5.000.000</p>
+                                <p class=" text-[15px] font-[700]">RP {{ shu }}</p>
                             </div>
                             <div class="m-1">
                                 <label class=" font-[500] text-[13px] text-slate-400" for="">Total Pendapatan</label>
-                                <p class=" text-[15px] font-[700]">RP10.000.000</p>
+                                <p class=" text-[15px] font-[700]">RP {{ totalPendapatan }}</p>
                             </div>
                         </div>
                     </div>
@@ -76,18 +77,20 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <div class=' h-[552px] w-full bg-white rounded-md'>
+            <!-- <div class=' h-[552px] w-full bg-white rounded-md'>
                 <h1 class=" text-xl p-7">History</h1>
-            </div>
+            </div> -->
         </div>
         <div class=" w-full text-start p-5 pl-[65px] shadow-sm">
-            <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+            <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All
+                rights reserved.</span>
         </div>
     </div>
 </template>
+
+
 <script setup>
 definePageMeta({
     layout: "layouts"
@@ -97,7 +100,8 @@ import { useSidebarStore } from '../../stores/Store';
 
 const sideBar = useSidebarStore()
 
-//=====================================UseFetch Api======================================
+//=====================================GET UseFetch Api Profile======================================
+
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
 const nama = ref(null);
@@ -106,7 +110,7 @@ const noTelp = ref(null);
 const alamat = ref(null);
 const thnLahir = ref(null);
 
-const fotoProfile = ref(null)
+const fotoProfile = ref(null);
 
 async function getProfile() {
     const token = localStorage.getItem("token");
@@ -128,16 +132,43 @@ async function getProfile() {
             thnLahir.value = res.data.value.data.user_birth_date;
 
             fotoProfile.value = res.data.value.data.user_profile_picture;
-        }, 1000)
+        }, 800)
 
     }).catch(err => {
-        console.log(err)
+        console.log(err);
+    })
+}
+
+
+//================================ Get Usefetch API Pendapatan====================
+
+const totalGaji = ref(null);
+const shu = ref(null);
+const totalPendapatan = ref(null);
+
+const getPendapatan = async () => {
+    const token = localStorage.getItem("token");
+
+    const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile/income`
+
+    await useFetch(url, {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        totalGaji.value = res.data.value.data.total_employee_salary;
+        shu.value = res.data.value.data.total_shu;
+        totalPendapatan.value = res.data.value.data.total_companion_salary;
+
     })
 }
 
 onBeforeMount(async () => {
     await getProfile();
+    await getPendapatan();
 })
+
 
 </script>
 

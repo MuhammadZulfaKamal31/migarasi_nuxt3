@@ -1,6 +1,6 @@
 <template >
     <div class=" w-full h-full md:p-11 px-7 pt-24 md:pt-14 flex flex-col md:flex-row gap-7 bg-slate-200"
-        :class="sideBar.openSideBar ? ' md:pr-[375px] duration-300' : ' md:px-24 duration-300'">
+        :class="sideBar.openSideBar ? ' md:pr-[65px] duration-300' : ' md:px-24 duration-300'">
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1240px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
@@ -107,7 +107,8 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
-        <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
+            reserved.</span>
     </div>
 </template>
 <script setup>

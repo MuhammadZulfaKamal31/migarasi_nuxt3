@@ -18,7 +18,7 @@
             <div class="flex items-center h-[100px]  md:h-[82px] w-[300px] md:w-[200px] bg-white rounded-md">
                 <div class=" h-[60px] w-[60px] bg-red-600 m-7 md:m-2"></div>
                 <div>
-                    <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Bisnis</span>
+                    <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Management</span>
                     <div class=" h-[20px] md:h-[25px] text-[17px] md:text-[20px] font-[800]">
                         {{ totalBisnis }}
                     </div>
@@ -36,8 +36,9 @@
         </div>
         <!-- studio -->
         <div class='w-full h-full md:h-[564px] bg-slate-200  rounded-md overflow-auto'
-            :class="sideBar.openSideBar ? ' md:pr-[350px] md:pl-10' : ' md:px-20'">
+            :class="sideBar.openSideBar ? ' md:pr-[55px] md:pl-10 duration-300' : ' md:px-20 duration-300'">
             <div class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
+                <h1 class=" text-[32px] font-[600] pb-4"> List Bisnis</h1>
                 <div v-for="i in bisnis" class=" w-1/2 md:w-1/5 px-4 mb-4">
                     <div class="h-full border rounded-md overflow-hidden shadow-xl">
                         <img :src="`${baseImageUrl}` + i.business.business_logo" alt="" class="object-cover w-full">
@@ -48,7 +49,8 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[85px] shadow-sm bg-slate-200">
-        <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
+            reserved.</span>
     </div>
 </template>
 <script setup>
