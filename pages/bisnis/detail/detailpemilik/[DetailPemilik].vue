@@ -1,4 +1,14 @@
 <template >
+    <!-- loading -->
+    <div v-if="loading" class="h-[2000px] flex justify-center py-40 bg-slate-50 absolute"
+        :class="sideBar.openSideBar ? ' w-[79%] duration-300' : 'w-full duration-300'">
+        <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status">
+            <span
+                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        </div>
+    </div>
+
     <div class=" h-[2000px] md:h-full w-full gap-7 font-inter p-7 md:p-12 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:px-10 md:pr-[4%] duration-300' : 'md:px-[7%] md:pl-[6%] duration-300'">
         <!-- pageName -->
@@ -169,6 +179,8 @@ const onInputChange = () => {
 
 //===========================================useFetch Api=========================================
 
+const loading = ref(false)
+
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const id_bisnis = route.params.DetailPemilik;
@@ -183,6 +195,7 @@ async function getBisnis() {
     const token = localStorage.getItem("token");
     console.log(token);
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/owners`;
+    loading.value = true;
     await useFetch(url, {
         method: "get",
         headers: {
@@ -199,6 +212,7 @@ async function getBisnis() {
             //dougnut chart
             dataValues.value = res.data.value.owners.map(owner => parseFloat(owner.owner_shares));
             dataValues.value.push(parseFloat(res.data.value.empty_shares));
+            loading.value = false
 
         }, 1000);
     }).catch(err => {

@@ -3,7 +3,7 @@
         <div class=" bg-white h-screen md:h-screen font-inter md:z-0" id="SideBar"
             :class="dataOpenSideBar == true ? ' w-[150px] md:w-[300px]' : ' w-0'">
             <div class=" flex justify-center py-10">
-                <nuxt-link to="/Bisnis" :class="{ 'active-link': isCurrentRoute('/Bisnis') }">
+                <nuxt-link to="/dashboard">
                     <img class=" w-[100px] h-[27px]" src="../assets/image1.png" alt="">
                 </nuxt-link>
             </div>
@@ -11,25 +11,30 @@
             <div class="">
                 <div class=" mx-5 my-5 text-[11px] w-[59px] text-[#A3A3A3] font-[500]">Dashboard</div>
                 <div class=" my-3">
-                    <my-custom-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Dashboard">
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/dashboard"
+                        @click="aktifLink.setActive('/dashboard')"
+                        :class="aktifLink.aktifLink === '/dashboard' ? 'bg-slate-200 text-slate-600 p-1 rounded-md' : ''">
                         <span class="fa-solid fa-gauge hidden md:block">
                         </span>
                         <span> Beranda</span>
-                    </my-custom-link>
+                    </router-link>
                 </div>
                 <div class=" mx-5 my-5 text-[11px] w-[59px] text-[#A3A3A3] font-[500]">Businness
                 </div>
                 <div class=" my-3">
-                    <my-custom-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis">
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"
+                        @click="aktifLink.setActive('/bisnis')"
+                        :class="aktifLink.aktifLink === '/bisnis' ? 'bg-slate-200 text-slate-600 p-1 rounded-md' : ''">
                         <i class="fa-solid fa-globe"></i>
                         <span>
                             Usaha Saya
                         </span>
-                    </my-custom-link>
+                    </router-link>
                 </div>
                 <div class=" my-3">
                     <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
-                        to="/Pendampingan/Pendampingan">
+                        to="/Pendampingan/Pendampingan" @click="aktifLink.setActive('/pendamping')"
+                        :class="aktifLink.aktifLink === '/pendamping' ? 'bg-slate-200 text-slate-600 p-1 rounded-md' : ''">
                         <i class="fa-solid fa-address-book"></i>
                         <span>
                             Pendampingan
@@ -37,7 +42,9 @@
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Circle">
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/circle"
+                        @click="aktifLink.setActive('/circle')"
+                        :class="aktifLink.aktifLink === '/circle' ? 'bg-slate-200 text-slate-600 p-1 rounded-md' : ''">
                         <i class="fa-solid fa-bullseye"></i>
                         <span>
                             Circle
@@ -71,12 +78,12 @@
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
+                    <nuxt-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
                             class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             JRUPOS
                         </span>
-                    </router-link>
+                    </nuxt-link>
                 </div>
                 <div class=" my-3">
                     <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
@@ -93,23 +100,44 @@
 <script setup>
 
 import { defineProps } from 'vue';
-// import { ref } from 'vue';
-
+import { useAktifLinkStore } from '../stores/AktifLinkStore'
 const props = defineProps({
     dataOpenSideBar: Boolean
 });
 
-import MyCustomLink from '~/components/MyCustomLink.vue';
+const aktifLink = useAktifLinkStore();
+
 //======================================================
 
-import { useRoute } from 'vue-router';
+// const setActive = (route) => {
+//     localStorage.setItem('activeLink', route);
+// };
 
-const route = useRoute();
+// const isActive = (route) => {
+//     return localStorage.getItem('activeLink') === route;
+// };
 
-function isCurrentRoute(routeName) {
-    return route.path === routeName;
+// import { ref, onMounted } from 'vue';
+// const aktifLink = ref('/dashboard');
 
-}
+// const setActive = (route) => {
+//     if (process.client) {
+//         sessionStorage.setItem('activeLink', route);
+//         aktifLink.value = sessionStorage.getItem('activeLink');
+//         console.log(coba.value);
+//     }
+// };
+
+// const isActive = () => {
+//     if (process.client) {
+//         coba.value = sessionStorage.getItem('activeLink')
+//     }
+//     // return true; // Ini akan mencegah kesalahan ketika kode berjalan di sisi server
+// };
+
+// onMounted(() => {
+//     isActive();
+// })
 
 //==================================================
 
@@ -129,10 +157,20 @@ function isCurrentRoute(routeName) {
     width: 0px;
 }
 
-.active-link {
-    background-color: #007bff;
-    /* Atur warna latar belakang untuk tautan yang aktif */
-    color: #fff;
-    /* Atur warna teks untuk tautan yang aktif */
+.active {
+    color: red;
 }
+
+.active1 {
+    color: blue;
+}
+
+/* .active-link {
+    background-color: #f1f1f1;
+    color: #fff;
+} */
 </style>
+
+<!-- <nuxt-link to="/Bisnis" :class="{ 'active-link': linkActive.isCurrentRoute('/Bisnis') }">
+    <img class=" w-[100px] h-[27px]" src="../assets/image1.png" alt="">
+</nuxt-link> -->

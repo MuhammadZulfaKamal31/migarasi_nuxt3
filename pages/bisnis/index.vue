@@ -1,5 +1,14 @@
 <template>
-    <div class=" h-screen md:h-full">
+    <div>
+        <!-- loading -->
+        <div v-if="loading" class="h-screen flex justify-center py-40 bg-slate-50 absolute"
+            :class="sideBar.openSideBar ? ' w-[78%] duration-300' : 'w-full duration-300'">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
         <!-- pageName -->
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
@@ -29,8 +38,7 @@
 definePageMeta({
     layout: "layouts"
 })
-// import { useBusinessStore } from '../../stores/bisnis/bisnis';
-// import { onMounted } from 'vue';
+
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
 import { useSidebarStore } from '../../stores/Store';
@@ -39,10 +47,12 @@ const sideBar = useSidebarStore();
 //=============================================useFetch Langsung=========================================
 
 const bisnis = ref(null);
+const loading = ref(false)
 
 async function getDetailCircle() {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/business`;
+    loading.value = true
 
     await useFetch(url, {
         method: "get",
@@ -53,7 +63,8 @@ async function getDetailCircle() {
         setTimeout(() => {
             console.log(res.data)
             bisnis.value = res.data.value.data
-        }, 1000)
+            loading.value = false
+        }, 700)
     }).catch(err => {
         console.log(err)
     })

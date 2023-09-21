@@ -1,4 +1,14 @@
 <template >
+    <!-- loading -->
+    <div v-if="loading" class="h-[2000px] flex justify-center py-40 bg-slate-50 absolute"
+        :class="sideBar.openSideBar ? ' w-[79%] duration-300' : 'w-full duration-300'">
+        <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status">
+            <span
+                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        </div>
+    </div>
+
     <div class=" h-full w-full p-7 pt-20 md:p-14 flex flex-col gap-8 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:pr-[63px] duration-300 ' : ' md:px-24 duration-300'">
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
@@ -146,6 +156,7 @@ const sideBar = useSidebarStore();
 
 //================================= useFetch Api =============================================
 import { useRoute } from 'vue-router';
+const loading = ref(null)
 const route = useRoute();
 const id_bisnis = route.params.DetailAsset;
 const assetDetail = ref(null);
@@ -153,6 +164,7 @@ const pageName = ref([]);
 
 async function getBisnis() {
     const token = localStorage.getItem("token");
+    loading.value = true;
     console.log(token);
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/assets`;
     await useFetch(url, {
@@ -165,6 +177,7 @@ async function getBisnis() {
             console.log(res.data)
             assetDetail.value = res.data.value.assets;
             pageName.value = res.data.value.business_id.business_name;
+            loading.value = false
         }, 1000);
 
     }).catch(err => {

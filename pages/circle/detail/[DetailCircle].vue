@@ -1,5 +1,15 @@
 <template>
     <div :class="sideBar.openSideBar ? '' : 'duration-300'">
+        <!-- loading -->
+        <div v-if="loading" class="h-[2000px] flex justify-center py-40 bg-slate-50 absolute"
+            :class="sideBar.openSideBar ? ' w-[79%] duration-300' : 'w-full duration-300'">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
+
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:ml-12 md:w-[1020px]' : 'duration-300  md:ml-24 md:w-[1250px]'">
             <span class=" text-2xl font-[500]">Komune</span>
@@ -67,6 +77,7 @@ const sideBar = useSidebarStore();
 //====================================useFetch api =============================================
 
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+const loading = ref(false)
 
 import { useRoute } from 'vue-router';
 const route = useRoute();
@@ -81,6 +92,7 @@ const bisnis = ref(null)
 async function getDetailCircle() {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/circle/detail/${id_circle}`;
+    loading.value = true
 
     await useFetch(url, {
         method: "get",
@@ -94,6 +106,8 @@ async function getDetailCircle() {
             totalBisnis.value = res.data.value.data.circle_info.total_business;
             totalProject.value = res.data.value.data.circle_info.total_project;
             bisnis.value = res.data.value.data.business;
+            loading.value = false
+
         }, 1000)
 
     }).catch(err => {

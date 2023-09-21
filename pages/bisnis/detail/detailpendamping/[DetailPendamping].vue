@@ -1,4 +1,14 @@
 <template>
+    <!-- loading -->
+    <div v-if="loading" class="h-[2000px] flex justify-center py-40 bg-slate-50 absolute"
+        :class="sideBar.openSideBar ? ' w-[79%] duration-300' : 'w-full duration-300'">
+        <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status">
+            <span
+                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        </div>
+    </div>
+
     <div class=" h-full w-full pt-20 px-7  md:p-14  gap-6 flex flex-col bg-slate-200 "
         :class="sideBar.openSideBar ? 'md:pr-[65px] duration-300' : ' md:px-24 duration-300'">
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
@@ -97,6 +107,8 @@ const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
 //===================================useFetch Api ================================
 
+const loading = ref(false)
+
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const id_bisnis = route.params.DetailPendamping;
@@ -108,6 +120,7 @@ async function getBisnis() {
     const token = localStorage.getItem("token");
     console.log(token);
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/companion`;
+    loading.value = true;
 
     await useFetch(url, {
         method: "get",
@@ -120,6 +133,7 @@ async function getBisnis() {
             pendampingDetail.value = res.data.value;
             pendamping.value = res.data.value.companions;
             pageName.value = res.data.value.business_id.business_name
+            loading.value = false
         }, 1000);
 
     }).catch(err => {

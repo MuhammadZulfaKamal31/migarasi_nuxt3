@@ -12,7 +12,8 @@
                 <!-- profile -->
                 <div @click="toggleDropDown"
                     class="h-[73px] w-[73px] bg-white rounded-full flex items-center justify-center mr-[38px] absolute right-7">
-                    <img :src="`${baseImageUrl}` + fotoProfile" alt="" class="h-[73px] w-[73px] rounded-full" />
+                    <img :src="`${baseImageUrl}` + fotoProfile" alt=""
+                        class="h-[73px] w-[73px] rounded-full object-cover" />
                 </div>
             </div>
             <div>

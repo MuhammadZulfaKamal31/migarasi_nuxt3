@@ -1,6 +1,15 @@
 <template>
     <div class=" flex flex-col gap-4 py-[5%] font-inter px-5 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:pr-[37px] pr-[8%] duration-300' : 'md:px-[7%] duration-300'">
+        <!-- loading -->
+        <div v-if="loading" class=" w-full h-screen flex justify-center py-40 bg-slate-50">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
+
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:ml-7 md:w-[1010px]' : 'duration-300 md:w-[1200px]'">
             <span class=" text-2xl font-[500]">Pendapatan</span>
@@ -96,6 +105,7 @@ const sideBar = useSidebarStore();
 //========================================Get useFetch Api Pendapatan==================
 
 const baseImageUrl = `${import.meta.env.VITE_BASE_IMAGE_URL}`
+const loading = ref(false);
 
 const totalGaji = ref(null);
 const totalShu = ref(null);
@@ -108,6 +118,7 @@ const shu = ref([])
 const getPendapatan = async () => {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile/income`;
+    loading.value = true;
 
     await useFetch(url, {
         method: "GET",
@@ -123,6 +134,7 @@ const getPendapatan = async () => {
             gaji.value = res.data.value.data.companion_salaries;
 
             shu.value = res.data.value.data.owners_shares;
+            loading.value = false
 
         })
     })

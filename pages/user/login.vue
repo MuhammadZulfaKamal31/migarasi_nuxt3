@@ -83,7 +83,7 @@ const login = async () => {
             console.log(token)
             localStorage.setItem('token', token);
 
-            router.push({ path: "/Bisnis" });
+            router.push({ path: "/dashboard" });
         } catch (err) {
             error.value = "Login gagal. Periksa username dan password Anda.";
             console.error(err);

@@ -1,7 +1,17 @@
 <!-- hati hati dalam penggunaan lang, karena itu masalah error  -->
 <template>
+    <!-- loading -->
+    <div v-if="loading" class=" h-[7000px] flex justify-center py-40 bg-slate-50 absolute"
+        :class="openSideBar.openSideBar ? ' w-[79%] duration-300 ' : 'w-full duration-300'">
+        <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status">
+            <span
+                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        </div>
+    </div>
     <div class=" pt-20 md:pt-16  flex flex-col gap-8 flex-wrap bg-slate-200"
         :class="openSideBar.openSideBar ? ' p-12  md:pr-[65px] duration-300' : 'p-12 md:p-20 md:pl-24 md:pr-24 duration-300 '">
+
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
             :class="openSideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1250px]'">
             <span class=" text-2xl font-[500]">Usaha Saya</span>
@@ -177,7 +187,9 @@ const openSideBar = useSidebarStore();
 
 //==============================Usefect Data =======================================
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+const loading = ref(false)
 import { useRoute } from "vue-router";
+
 
 const route = useRoute()
 const id_bisnis = route.params.My_Business;
@@ -197,6 +209,7 @@ const target = ref([])
 async function getDetailCircle() {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}`;
+    loading.value = true
 
     await useFetch(url, {
         method: "get",
@@ -221,6 +234,7 @@ async function getDetailCircle() {
             asset.value = res.data.value.data.business_assets;
             //terget
             target.value = res.data.value.data.business_target;
+            loading.value = false
         }, 1000)
 
     }).catch(err => {

@@ -1,5 +1,14 @@
 <template>
-    <div class=" h-full md:h-full bg-slate-200">
+    <div class=" h-full md:max-h-full bg-slate-200">
+        <!-- loading -->
+        <div v-if="loading" class=" w-[78%] h-[78%] flex justify-center py-40 bg-slate-50 absolute">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
+
         <div class=' flex flex-col gap-5 font-inter pr-[10%] pt-10 md:pt-2 '
             :class="sideBar.openSideBar ? 'md:px-[5%] md:pr-[7%] duration-300' : 'px-[6%] duration-300'">
             <!-- pageName -->
@@ -32,7 +41,7 @@
                     </div>
                     <div class=" my-5">
                         <label class="text-gray-400 text-[13px]">Tahun Lahir</label>
-                        <p class=" text-[15px] font-[600]">{{ thnLahir }}</p>
+                        <p class=" text-[15px] font-[600]">{{ formatDate }}</p>
                     </div>
                 </div>
                 <div class=" h-full w-full flex flex-col  gap-6">
@@ -66,8 +75,8 @@
                     <div class=" h-full w-full bg-white mb-10 rounded-md p-6">
                         <h1 class=" text-2xl">Circle</h1>
                         <div class=" flex items-center my-3">
-                            <img class=" h-[70px] w-[70px] rounded-full object-cover" :src="`${baseImageUrl}` + fotoProfile"
-                                alt="">
+                            <img class=" h-[70px] w-[110px] rounded-full object-cover"
+                                :src="`${baseImageUrl}` + fotoProfile" alt="">
                             <div class=" mx-3">
                                 <h1 class=" text-xl mb-3">Komune</h1>
                                 <p class=" text-[13px]">
@@ -83,7 +92,7 @@
                 <h1 class=" text-xl p-7">History</h1>
             </div> -->
         </div>
-        <div class=" w-full text-start p-5 pl-[65px] shadow-sm">
+        <div class=" w-full text-start p-5 pl-[65px] shadow-sm py-10">
             <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All
                 rights reserved.</span>
         </div>
@@ -97,28 +106,32 @@ definePageMeta({
 })
 
 import { useSidebarStore } from '../../stores/Store';
+import { useNow, useDateFormat } from '@vueuse/core'
+
 
 const sideBar = useSidebarStore()
 
 //=====================================GET UseFetch Api Profile======================================
 
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+const loading = ref(false)
 
 const nama = ref(null);
 const email = ref(null);
 const noTelp = ref(null);
 const alamat = ref(null);
 const thnLahir = ref(null);
-
+const formatDate = useDateFormat(thnLahir, "DD MMMM YYYY");
 const fotoProfile = ref(null);
 
 async function getProfile() {
     const token = localStorage.getItem("token");
     console.log(token)
     const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile`;
+    loading.value = true
 
     await useFetch(url, {
-        method: "get",
+        method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -132,7 +145,8 @@ async function getProfile() {
             thnLahir.value = res.data.value.data.user_birth_date;
 
             fotoProfile.value = res.data.value.data.user_profile_picture;
-        }, 800)
+            loading.value = false
+        }, 2000)
 
     }).catch(err => {
         console.log(err);
@@ -154,13 +168,12 @@ const getPendapatan = async () => {
     await useFetch(url, {
         method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
         }
     }).then(res => {
         totalGaji.value = res.data.value.data.total_employee_salary;
         shu.value = res.data.value.data.total_shu;
         totalPendapatan.value = res.data.value.data.total_companion_salary;
-
     })
 }
 
