@@ -13,3 +13,16 @@ export const useSidebarStore = defineStore('sidebar', () => {
   };
   return { openSideBar, toggleSideBar, closeSideBar };
 });
+
+//======================= Highlight Menu sideBar ====================================
+
+// import { defineStore } from 'pinia'
+
+// export const useBusinessStore = defineStore('business', {
+//   state: () => ({
+//     business : []
+//   }),
+//   actions: {
+
+//   }
+// })

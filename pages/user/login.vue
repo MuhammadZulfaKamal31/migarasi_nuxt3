@@ -15,11 +15,13 @@
                     </p>
                     <div class=" mb-7 mt-19">
                         <div class=" my-8">
-                            <input v-model="userName" class="border w-full md:w-[329px] h-[60px] bg-[#FAFAFA]" type="text"
-                                placeholder=" Username">
+                            <input v-model="userName"
+                                class="w-full md:w-[329px] h-[60px] bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md"
+                                type="text" placeholder=" Username">
                         </div>
                         <div>
-                            <input v-model="password" class=" border w-full md:w-[329px] h-[60px] bg-[#FAFAFA]"
+                            <input v-model="password"
+                                class=" border-2 outline-none px-2 focus:border-red-500 rounded-md w-full md:w-[329px] h-[60px] bg-[#FAFAFA]"
                                 type="password" placeholder=" Password">
                         </div>
                     </div>
@@ -41,7 +43,8 @@
 
             </div>
             <div class=" w-full text-center md:pt-24 py-7 shadow-sm text-[14px]">
-                <span> © 2023 <span class=" text-red-500 text-[13px]">jruhub.com.</span> All rights reserved.</span>
+                <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[13px]">jruhub.com.</router-link> All
+                    rights reserved.</span>
             </div>
         </div>
         <div class=" hidden md:block md:w-[1220px]">
@@ -80,7 +83,7 @@ const login = async () => {
             console.log(token)
             localStorage.setItem('token', token);
 
-            router.push({ path: "/Bisnis" });
+            router.push({ path: "/dashboard" });
         } catch (err) {
             error.value = "Login gagal. Periksa username dan password Anda.";
             console.error(err);

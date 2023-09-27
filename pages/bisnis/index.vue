@@ -1,62 +1,103 @@
 <template>
-    <div class=" bg-slate-200 ">
-        <!-- <div class=" h-[77px]  bg-blue-500 rounded-md flex items-center justify-center px-6 absolute top-36"
+    <div>
+        <!-- pageName -->
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
-            <span class=" text-2xl font-[500]">{{ $route.params.judul }}</span>
-        </div> -->
-
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-center px-6 absolute top-36"
-            :class="sideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
-            <span class=" text-2xl font-[500]">{{ $route.params.judul }}</span>
-        </div>
-
-        <div class=" flex flex-col items-center md:items-start
-         md:flex-row md:h-[580px] gap-5 md:ml-[40px] px-5 py-20 md:py-12 "
-            :class="sideBar.openSideBar ? 'md:px-[14px] duration-300' : 'md:px-[4%] duration-300'">
-            <div class="flex items-center h-[100px]  md:h-[82px] w-[300px] md:w-[200px] bg-white rounded-md">
-                <div class=" h-[60px] w-[60px] bg-red-600 m-7 md:m-2"></div>
-                <div>
-                    <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Anggota</span>
-                    <div class=" h-[20px] md:h-[25px] text-[17px] md:text-[20px] font-[800]">
-                        544
-                    </div>
+            <span class=" text-2xl font-[500]">Bisnis Saya</span>
+            <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                <div v-for="(link, index) in links ">
+                    <nuxt-link :to="generateLink(index)" class=" hover:text-black">
+                        {{ link }}
+                        <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
+                    </nuxt-link>
                 </div>
             </div>
-            <div class="flex items-center h-[100px]  md:h-[82px] w-[300px] md:w-[200px] bg-white rounded-md">
-                <div class=" h-[60px] w-[60px] bg-red-600 m-7 md:m-2"></div>
-                <div>
-                    <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Bisnis</span>
-                    <div class=" h-[20px] md:h-[25px] text-[17px] md:text-[20px] font-[800]">
-                        80
-                    </div>
-                </div>
-            </div>
-            <div class="flex items-center h-[100px]  md:h-[82px] w-[300px] md:w-[200px] bg-white rounded-md">
-                <div class=" h-[60px] w-[60px] bg-red-600 m-7 md:m-2"></div>
-                <div>
-                    <span class=" text-[17px] md:text-base text-slate-600 font-[700]">Total Anggota</span>
-                    <div class=" h-[20px] md:h-[25px] text-[17px] md:text-[20px] font-[800]">
-                        10
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <div class=" w-full pt-[70%] md:pt-0 bg-slate-200 text-start p-5 pl-[65px] shadow-sm">
-            <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+        <!-- loading -->
+        <div v-if="loading" class="md:h-[550px] flex justify-center py-40 bg-slate-200"
+            :class="sideBar.openSideBar ? ' duration-300' : 'w-full duration-300'">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
         </div>
 
+        <div v-else class='w-full h-full md:h-[564px] bg-slate-200  rounded-md overflow-auto pt-20 md:pt-14'
+            :class="sideBar.openSideBar ? ' md:pr-[73px] md:pl-10 duration-300' : ' md:px-20 md:pr-28 duration-300'">
+            <div class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
+                <div v-for="i in bisnis" class=" w-1/2 md:w-1/5 px-4 mb-4">
+                    <router-link :to="`/Bisnis/${i.business_slug}`">
+                        <div class="h-full border rounded-md overflow-hidden shadow-xl">
+                            <img :src="`${baseImageUrl}` + i.business_logo" alt="" class="object-cover w-full">
+                            <h5 class="p-4 text-[14px] font-semibold">{{ i.business_name }}</h5>
+                        </div>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
+            reserved.</span>
     </div>
 </template>
-<!-- jangan lupa setup nya di pakai -->
 <script setup>
 definePageMeta({
     layout: "layouts"
 })
-//pinia
-import { useSidebarStore } from '../../stores/Store';
 
-const sideBar = useSidebarStore()
+const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+
+import { useSidebarStore } from '../../stores/Store';
+const sideBar = useSidebarStore();
+
+//=============================================useFetch Langsung=========================================
+
+const bisnis = ref(null);
+const loading = ref(false)
+
+async function getDetailCircle() {
+    const token = localStorage.getItem("token");
+    const url = `${import.meta.env.VITE_BASE_API_URL}/business`;
+    loading.value = true
+
+    await useFetch(url, {
+        method: "get",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => {
+        setTimeout(() => {
+            console.log(res.data)
+            bisnis.value = res.data.value.data
+            loading.value = false
+        }, 700)
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+onBeforeMount(async () => {
+    await getDetailCircle();
+})
+
+//==========================================BreadCrumb ==========================================
+import { useRoute } from 'vue-router'
+const links = ref([]);
+const makeBreadcrumbs = () => {
+    const routeName = useRoute().path;
+    links.value = routeName.split("/").filter((i) => i != "");
+}
+
+const generateLink = (index) => {
+    const subLinks = links.value.slice(0, index + 1)
+    console.log(subLinks)
+    return '/' + subLinks.join("/");
+}
+onMounted(() => {
+    makeBreadcrumbs();
+})
 
 </script>
-<style ></style>
+<style></style>

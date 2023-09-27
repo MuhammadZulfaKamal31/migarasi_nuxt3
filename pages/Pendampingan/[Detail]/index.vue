@@ -1,9 +1,33 @@
 <!-- hati hati dalam penggunaan lang, karena itu masalah error  -->
 <template>
     <div class=" pt-20 md:pt-16  flex flex-col gap-8 flex-wrap bg-slate-200"
-        :class="openSideBar.openSideBar ? ' p-12  md:pr-[370px] duration-300' : 'p-12 md:p-20 md:pl-24 md:pr-24 duration-300 '">
+        :class="openSideBar.openSideBar ? ' p-12  md:pr-[65px] duration-300' : 'p-12 md:p-20 md:pl-24 md:pr-24 duration-300 '">
+
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
+            :class="openSideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1250px]'">
+            <span class=" text-2xl font-[500]">Pendampingan</span>
+            <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                <div v-for="(link, index) in links ">
+                    <nuxt-link :to="generateLink(index)" class=" hover:text-black">
+                        {{ link }}
+                        <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
+                    </nuxt-link>
+                </div>
+            </div>
+        </div>
+
+        <!-- loading -->
+        <div v-if="loading" class=" h-[440px] flex justify-center py-40 bg-slate-200"
+            :class="openSideBar.openSideBar ? ' w-full duration-300 ' : 'w-full duration-300'">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...
+                </span>
+            </div>
+        </div>
         <!-- crackinCode -->
-        <div class=" w-full h-[700px] md:h-full bg-white rounded-md p-7">
+        <div v-show="loading == false" class=" w-full h-[700px] md:h-full bg-white rounded-md p-7">
             <div class=" flex justify-between">
                 <div class=" flex items-center md:h-[150px]">
                     <img class=" h-11 md:h-32" :src="`${baseImageUrl}` + logo" alt="">
@@ -19,7 +43,7 @@
                 {{ deskripsiBisnis }}
             </p>
         </div>
-        <div class=" flex flex-col md:flex-row gap-12 w-full h-full md:h-[505px] md:px-4">
+        <div v-show="loading == false" class=" flex flex-col md:flex-row gap-12 w-full h-full md:h-[505px] md:px-4">
             <!-- pemilik -->
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
@@ -48,7 +72,7 @@
                 </table>
             </div>
             <!-- pendamping -->
-            <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
+            <div class=" w-full h-full bg-white rounded-md px-5 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
                     <h4 class=" text-[32px] font-[600]"> Pendamping</h4>
                     <router-link :to="`/bisnis/detail/detailpendamping/${router}`"
@@ -74,7 +98,7 @@
                 </table>
             </div>
         </div>
-        <div class=" flex flex-col md:flex-row gap-12 w-full h-full md:h-[505px] md:px-4">
+        <div v-show="loading == false" class=" flex flex-col md:flex-row gap-12 w-full h-full md:h-[505px] md:px-4">
             <!-- karyawan -->
             <div class=" w-full h-full bg-white rounded-md px-7 p-5 md:p-7 md:pl-[50px]">
                 <div class=" flex justify-between">
@@ -86,7 +110,6 @@
                     <thead>
                         <tr class=" py-4">
                             <th class=" text-[18px] font-[600] text-start ">Name</th>
-                            <th class="text-[18px] font-[600] text-start">Posisi</th>
                         </tr>
                     </thead>
                     <tbody v-for="  i  in  karyawan ">
@@ -96,7 +119,7 @@
                                     :src="`${baseImageUrl}` + i.employee_user.user_profile_picture" alt="">
                                 {{ i.employee_user.user_full_name }}
                             </td>
-                            <td class="text-[15px] font-[600]">{{ i.employee_position.jabatan }}</td>
+                            <td class="text-[15px] font-[600]">{{ i.employee_position }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -129,7 +152,7 @@
                 </table>
             </div>
         </div>
-        <div class=" w-full h-[389px] bg-white rounded-md p-3 md:p-7">
+        <div v-show="loading == false" class=" w-full h-[389px] bg-white rounded-md p-3 md:p-7">
             <!-- Target -->
             <h1 class=" text-[25px] md:text-[32px] font-[600]"> Target & Pencapaian</h1>
             <table class="w-full mt-9">
@@ -155,7 +178,8 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[65px] shadow-sm bg-slate-200">
-        <span> © 2023 <span class=" text-red-500 text-[14px]">jruhub.com.</span> All rights reserved.</span>
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
+            reserved.</span>
     </div>
 </template>
 <script setup>
@@ -169,29 +193,14 @@ import { useSidebarStore } from '../../../stores/Store';
 
 const openSideBar = useSidebarStore();
 
-
-//======================usefect data===============================================
-
-// const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
-// import { useRoute } from 'vue-router';
-
-// const route = useRoute();
-// const id_bisnis = route.params.My_Business;
-// const { data: bisnisDetail } = useFetch(`https://admin.jruhub.com/api/v1/business/detail/${id_bisnis}`, {
-//     method: "GET",
-//     headers: {
-//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-//     },
-// })
-
-// console.log(bisnisDetail);
-
 //==============================Usefect Data =======================================
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
+const loading = ref(false)
 import { useRoute } from "vue-router";
 
+
 const route = useRoute()
-const id_bisnis = route.params.My_Business;
+const id_bisnis = route.params.Detail;
 
 const router = ref(null)
 
@@ -208,6 +217,7 @@ const target = ref([])
 async function getDetailCircle() {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}`;
+    loading.value = true
 
     await useFetch(url, {
         method: "get",
@@ -232,6 +242,7 @@ async function getDetailCircle() {
             asset.value = res.data.value.data.business_assets;
             //terget
             target.value = res.data.value.data.business_target;
+            loading.value = false
         }, 1000)
 
     }).catch(err => {
@@ -243,6 +254,29 @@ onBeforeMount(async () => {
     await getDetailCircle();
 })
 
+//==================================================Breadcrumb ================================
+
+const links = ref([]);
+const makeBreadcrumbs = () => {
+    const routeName = useRoute().name;
+    links.value = routeName.split("-");
+}
+
+const generateLink = (index) => {
+    const subLinks = links.value.slice(0, index + 1)
+    console.log(subLinks)
+    return '/' + subLinks.join("/");
+}
+onMounted(() => {
+    makeBreadcrumbs()
+})
 
 </script>
-<style ></style>
+<style >
+.active-link {
+    background-color: #007bff;
+    /* Atur warna latar belakang untuk tautan yang aktif */
+    color: #fff;
+    /* Atur warna teks untuk tautan yang aktif */
+}
+</style>

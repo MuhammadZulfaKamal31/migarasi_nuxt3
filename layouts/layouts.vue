@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full flex">
+    <div class="w-full h-full flex" v-if="cekToken">
         <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class=" z-10">
         </Sidebar>
         <div :class="{
@@ -7,14 +7,14 @@
             'w-full duration-300': !openSideBar.openSideBar
         }">
             <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
-                :openSideBar="openSideBar.openSideBar" />
+                :openSideBar="openSideBar.openSideBar"
+                :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
 
             <div @click="toggleCloseBar">
                 <router-view></router-view>
             </div>
-
         </div>
     </div>
 </template>
@@ -39,6 +39,29 @@ const toggleCloseBar = () => {
 //     openSideBar.openSideBar = false;
 // }
 
+
+//=========================================Protect Route ==========================================
+
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+const cekToken = ref(null);
+const router = useRouter();
+const cekRoute = () => {
+    if (process.client) {
+        const token = localStorage.getItem('token');
+        if (token) {
+            cekToken.value = true;
+        } else {
+            cekToken.value = false;
+            router.push('user/login');
+        }
+    }
+};
+
+onMounted(() => {
+    cekRoute();
+});
 
 </script>
   
