@@ -1,20 +1,28 @@
 <template>
-    <!-- loading -->
-    <div v-if="loading" class=" w-[78%] h-[2000px] flex justify-center py-40 bg-slate-50 absolute">
-        <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status">
-            <span
-                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-        </div>
-    </div>
     <div class="w-full h-full flex justify-center items-center font-inter bg-slate-200"
         :class="sideBar.openSideBar ? ' duration-300' : 'duration-300'">
         <!-- pageName -->
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[995px]' : 'duration-300 md:w-[1200px]'">
             <span class=" text-2xl font-[500]">Profile</span>
+            <div class=" flex flex-row  space-x-2 font-semibold text-sm text-red-500 ">
+                <div v-for="(link, index) in links ">
+                    <nuxt-link :to="generateLink(index)" class=" hover:text-black">
+                        {{ link }}
+                        <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
+                    </nuxt-link>
+                </div>
+            </div>
         </div>
-        <div class="md:h-full w-[90%] md:w-[900px] border border-slate-300 rounded-md md:p-10 p-3 bg-white my-20">
+        <!-- loading -->
+        <div v-if="loading" class=" w-[78%] h-[520px] flex justify-center py-40 bg-slate-200">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
+        <div v-else class="md:h-full w-[90%] md:w-[900px] border border-slate-300 rounded-md md:p-10 p-3 bg-white my-20">
             <form action="" @submit.prevent="update">
                 <h1 class="text-2xl font-semibold pb-10">Update Profile</h1>
                 <!-- Alamat -->
@@ -90,6 +98,10 @@
             </form>
         </div>
     </div>
+    <div class=" w-full text-start p-5 pl-[65px] shadow-sm py-10 bg-slate-200">
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All
+            rights reserved.</span>
+    </div>
 </template>
   
 <script setup>
@@ -99,9 +111,8 @@ definePageMeta({
 
 //========================================UseFetch Api=============================================
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useSidebarStore } from '../../stores/Store';
-import { useNow, useDateFormat } from '@vueuse/core'
 
 const sideBar = useSidebarStore();
 
@@ -153,7 +164,7 @@ const update = async () => {
                         confirmButtonColor: '#3085d6',
                     }).then(() => {
                         // Navigasi ke halaman "/user/Profile" setelah tombol "OK" pada alert kedua diklik
-                        router.push({ path: "/user/Profile" });
+                        router.push({ path: "/Profile" });
                     });
                 } else if (result.isDenied) {
                     Swal.fire({
@@ -238,11 +249,26 @@ const getDataProfile = async () => {
     })
 }
 
-
-
 onBeforeMount(() => {
     getDataProfile();
 })
+
+//========================================BreadCrumb =======================
+
+const links = ref([]);
+const makeBreadcrumbs = () => {
+    const routeName = useRoute().name;
+    links.value = routeName.split("-");
+}
+
+const generateLink = (index) => {
+    const subLinks = links.value.slice(0, index + 1)
+    console.log(subLinks)
+    return '/' + subLinks.join("/");
+}
+onMounted(() => {
+    makeBreadcrumbs()
+});
 
 </script>
 

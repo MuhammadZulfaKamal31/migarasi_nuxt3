@@ -1,22 +1,30 @@
 <template >
-    <!-- loading -->
-    <div v-if="loading" class="h-[2000px] flex justify-center py-40 bg-slate-50 absolute"
-        :class="sideBar.openSideBar ? ' w-[79%] duration-300' : 'w-full duration-300'">
-        <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status">
-            <span
-                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-        </div>
-    </div>
-
     <div class=" h-[2000px] md:h-full w-full gap-7 font-inter p-7 md:p-12 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:px-10 md:pr-[4%] duration-300' : 'md:px-[7%] md:pl-[6%] duration-300'">
         <!-- pageName -->
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1037px]' : 'duration-300  md:w-[1235px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
+            <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                <div v-for="(link, index) in links ">
+                    <nuxt-link :to="generateLink(index)" class=" hover:text-black">
+                        {{ link }}
+                        <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
+                    </nuxt-link>
+                </div>
+            </div>
         </div>
-        <div class="  md:h-[487px] gap-10 flex flex-col md:flex-row mb-6 pt-14 md:pt-0">
+        <!-- loading -->
+        <div v-if="loading" class="h-[460px] flex justify-center py-40 bg-slate-200"
+            :class="sideBar.openSideBar ? ' w-full duration-300' : 'w-full duration-300'">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
+
+        <div v-else class="  md:h-[487px] gap-10 flex flex-col md:flex-row mb-6 pt-14 md:pt-0">
             <!-- chart -->
             <div class="  h-[250px]  md:w-full md:h-full bg-white flex items-center justify-center rounded-md">
                 <div class="">
@@ -42,21 +50,21 @@
                             class="border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[57px] bg-[#FAFAFA]">
                     </div>
                     <div class=" flex items-center gap-2 my-3">
-                        <input type="checkbox" class=" w-[19px] h-[19px] bg-slate-300">
+                        <input type="radio" class=" w-[17px] h-[17px] bg-slate-300">
                         <span class=" text-[#A3A3A3] text-[15px]"> Aktif</span>
                     </div>
                     <div class=" flex items-center gap-2 my-3">
-                        <input type="checkbox" class=" rounded-md w-[19px] h-[19px] bg-slate-300">
+                        <input type="radio" class=" rounded-md w-[17px] h-[17px] bg-slate-300">
                         <span class=" text-[#A3A3A3] text-[15px]">Tidak Aktif</span>
                     </div>
                     <button type="submit" class=" bg-red-600 p-3 w-full text-center text-[20px] text-white my-10">
-                        Login
+                        Tambahkan
                     </button>
                 </form>
             </div>
         </div>
 
-        <div class="  w-full h-[691px] gap-10 flex flex-col md:flex-row">
+        <div v-show="loading == false" class="  w-full h-[691px] gap-10 flex flex-col md:flex-row">
             <!-- Pemilik -->
             <div class=" md:w-[92%] h-[487px] bg-white p-10 rounded-md">
                 <div class=" flex justify-between">
@@ -88,16 +96,17 @@
             </div>
             <!-- nama pemilik -->
             <div class=" w-full h-full bg-white p-10 rounded-md">
-                <h1 class=" text-[27px] md:text-[30px] font-[600]">Nama Bisnis</h1>
-                <div class=" md:pl-10 mt-14 flex flex-col items-center md:items-start ">
+                <h1 class=" text-[27px] md:text-[30px] font-[600]">Detail Pemilik</h1>
+                <div v-for=" i in owner" class=" md:pl-10 mt-14 flex flex-col items-center md:items-start ">
                     <div class=" w-[200px] h-[200px] md:w-[241px] md:h-[241px] rounded-full bg-[#D9D9D9]">
-                        <img :src="`${baseImageUrl}` + gambarBisnis" alt="">
+                        <img :src="`${baseImageUrl}` + i.owner_user.user_profile_picture" alt=""
+                            class="md:w-[241px] md:h-[241px] rounded-full">
                     </div>
                     <div class=" flex justify-start">
                         <div class=" py-10 flex flex-col items-center">
-                            <h2 class=" text-[25px] md:text-[29px] font-[500] py-2">{{ namaBisnis }}
+                            <h2 class=" text-[25px] md:text-[29px] font-[500] py-2">{{ i.owner_user.user_full_name }}
                             </h2>
-                            <p class="text-[13px] font-[500]">{{ deskripsiBisnis }}</p>
+                            <p class="text-[13px] font-[500]">{{ i.owner_user.user.email }}</p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +192,7 @@ const loading = ref(false)
 
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const id_bisnis = route.params.DetailPemilik;
+const id_bisnis = route.params.Usaha;
 const owner = ref([]);
 
 const namaBisnis = ref([]);
@@ -204,13 +213,13 @@ async function getBisnis() {
     }).then(res => {
         setTimeout(() => {
             console.log(res.data)
-            owner.value = res.data.value.owners;
-            gambarBisnis.value = res.data.value.business_id.business_logo
-            namaBisnis.value = res.data.value.business_id.business_name;
-            deskripsiBisnis.value = res.data.value.business_id.business_name;
-            pageName.value = res.data.value.business_id.business_name;
+            owner.value = res.data.value.data; //done
+            gambarBisnis.value = res.data.value
+            namaBisnis.value = res.data.value.data;
+            deskripsiBisnis.value = res.data.value;
+            pageName.value = res.data.value.business;
             //dougnut chart
-            dataValues.value = res.data.value.owners.map(owner => parseFloat(owner.owner_shares));
+            dataValues.value = res.data.value.data.map(owner => parseFloat(owner.owner_shares));
             dataValues.value.push(parseFloat(res.data.value.empty_shares));
             loading.value = false
 
@@ -223,6 +232,22 @@ async function getBisnis() {
 onBeforeMount(async () => {
     await getBisnis();
 });
+
+//==========================================BreadCrumb ==========================================
+const links = ref([]);
+const makeBreadcrumbs = () => {
+    const routeName = useRoute().name;
+    links.value = routeName.split("-");
+}
+
+const generateLink = (index) => {
+    const subLinks = links.value.slice(0, index + 1)
+    console.log(subLinks)
+    return '/' + subLinks.join("/");
+}
+onMounted(() => {
+    makeBreadcrumbs()
+})
 
 
 </script>

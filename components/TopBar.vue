@@ -23,9 +23,9 @@
         <div v-show="showDropDown" class=" absolute right-[40px] top-[6.5rem] z-10 mt-2 w-[119px] origin-top-right rounded-md bg-white shadow-lg ring-1
                 ring-black ring-opacity-5 focus:outline-none">
             <div class="py-1 text-left">
-                <a href="/User/Profile" class=" block px-4 py-2 text-sm" role="menuitem" id=" menu-item-2">
+                <a href="/Profile" class=" block px-4 py-2 text-sm" role="menuitem" id=" menu-item-2">
                     <i class="fa-solid fa-user"></i> Pofile</a>
-                <form method="POST" action="" role="none">
+                <form @submit.prevent="logout" action="" role="none">
                     <button type="submit" class=" block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1"
                         id="menu-item-3"><i class="fa-solid fa-power-off"></i> Log Out</button>
                 </form>
@@ -69,6 +69,15 @@ async function getCircle() {
     }).catch(err => {
         console.log(err)
     })
+}
+//==================================logout =============================================
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const logout = () => {
+    localStorage.removeItem('token')
+    router.push('/user/login'); // Jika Anda menggunakan Vue Router
 }
 
 onBeforeMount(async () => {

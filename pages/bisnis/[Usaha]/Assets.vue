@@ -1,21 +1,29 @@
 <template >
-    <!-- loading -->
-    <div v-if="loading" class="h-[2000px] flex justify-center py-40 bg-slate-50 absolute"
-        :class="sideBar.openSideBar ? ' w-[79%] duration-300' : 'w-full duration-300'">
-        <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status">
-            <span
-                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-        </div>
-    </div>
-
     <div class=" h-full w-full p-7 pt-20 md:p-14 flex flex-col gap-8 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:pr-[63px] duration-300 ' : ' md:px-24 duration-300'">
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
+        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1240px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
+            <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                <div v-for="(link, index) in links ">
+                    <nuxt-link :to="generateBreadcrumb(index)" class=" hover:text-black">
+                        {{ link }}
+                        <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
+                    </nuxt-link>
+                </div>
+            </div>
         </div>
-        <div class=" md:h-[855px] w-full flex flex-col md:flex-row gap-8">
+        <!-- loading -->
+        <div v-if="loading" class="h-[450px] flex justify-center py-40 bg-slate-200"
+            :class="sideBar.openSideBar ? ' w-full duration-300' : 'w-full duration-300'">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
+
+        <div v-else class=" md:h-[855px] w-full flex flex-col md:flex-row gap-8">
             <!-- Asset -->
             <div class=" bg-white w-full md:h-[748px] p-10 md:px-20 rounded-md">
                 <div class=" flex justify-between">
@@ -31,7 +39,8 @@
                     </thead>
                     <tbody v-for="i in assetDetail">
                         <tr class="">
-                            <td class=" py-4 pt-8  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
+                            <td @click="tampilkan"
+                                class=" py-4 pt-8  flex items-center gap-3 text-red-600 text-[15px] font-[600] cursor-pointer">
                                 <img class=" w-[40px] h-[40px] rounded-full" :src="`${baseImageUrl}` + i.asset_photo"
                                     alt="">
                                 {{ i.asset_name }}
@@ -50,24 +59,30 @@
                             class=" h-[60px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                     </div>
                     <div class=" py-3">
-                        <input type="text" placeholder=" Jumlah Asset" alt=""
+                        <input type="number" placeholder=" Jumlah Asset" alt=""
                             class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
                     </div>
                     <div class=" py-3">
-                        <input type="text" placeholder=" Tanggal Pembelian" alt=""
-                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
+                        <label for="tanggalPembelian" class="block mb-2 text-slate-400">Tanggal
+                            Pembelian</label>
+                        <input type="date" id="tanggalPembelian" name="tanggalPembelian" class="h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]
+        placeholder-slate-300 text-black focus:text-black">
                     </div>
                     <div class=" py-3">
-                        <input type="text" placeholder=" Kondisi Asset" alt=""
-                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
+                        <select class="h-12 w-full bg-[#FAFAFA] text-[16px] border outline-none" placeholder="Kondisi">
+                            <option disabled value="">Pilih Kondisi</option>
+                            <option selected value="L">Bagus</option>
+                            <option value="P">Kurang Bagus</option>
+                        </select>
+                        <!-- <input type="text" placeholder=" Kondisi Asset" alt=""
+                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]"> -->
                     </div>
                     <div class=" py-3">
                         <input type="text" placeholder=" Nota Pembelian" alt=""
                             class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
                     </div>
                     <div class=" py-3">
-                        <input type="text" placeholder=" Pilih Gamabar Asset" alt=""
-                            class=" h-[60px] w-full border-2 outline-none px-2 focus:border-red-500 rounded-md bg-[#FAFAFA]">
+                        <input type="file" placeholder=" Pilih Gambar Asset" alt="">
                     </div>
                     <div class=" flex items-center gap-2 py-3">
                         <input type="checkbox" class=" h-[17px] w-[17px]">
@@ -79,13 +94,13 @@
                     </div>
 
                     <button type=" submit" class=" mt-5 w-full p-3 bg-red-600 text-white text-[20px] font-semibold">
-                        Login
+                        Tambahkan
                     </button>
                 </form>
             </div>
         </div>
         <!-- Detail Asset -->
-        <div class=" md:h-[744px] w-full bg-white rounded-md p-10">
+        <div v-show="tampilDetail" class=" md:h-[744px] w-full bg-white rounded-md p-10">
             <h1 class=" text-[32px] font-semibold"> Detail Asset</h1>
             <div class=" h-full w-full flex gap-10">
                 <div v-for="i in assetDetail" class=" w-full h-full">
@@ -134,14 +149,17 @@
 definePageMeta({
     layout: "layouts"
 })
-// import { onMounted } from 'vue';
 import { useSidebarStore } from '../../stores/Store';
-// const token = localStorage.getItem("token")
 
-// import { useAssetBusines } from '../../stores/Bisnis/AssetBisnis'
 
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 const sideBar = useSidebarStore();
+
+//menyembunykan Detail
+const tampilDetail = ref(false);
+const tampilkan = () => {
+    tampilDetail.value = true
+}
 
 //===================================== useFetch API =====================================
 
@@ -158,7 +176,7 @@ const sideBar = useSidebarStore();
 import { useRoute } from 'vue-router';
 const loading = ref(null)
 const route = useRoute();
-const id_bisnis = route.params.DetailAsset;
+const id_bisnis = route.params.Usaha;
 const assetDetail = ref(null);
 const pageName = ref([]);
 
@@ -168,15 +186,15 @@ async function getBisnis() {
     console.log(token);
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/assets`;
     await useFetch(url, {
-        method: "get",
+        method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`
         }
     }).then(res => {
         setTimeout(() => {
-            console.log(res.data)
-            assetDetail.value = res.data.value.assets;
-            pageName.value = res.data.value.business_id.business_name;
+            // console.log(res.data)
+            assetDetail.value = res.data.value.data;
+            pageName.value = res.data.value.business;
             loading.value = false
         }, 1000);
 
@@ -188,6 +206,29 @@ async function getBisnis() {
 onBeforeMount(async () => {
     await getBisnis();
 });
+
+//=========================================BreadCrumb =============================
+
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const currentPath = router.currentRoute.value.path;
+console.log("cureant " + currentPath);
+const breadcrumb = ref(currentPath.split("/").filter((i) => i != ""));
+console.log("hiya hiya " + breadcrumb)
+
+const generateBreadcrumb = (index) => {
+    let link = "";
+    for (let i = 0; i <= index; i++) {
+        link += `/${breadcrumb.value[i]}`;
+    }
+    return link;
+};
+
+const links = computed(() => breadcrumb.value);
+
+
 
 </script>
 <style></style>

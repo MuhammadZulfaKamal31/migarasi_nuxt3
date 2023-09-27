@@ -1,27 +1,34 @@
 <template>
     <div class=" h-full md:max-h-full bg-slate-200">
-        <!-- loading -->
-        <div v-if="loading" class=" w-[78%] h-[78%] flex justify-center py-40 bg-slate-50 absolute">
-            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                role="status">
-                <span
-                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-            </div>
-        </div>
-
         <div class=' flex flex-col gap-5 font-inter pr-[10%] pt-10 md:pt-2 '
             :class="sideBar.openSideBar ? 'md:px-[5%] md:pr-[7%] duration-300' : 'px-[6%] duration-300'">
             <!-- pageName -->
-            <div class=" h-[77px]  bg-white rounded-md flex items-center justify-start px-6 absolute md:top-36 invisible md:visible"
-                :class="sideBar.openSideBar ? ' duration-300 md:w-[995px]' : 'duration-300 md:w-[1200px]'">
-                <span class=" text-2xl font-[500]">Profile</span>
+            <div class=" md:h-[77px] h-8 bg-white rounded-md flex w-[85%] items-center justify-between px-2 md:px-6 fixed md:absolute top-14 md:top-36 md:z-0 z-10 shadow-xl md:shadow-none"
+                :class="sideBar.openSideBar ? ' duration-300 md:w-[1000px]' : 'duration-300  md:w-[1200px]'">
+                <span class=" text-[14px] md:text-2xl font-[500]">Profile</span>
+                <div class=" text-[0.6rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                    <div v-for="(link, index) in links ">
+                        <nuxt-link :to="generateLink(index)" class=" hover:text-black">
+                            {{ link }}
+                            <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
+                        </nuxt-link>
+                    </div>
+                </div>
             </div>
-            <div class='flex md:flex-row flex-col md:h-[474px] mt-[40px] justify-between gap-6'>
+            <!-- loading -->
+            <div v-if="loading" class=" w-full h-[700px] md:h-[510px] flex justify-center py-40 bg-slate-200">
+                <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status">
+                    <span
+                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                </div>
+            </div>
+            <div v-else class='flex md:flex-row flex-col md:h-[474px] mt-[40px] justify-between gap-6 pt-8 md:pt-0'>
                 <!-- profile -->
                 <div class=" h-full md:w-[70%] bg-[#FFFFFF] p-7 rounded-md">
                     <div class=" flex justify-between">
                         <h1 class=" text-[24px] font-[600]"> info Profil</h1>
-                        <router-link to="/user/updateProfile" class="fa-solid fa-pen-to-square"></router-link>
+                        <router-link to="/Profile/updateProfile" class="fa-solid fa-pen-to-square"></router-link>
                     </div>
                     <div class=" my-5">
                         <label class="text-gray-400 text-[13px]">Nama</label>
@@ -55,7 +62,7 @@
                         <div class=" w-full px-3 md:px-10 bg-white py-3 md:p-6 rounded-md">
                             <div class=" flex justify-between">
                                 <h1 class="text-xl">Pendapatan</h1>
-                                <router-link to="/User/Pendapatan" class="fa-solid fa-up-right-from-square"></router-link>
+                                <nuxt-link to="/Profile/Pendapatan" class="fa-solid fa-up-right-from-square"></nuxt-link>
                             </div>
                             <div class="m-1">
                                 <label class=" font-[500] text-[13px] text-slate-400" for="">Gaji</label>
@@ -74,9 +81,9 @@
                     <!-- circle -->
                     <div class=" h-full w-full bg-white mb-10 rounded-md p-6">
                         <h1 class=" text-2xl">Circle</h1>
-                        <div class=" flex items-center my-3">
-                            <img class=" h-[70px] w-[110px] rounded-full object-cover"
-                                :src="`${baseImageUrl}` + fotoProfile" alt="">
+                        <div class=" flex items-center my-3 justify-between">
+                            <img class=" h-[70px] w-[70px] rounded-full object-cover" :src="`${baseImageUrl}` + fotoProfile"
+                                alt="">
                             <div class=" mx-3">
                                 <h1 class=" text-xl mb-3">Komune</h1>
                                 <p class=" text-[13px]">
@@ -102,7 +109,8 @@
 
 <script setup>
 definePageMeta({
-    layout: "layouts"
+    layout: "layouts",
+    // middleware: ["auth"]
 })
 
 import { useSidebarStore } from '../../stores/Store';
@@ -182,6 +190,24 @@ onBeforeMount(async () => {
     await getPendapatan();
 })
 
+//=====================================BreadCrumbs ==================================
+
+import { useRoute } from '#vue-router';
+
+const links = ref([]);
+const makeBreadcrumbs = () => {
+    const routeName = useRoute().name;
+    links.value = routeName.split("-");
+}
+
+const generateLink = (index) => {
+    const subLinks = links.value.slice(0, index + 1)
+    console.log(subLinks)
+    return '/' + subLinks.join("/");
+}
+onMounted(() => {
+    makeBreadcrumbs()
+})
 
 </script>
 

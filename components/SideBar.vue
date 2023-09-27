@@ -25,17 +25,17 @@
                     <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"
                         @click="aktifLink.setActive('/bisnis')"
                         :class="aktifLink.aktifLink === '/bisnis' ? 'bg-slate-200 text-slate-600 p-1 rounded-md' : ''">
-                        <i class="fa-solid fa-globe"></i>
+                        <i class="fa-solid fa-globe hidden md:block"></i>
                         <span>
                             Usaha Saya
                         </span>
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
-                        to="/Pendampingan/Pendampingan" @click="aktifLink.setActive('/pendamping')"
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Pendampingan"
+                        @click="aktifLink.setActive('/pendamping')"
                         :class="aktifLink.aktifLink === '/pendamping' ? 'bg-slate-200 text-slate-600 p-1 rounded-md' : ''">
-                        <i class="fa-solid fa-address-book"></i>
+                        <i class="fa-solid fa-address-book hidden md:block"></i>
                         <span>
                             Pendampingan
                         </span>
@@ -45,7 +45,7 @@
                     <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/circle"
                         @click="aktifLink.setActive('/circle')"
                         :class="aktifLink.aktifLink === '/circle' ? 'bg-slate-200 text-slate-600 p-1 rounded-md' : ''">
-                        <i class="fa-solid fa-bullseye"></i>
+                        <i class="fa-solid fa-bullseye hidden md:block"></i>
                         <span>
                             Circle
                         </span>
@@ -55,7 +55,7 @@
                     JRUHUB</div>
                 <div class=" my-3">
                     <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis">
-                        <i class="fa-solid fa-briefcase"></i>
+                        <i class="fa-solid fa-briefcase hidden md:block"></i>
                         <span>
                             JRUWAY
                         </span>
