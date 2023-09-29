@@ -62,6 +62,15 @@ const userName = ref("");
 const password = ref("");
 const error = ref("");
 
+onMounted(() => {
+        console.log("Check Mounted")
+        console.log("token", localStorage.getItem('token'))
+        if (localStorage.getItem('token')) {
+            console.log("token", localStorage.getItem('token'))
+            router.push({ path: "/dashboard" });
+        }
+});
+
 const login = async () => {
     console.log("login", import.meta.env.VITE_BASE_API_URL)
     if (!userName.value || !password.value) {
@@ -89,6 +98,10 @@ const login = async () => {
             console.error(err);
         }
     }
+
+    
+
+    
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="fixed z-20">
         <div class=" bg-white h-screen md:h-screen font-inter md:z-0" id="SideBar"
-            :class="dataOpenSideBar == true ? ' w-[150px] md:w-[300px]' : ' w-0'">
+            :class="dataOpenSideBar == true ? ' w-72' : ' w-0'">
             <div class=" flex justify-center py-10">
                 <nuxt-link to="/dashboard">
                     <img class=" w-[100px] h-[27px]" src="../assets/image1.png" alt="">

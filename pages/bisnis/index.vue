@@ -1,18 +1,18 @@
 <template>
     <div>
         <!-- pageName -->
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
+        <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 ml-14 md:w-[980px]' : 'duration-300 ml-24 md:w-[1200px]'">
             <span class=" text-2xl font-[500]">Bisnis Saya</span>
             <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
-                <div v-for="(link, index) in links ">
+                <div v-for="(link, index) in links " :key="index">
                     <nuxt-link :to="generateLink(index)" class=" hover:text-black">
                         {{ link }}
                         <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
                     </nuxt-link>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- loading -->
         <div v-if="loading" class="md:h-[550px] flex justify-center py-40 bg-slate-200"
             :class="sideBar.openSideBar ? ' duration-300' : 'w-full duration-300'">
@@ -26,7 +26,7 @@
         <div v-else class='w-full h-full md:h-[564px] bg-slate-200  rounded-md overflow-auto pt-20 md:pt-14'
             :class="sideBar.openSideBar ? ' md:pr-[73px] md:pl-10 duration-300' : ' md:px-20 md:pr-28 duration-300'">
             <div class="flex flex-wrap mx-4 bg-white p-10 rounded-md">
-                <div v-for="i in bisnis" class=" w-1/2 md:w-1/5 px-4 mb-4">
+                <div v-for="i in bisnis" :key="i" class=" w-1/2 md:w-1/5 px-4 mb-4">
                     <router-link :to="`/Bisnis/${i.business_slug}`">
                         <div class="h-full border rounded-md overflow-hidden shadow-xl">
                             <img :src="`${baseImageUrl}` + i.business_logo" alt="" class="object-cover w-full">

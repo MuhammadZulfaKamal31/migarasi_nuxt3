@@ -1,20 +1,20 @@
 <template>
     <div>
         <!-- topbar -->
-        <div class=" h-[190px] md:w-full bg-red-500 md:flex items-center md:flex-col pt-7 px-10 ">
-            <div class=" w-full mb-14 flex justify-between mx-7">
-                <div class=" flex gap-10 items-center">
+        <div class=" h-[190px] bg-red-500 w-full pt-7 px-10 ">
+            <div class=" w-max mb-14 flex justify-between mx-7">
+                <!-- <div class=" flex gap-10 items-center">
                     <i @click="toggleSideBar" class="fa-solid fa-bars text-white text-2xl"></i>
                     <input type="text"
                         class=" w-[375px] h-[55px] border-2 outline-none px-2 focus:border-red-400 focus:rounded-md "
                         placeholder="Search">
-                </div>
+                </div> -->
                 <!-- profile -->
-                <div @click="toggleDropDown"
+                <!-- <div @click="toggleDropDown"
                     class="h-[73px] w-[73px] bg-white rounded-full flex items-center justify-center mr-[38px] absolute right-7">
                     <img :src="`${baseImageUrl}` + fotoProfile" alt=""
                         class="h-[73px] w-[73px] rounded-full object-cover" />
-                </div>
+                </div> -->
             </div>
             <div>
             </div>
