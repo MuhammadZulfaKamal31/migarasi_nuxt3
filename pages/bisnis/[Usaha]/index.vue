@@ -2,7 +2,6 @@
 <template>
     <div class=" pt-20 md:pt-16  flex flex-col gap-8 flex-wrap bg-slate-200"
         :class="openSideBar.openSideBar ? ' p-12  md:pr-[65px] duration-300' : 'p-12 md:p-20 md:pl-24 md:pr-24 duration-300 '">
-
         <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="openSideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1250px]'">
             <span class=" text-2xl font-[500]">Usaha Saya</span>
@@ -16,16 +15,20 @@
             </div>
         </div>
 
-        <!-- loading -->
-        <div v-if="loading" class=" h-[440px] flex justify-center py-40 bg-slate-200"
-            :class="openSideBar.openSideBar ? ' w-full duration-300 ' : 'w-full duration-300'">
-            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                role="status">
-                <span
-                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...
-                </span>
+        <!-- PageName Mobile -->
+        <div v-show="loading == false" class=" pt-4 md:pt-0 w-full md:w-0">
+            <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible "
+                :class="openSideBar.openSideBar ? ' duration-300 md:ml-4 md:w-[960px]' : 'duration-300  md:ml-4 md:w-[1250px]'">
+                <span class=" text-[15px] md:text-2xl font-[500]">Bisnis Saya</span>
+                <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                    <div v-for="(link, index) in links" :key="index">
+                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                    </div>
+                </div>
             </div>
         </div>
+
         <!-- crackinCode -->
         <div v-show="loading == false" class=" w-full h-[700px] md:h-full bg-white rounded-md p-7">
             <div class=" flex justify-between">

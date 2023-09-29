@@ -26,6 +26,20 @@
                 </span>
             </div>
         </div>
+
+        <!-- <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0">
+            <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible "
+                :class="openSideBar.openSideBar ? ' duration-300 md:ml-4 md:w-[960px]' : 'duration-300  md:ml-4 md:w-[1250px]'">
+                <span class=" text-[15px] md:text-2xl font-[500]">Pendampingan</span>
+                <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                    <div v-for="(link, index) in links" :key="index">
+                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
         <!-- crackinCode -->
         <div v-show="loading == false" class=" w-full h-[700px] md:h-full bg-white rounded-md p-7">
             <div class=" flex justify-between">

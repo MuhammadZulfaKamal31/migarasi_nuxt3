@@ -3,15 +3,14 @@
         <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class=" z-10">
         </Sidebar>
         <div :class="{
-            'md:ml-[300px] w-full duration-300': openSideBar.openSideBar,
+            'md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
             'w-full duration-300': !openSideBar.openSideBar
         }">
             <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
                 :openSideBar="openSideBar.openSideBar"
-                :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
+                :class="openSideBar.openSideBar ? ' max-w-max: duration-300' : 'max-2xl duration-300'" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
-
             <div @click="toggleCloseBar">
                 <router-view></router-view>
             </div>
@@ -38,7 +37,6 @@ const toggleCloseBar = () => {
 // if (window.innerWidth < 768) {
 //     openSideBar.openSideBar = false;
 // }
-
 
 //=========================================Protect Route ==========================================
 

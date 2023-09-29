@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <nuxt-link :to="to" :class="{ 'text-red-500 font-bold': isActive, 'text-green-900 font-medium': isExactActive }">
         <slot></slot>
     </nuxt-link>
@@ -16,4 +16,4 @@ const props = defineProps({
 const isActive = route.path === props.to;
 const isExactActive = route.path === props.to;
 </script>
-  
+   -->
