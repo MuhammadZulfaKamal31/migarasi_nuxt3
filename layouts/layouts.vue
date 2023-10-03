@@ -52,6 +52,7 @@ const toggleCloseBar = () => {
         openSideBar.closeSideBar()
     }
 }
+
 //menutup tampilan sidebar Mobile
 if (process.client) {
     if (window.innerWidth < 768) {
@@ -60,9 +61,8 @@ if (process.client) {
 }
 
 //=========================================Protect Route ==========================================
-
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const links = ref([]);
 const activeLink = ref('Dashboard');
@@ -80,7 +80,7 @@ const cekRoute = () => {
     }
 };
 
-//=====================breadCrumb====================================
+//=====================breadCrumb=====================================
 const makeBreadcrumbs = () => {
     const routeName = useRoute().path;
     links.value = routeName.split("/").filter((i) => i != "");

@@ -114,9 +114,9 @@
             </div>
         </div>
         <!-- Detail Asset -->
-        <div v-show="tampilDetail" class=" md:h-full w-full bg-white rounded-md p-10">
-            <h1 class=" text-[32px] font-semibold"> Detail Asset</h1>
-            <div class=" h-full w-full flex gap-10">
+        <div v-show="tampilDetail" class=" md:h-full w-full bg-white rounded-md p-5 lg:p-10">
+            <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]"> Detail Asset</h1>
+            <div class=" h-full w-full flex justify-between md:gap-10">
                 <div v-for="i in assetDetail" class=" w-full h-full">
                     <div class=" my-10 mb-[80px] md:mb-0">
                         <label for="" class=" text-[14px] font-semibold py-5"> Nama Asset</label>
@@ -132,26 +132,27 @@
                     </div>
                     <div class=" my-10">
                         <label for="" class=" text-[14px] font-semibold py-5"> Tanggal Pembelian</label>
-                        <p class=" text-[27px] md:text-[32px] font-semibold"> {{ i.asset_buy_date }}</p>
+                        <p class=" text-[19px] md:text-[27px] lg:text-[32px] font-semibold"> {{ formatDate }}
+                        </p>
                     </div>
                 </div>
                 <div v-for="i in assetDetail" class=" h-full w-full">
                     <div>
                         <p class=" text-[14px] font-semibold my-9"> Foto Nota Pembelian</p>
                         <img :src="`${baseImageUrl}` + i.asset_receipt" alt=""
-                            class=" w-[160px] h-[120px] md:w-[170px] md:h-[125px]">
+                            class="w-[140px] h-[90px] md:w-[160px] md:h-[120px] lg:w-[170px] lg:h-[125px]">
                     </div>
                     <div>
                         <p class=" text-[14px] font-semibold my-9"> Foto Asset</p>
-                        <div class=" flex flex-wrap overflow-auto gap-10">
+                        <div class=" flex flex-wrap overflow-auto gap-7 lg:gap-10">
                             <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
-                                class=" w-[155px] h-[105px] lg:w-[170px] lg:h-[125px]">
+                                class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
                             <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
-                                class=" w-[155px] h-[105px] lg:w-[170px] lg:h-[125px]">
+                                class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
                             <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
-                                class=" w-[155px] h-[105px] lg:w-[170px] lg:h-[125px]">
+                                class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
                             <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
-                                class=" w-[155px] h-[105px] lg:w-[170px] lg:h-[125px]">
+                                class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
                         </div>
                     </div>
                 </div>
@@ -169,10 +170,15 @@ definePageMeta({
     layout: "layouts"
 })
 import { useSidebarStore } from '../../stores/Store';
+import { useDateFormat } from '@vueuse/core'
+
 
 
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 const sideBar = useSidebarStore();
+
+const tanggalPembelian = ref(null);
+const formatDate = useDateFormat(tanggalPembelian, 'DD MMMM YYYY');
 
 //menyembunykan Detail
 const tampilDetail = ref(false);
@@ -211,9 +217,9 @@ async function getBisnis() {
         }
     }).then(res => {
         setTimeout(() => {
-            // console.log(res.data)
             assetDetail.value = res.data.value.data;
             pageName.value = res.data.value.business;
+            tanggalPembelian.value = res.data.value.data.map(item => item.asset_buy_date)
             loading.value = false
         }, 1000);
 

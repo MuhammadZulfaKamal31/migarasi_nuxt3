@@ -11,7 +11,7 @@
             </div>
         </div>
         <!-- profile dropdown -->
-        <div v-show="showDropDown" class=" absolute right-[40px] top-[3.5rem] z-50 mt-2 md:w-[119px] origin-top-right rounded-md bg-white shadow-lg ring-1
+        <div v-show="showDropDown" class=" fixed right-[40px] top-[3.5rem] z-50 mt-2 md:w-[119px] origin-top-right rounded-md bg-white shadow-lg ring-1
                     ring-black ring-opacity-5 focus:outline-none">
             <div class="py-1 text-left">
                 <a href="/Profile" class=" block px-4 py-2 text-sm" role="menuitem" id=" menu-item-2">

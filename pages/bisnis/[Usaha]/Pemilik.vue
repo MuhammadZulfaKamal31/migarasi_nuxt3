@@ -15,17 +15,9 @@
             </div>
         </div> -->
         <!-- loading -->
-        <div v-if="loading" class="h-[460px] flex justify-center py-40 bg-slate-200"
-            :class="sideBar.openSideBar ? ' w-full duration-300' : 'w-full duration-300'">
-            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                role="status">
-                <span
-                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-            </div>
-        </div>
         <!-- //pageName Mobile -->
         <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-7 md:mt-0">
-            <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
+            <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:hidden ">
                 <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
                 <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
                     <div v-for="(link, index) in links" :key="index">
@@ -36,15 +28,31 @@
             </div>
         </div>
 
-        <div v-show="loading == false"
-            class="  md:h-[487px] gap-5 md:gap-7 lg:gap-10 flex flex-col md:flex-row mb-6 pt-2 md:pt-0">
+        <div v-if="loading" class=" h-screen xl:h-[460px] flex justify-center py-40 bg-slate-200"
+            :class="sideBar.openSideBar ? ' w-full duration-300' : 'w-full duration-300'">
+            <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+            </div>
+        </div>
+
+        <div v-else class="  md:h-[487px] gap-5 md:gap-7 lg:gap-10 flex flex-col md:flex-row mb-6 pt-2 md:pt-0">
             <!-- chart -->
             <div class="  h-[250px]  md:w-full lg:h-full bg-white flex items-center justify-center rounded-md">
-                <div class="">
+                <div class=" ">
+                    <div>
+                        <DoughnutChart :chart-data="data" :options="options" css-classes="chart-container"
+                            class=" h-[210px] md:h-[200px] lg:h-[400px]" />
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="  h-[250px]  md:w-full lg:h-full bg-white flex items-center justify-center rounded-md">
+                <div>
                     <DoughnutChart :chart-data="data" :options="options" css-classes="chart-container"
                         class=" h-[210px] md:h-[200px] lg:h-[400px]" />
                 </div>
-            </div>
+            </div> -->
             <!-- form isi -->
             <div class=" w-full md:h-full bg-white p-8 rounded-md ">
                 <form action="">
@@ -108,7 +116,7 @@
                 </div>
             </div>
             <!-- Detail pemilik -->
-            <div v-show="tampilDetail" class=" w-[108%] h-full bg-white p-7 lg:p-10 rounded-md">
+            <div v-show="tampilDetail" class=" lg:w-[108%] h-full bg-white p-7 lg:p-10 rounded-md">
                 <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Detail Pemilik</h1>
                 <div v-for=" i in owner" class=" lg:pl-10 mt-14 flex flex-col items-center md:items-start ">
                     <div class=" w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full bg-[#D9D9D9]">
@@ -241,32 +249,21 @@ async function getBisnis() {
             namaBisnis.value = res.data.value.data;
             deskripsiBisnis.value = res.data.value;
             aktifLink.setActive(res.data._rawValue.business);
-            //PageName
-            // if (process.client) {
-            //     sessionStorage.setItem('activeLink', res.data._rawValue.business);
-            // }
 
             //dougnut chart
             dataValues.value = res.data.value.data.map(owner => parseFloat(owner.owner_shares));
             dataValues.value.push(parseFloat(res.data.value.empty_shares));
             loading.value = false
 
-        }, 1000);
+        }, 700);
 
     }).catch(err => {
         console.log(err);
     })
 }
-// const setAktifLink = () => {
-//     if (process.client) {
-//         sessionStorage.setItem('activeLink', pageName);
-//     }
-// }
-
 
 onBeforeMount(async () => {
     await getBisnis();
-    // setAktifLink()
 });
 
 //==========================================BreadCrumb ==========================================

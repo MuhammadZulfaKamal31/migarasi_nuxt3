@@ -1,5 +1,5 @@
 <template>
-    <div class=" h-full w-full md:h-screen pt-14 md:pt-0 px-7  md:px-14  gap-6 flex flex-col bg-slate-200 "
+    <div class=" h-full w-full md:h-full pt-14 md:pt-0 px-7  md:px-14  gap-6 flex flex-col bg-slate-200 "
         :class="sideBar.openSideBar ? 'md:p-[7%] lg:pr-[65px] duration-300' : ' lg:px-24 duration-300'">
         <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1245px]'">

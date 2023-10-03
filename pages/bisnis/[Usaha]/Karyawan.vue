@@ -15,7 +15,7 @@
         </div> -->
 
         <!-- loading -->
-        <div v-if="loading" class="h-[450px] flex justify-center py-40 bg-slate-200"
+        <div v-if="loading" class=" h-screen lg:h-[450px] flex justify-center py-40 bg-slate-200"
             :class="sideBar.openSideBar ? ' w-full duration-300' : 'w-full duration-300'">
             <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                 role="status">
@@ -154,10 +154,11 @@ definePageMeta({
 })
 import { useSidebarStore } from '../../stores/Store';
 
+
 const sideBar = useSidebarStore();
 
-const tampilDetail = ref(false)
 
+const tampilDetail = ref(false)
 const tampil = () => {
     tampilDetail.value = true
 }

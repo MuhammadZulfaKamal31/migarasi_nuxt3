@@ -117,7 +117,6 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[65px] shadow-sm py-10 bg-slate-200">
-        {{ circleName }}
         <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All
             rights reserved.</span>
     </div>
