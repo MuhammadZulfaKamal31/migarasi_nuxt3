@@ -111,8 +111,6 @@ const login = async () => {
             console.error(err);
         }
     }
-
-
 }
 </script>
 

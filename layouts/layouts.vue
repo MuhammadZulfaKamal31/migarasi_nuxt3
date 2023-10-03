@@ -9,7 +9,7 @@
             <div class=" hidden md:block">
                 <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
                     'ml-[2%] md:w-[70%] lg:w-[69%] xl:w-[74%] duration-300': openSideBar.openSideBar,
-                    ' ml-[5%] w-[90%]  duration-300': !openSideBar.openSideBar
+                    ' ml-[5%] w-[90%] duration-300': !openSideBar.openSideBar
                 }">
                     <div
                         class="bg-white shadow-xl w-full md:h-16 lg:h-20 rounded-xl flex flex-row justify-between items-center px-5">
@@ -52,11 +52,12 @@ const toggleCloseBar = () => {
         openSideBar.closeSideBar()
     }
 }
-
-//ketika di reload gak tampil
-// if (window.innerWidth < 768) {
-//     openSideBar.openSideBar = false;
-// }
+//menutup tampilan sidebar Mobile
+if (process.client) {
+    if (window.innerWidth < 768) {
+        openSideBar.openSideBar = false;
+    }
+}
 
 //=========================================Protect Route ==========================================
 
@@ -79,7 +80,7 @@ const cekRoute = () => {
     }
 };
 
-//=====================breadCrumb===================
+//=====================breadCrumb====================================
 const makeBreadcrumbs = () => {
     const routeName = useRoute().path;
     links.value = routeName.split("/").filter((i) => i != "");
