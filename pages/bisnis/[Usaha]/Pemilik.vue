@@ -1,9 +1,9 @@
 <template >
-    <div class=" h-[2000px] md:h-full w-full gap-7 font-inter p-7 md:p-12 bg-slate-200"
-        :class="sideBar.openSideBar ? 'md:px-10 md:pr-[4%] duration-300' : 'md:px-[7%] md:pl-[6%] duration-300'">
+    <div class=" h-[2000px] md:h-full w-full gap-7 font-inter p-7 md:p-12 lg:p-14 bg-slate-200"
+        :class="sideBar.openSideBar ? ' md:px-[7%] lg:px-[5%] lg:pr-[6%] duration-300' : ' md:px-[8%] lg:px-[7%] duration-300'">
         <!-- pageName -->
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
-            :class="sideBar.openSideBar ? ' duration-300 md:w-[1037px]' : 'duration-300  md:w-[1235px]'">
+        <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
+            :class="sideBar.openSideBar ? ' duration-300 md:w-[1037px]' : 'duration-300 md:w-[1235px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
             <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
                 <div v-for="(link, index) in links ">
@@ -13,7 +13,7 @@
                     </nuxt-link>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- loading -->
         <div v-if="loading" class="h-[460px] flex justify-center py-40 bg-slate-200"
             :class="sideBar.openSideBar ? ' w-full duration-300' : 'w-full duration-300'">
@@ -23,20 +23,33 @@
                     class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
             </div>
         </div>
+        <!-- //pageName Mobile -->
+        <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-7 md:mt-0">
+            <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
+                <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
+                <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                    <div v-for="(link, index) in links" :key="index">
+                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div v-else class="  md:h-[487px] gap-10 flex flex-col md:flex-row mb-6 pt-14 md:pt-0">
+        <div v-show="loading == false"
+            class="  md:h-[487px] gap-5 md:gap-7 lg:gap-10 flex flex-col md:flex-row mb-6 pt-2 md:pt-0">
             <!-- chart -->
-            <div class="  h-[250px]  md:w-full md:h-full bg-white flex items-center justify-center rounded-md">
+            <div class="  h-[250px]  md:w-full lg:h-full bg-white flex items-center justify-center rounded-md">
                 <div class="">
                     <DoughnutChart :chart-data="data" :options="options" css-classes="chart-container"
-                        class=" h-[210px] md:h-[400px]" />
+                        class=" h-[210px] md:h-[200px] lg:h-[400px]" />
                 </div>
             </div>
             <!-- form isi -->
             <div class=" w-full md:h-full bg-white p-8 rounded-md ">
                 <form action="">
-                    <h1 class=" text-[32px] font-[700] mb-5">Tambah Pemilik</h1>
-                    <div class=" my-8">
+                    <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Tambah Pemilik</h1>
+                    <div class=" my-8 md">
                         <input @input="onInputChange" v-model="searchQuery" placeholder=" Pilih User" type="text"
                             class=" border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[57px] bg-[#FAFAFA]">
                         <ul v-if="showUserList" class=" mt-2 absolute w-[450px] z-10">
@@ -53,7 +66,7 @@
                         <input type="radio" class=" w-[17px] h-[17px] bg-slate-300">
                         <span class=" text-[#A3A3A3] text-[15px]"> Aktif</span>
                     </div>
-                    <div class=" flex items-center gap-2 my-3">
+                    <div class=" flex items-center gap-2 lg:my-3">
                         <input type="radio" class=" rounded-md w-[17px] h-[17px] bg-slate-300">
                         <span class=" text-[#A3A3A3] text-[15px]">Tidak Aktif</span>
                     </div>
@@ -63,12 +76,11 @@
                 </form>
             </div>
         </div>
-
-        <div v-show="loading == false" class="  w-full h-[691px] gap-10 flex flex-col md:flex-row">
+        <div v-show="loading == false" class="  w-full h-[691px] gap-5 lg:gap-10 flex flex-col md:flex-row">
             <!-- Pemilik -->
-            <div class=" md:w-[92%] h-[487px] bg-white p-10 rounded-md">
+            <div class=" md:w-full h-[487px] bg-white p-7 lg:p-10 rounded-md">
                 <div class=" flex justify-between">
-                    <h1 class=" text-[32px] font-[600]">Pemilik</h1>
+                    <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Pemilik</h1>
                     <i class="fa-solid fa-up-right-from-square text-[20px] md:text-[25px]"></i>
                 </div>
                 <div>
@@ -81,7 +93,8 @@
                         </thead>
                         <tbody v-for=" i in owner">
                             <tr class="">
-                                <td class=" py-3 text-red-600 text-[15px] font-[600]">{{ i.owner_user.user_full_name }}</td>
+                                <td @click="tampilkan" class=" py-3 text-red-600 text-[15px] font-[600]">{{
+                                    i.owner_user.user_full_name }}</td>
                                 <td class=" font-[600] text-[15px]">{{ i.owner_shares }}%</td>
                                 <td>
                                     <span class="fa-solid fa-pen-to-square"></span>
@@ -94,13 +107,13 @@
                     </table>
                 </div>
             </div>
-            <!-- nama pemilik -->
-            <div class=" w-full h-full bg-white p-10 rounded-md">
-                <h1 class=" text-[27px] md:text-[30px] font-[600]">Detail Pemilik</h1>
-                <div v-for=" i in owner" class=" md:pl-10 mt-14 flex flex-col items-center md:items-start ">
-                    <div class=" w-[200px] h-[200px] md:w-[241px] md:h-[241px] rounded-full bg-[#D9D9D9]">
+            <!-- Detail pemilik -->
+            <div v-show="tampilDetail" class=" w-[108%] h-full bg-white p-7 lg:p-10 rounded-md">
+                <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Detail Pemilik</h1>
+                <div v-for=" i in owner" class=" lg:pl-10 mt-14 flex flex-col items-center md:items-start ">
+                    <div class=" w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full bg-[#D9D9D9]">
                         <img :src="`${baseImageUrl}` + i.owner_user.user_profile_picture" alt=""
-                            class="md:w-[241px] md:h-[241px] rounded-full">
+                            class=" md:w-[200px] md:h-[200px] lg:w-[241px] lg:h-[241px] rounded-full">
                     </div>
                     <div class=" flex justify-start">
                         <div class=" py-10 flex flex-col items-center">
@@ -126,9 +139,14 @@ definePageMeta({
     layout: "layouts"
 })
 import { ref, computed, onMounted } from "vue"
-// import { useOwnerBusines } from "../../stores/Bisnis/Owner";
 import { DoughnutChart } from "vue-chart-3"
 import { Chart, DoughnutController, ArcElement, Title, Tooltip } from "chart.js"
+
+//memnyembunyikan detail
+const tampilDetail = ref(false);
+const tampilkan = () => {
+    tampilDetail.value = true;
+}
 
 //=======================penyesuaian tampilan=======================================
 import { useSidebarStore } from '../../stores/Store';
@@ -187,6 +205,10 @@ const onInputChange = () => {
 };
 
 //===========================================useFetch Api=========================================
+import { useAktifLinkStore } from "~/stores/AktifLinkStore";
+
+const aktifLink = useAktifLinkStore();
+
 
 const loading = ref(false)
 
@@ -198,7 +220,7 @@ const owner = ref([]);
 const namaBisnis = ref([]);
 const deskripsiBisnis = ref([])
 const gambarBisnis = ref([]);
-const pageName = ref(null)
+// const pageName = ref([]);
 
 async function getBisnis() {
     const token = localStorage.getItem("token");
@@ -206,38 +228,52 @@ async function getBisnis() {
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/owners`;
     loading.value = true;
     await useFetch(url, {
-        method: "get",
+        method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`
         }
     }).then(res => {
+
         setTimeout(() => {
-            console.log(res.data)
-            owner.value = res.data.value.data; //done
+            // console.log(res.data._rawValue.business);
+            owner.value = res.data.value.data;
             gambarBisnis.value = res.data.value
             namaBisnis.value = res.data.value.data;
             deskripsiBisnis.value = res.data.value;
-            pageName.value = res.data.value.business;
+            aktifLink.setActive(res.data._rawValue.business);
+            //PageName
+            // if (process.client) {
+            //     sessionStorage.setItem('activeLink', res.data._rawValue.business);
+            // }
+
             //dougnut chart
             dataValues.value = res.data.value.data.map(owner => parseFloat(owner.owner_shares));
             dataValues.value.push(parseFloat(res.data.value.empty_shares));
             loading.value = false
 
         }, 1000);
+
     }).catch(err => {
         console.log(err);
     })
 }
+// const setAktifLink = () => {
+//     if (process.client) {
+//         sessionStorage.setItem('activeLink', pageName);
+//     }
+// }
+
 
 onBeforeMount(async () => {
     await getBisnis();
+    // setAktifLink()
 });
 
 //==========================================BreadCrumb ==========================================
 const links = ref([]);
 const makeBreadcrumbs = () => {
-    const routeName = useRoute().name;
-    links.value = routeName.split("-");
+    const routeName = useRoute().path;
+    links.value = routeName.split("/").filter((i) => i !== "");
 }
 
 const generateLink = (index) => {

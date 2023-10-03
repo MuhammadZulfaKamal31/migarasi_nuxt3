@@ -1,22 +1,22 @@
 <template>
     <div class=" bg-slate-200">
-        <div class=" flex flex-col items-center md:items-start md:pt-16 pt-4
-        md:flex-row h-screen md:h-[580px] gap-5 md:ml-[40px] md:px-5 px-10 py-20 md:py-12"
-            :class="sideBar.openSideBar ? 'md:px-[14px] duration-300' : 'md:px-[4%] duration-300'">
+        <div class=" flex flex-col items-center md:items-start lg:pt-16 pt-1
+        md:flex-row h-screen lg:h-[580px] gap-5 md:ml-[40px] md:px-5 px-10 py-20 md:py-4"
+            :class="sideBar.openSideBar ? 'md:pr-[250px] duration-300' : 'md:px-[4%] duration-300'">
             <!-- //pageName -->
-            <div class="pt-[80px] md:pt-0 w-full md:w-0">
-                <div class="md:h-[70px] lg:h-[77px] h-10 bg-white rounded-md flex items-center justify-between px-2 md:px-6 md:absolute md:top-36 "
-                    :class="sideBar.openSideBar ? ' duration-300 lg:ml-4 md:w-[500px] lg:w-[750px] xl:w-[960px]' : 'duration-300  md:ml-4 md:w-[600px] lg:w-[1250px]'">
+
+            <!-- <div class="pt-[80px] md:pt-0 w-full md:w-0">
+                <div class=" md:h-[77px] h-10 bg-white rounded-md flex items-center justify-between px-2 md:px-6 md:absolute md:top-36 "
+                    :class="sideBar.openSideBar ? ' duration-300 md:ml-4 md:w-[960px]' : 'duration-300  md:ml-4 md:w-[1250px]'">
                     <span class=" text-[15px] md:text-2xl font-[500]">Beranda</span>
                     <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
                         <div v-for="(link, index) in links" :key="index">
                             <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                            <!-- {{ link === links[links.length - 1] }} -->
                             <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- loading -->
             <div v-if="loading" class=" w-full h-screen md:h-[530px] flex justify-center pt-40 bg-slate-200"
                 :class="sideBar.openSideBar ? ' duration-300 md:w-[1000px]' : 'duration-300 md:w-[full]'">
@@ -28,6 +28,19 @@
             </div>
             <!-- total Anggota -->
             <div v-else class="flex lg:flex-row  flex-col gap-5 w-full">
+                <!-- //pageName Mobile -->
+                <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-14 md:mt-0">
+                    <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
+                        <span class=" text-[15px] md:text-2xl font-[500]"> Dashboard</span>
+                        <div
+                            class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                            <div v-for="(link, index) in links" :key="index">
+                                <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                                <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex items-center h-[100px]  md:h-[82px] w-full md:w-[200px] bg-white rounded-md">
                     <div class=" h-[60px] w-[60px] bg-red-600 m-7 md:m-2"></div>
                     <div>
@@ -58,7 +71,7 @@
             </div>
 
         </div>
-        <div class=" w-full bg-slate-200 text-start p-5 pl-[65px] shadow-sm -mt-16 md:-mt-0">
+        <div class=" w-full bg-slate-200 text-start p-5 pl-[65px] shadow-sm -mt-16 lg:mt-0">
             <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All
                 rights reserved.</span>
         </div>

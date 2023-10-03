@@ -1,7 +1,7 @@
 <template>
-    <div class=" flex flex-col gap-4 py-[5%] font-inter px-5 bg-slate-200"
+    <div class="  flex flex-col gap-4 md:py-[2%] font-inter px-5 bg-slate-200"
         :class="sideBar.openSideBar ? 'md:pr-[37px] pr-[8%] duration-300' : 'md:px-[7%] duration-300'">
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
+        <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:ml-7 md:w-[1010px]' : 'duration-300 md:w-[1200px]'">
             <span class=" text-2xl font-[500]">Pendapatan</span>
             <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
@@ -12,9 +12,9 @@
                     </nuxt-link>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- loading -->
-        <div v-if="loading" class=" w-full h-[450px] flex justify-center py-40 bg-slate-200">
+        <div v-if="loading" class=" w-full h-screen lg:h-[450px] flex justify-center py-40 bg-slate-200">
             <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                 role="status">
                 <span
@@ -22,31 +22,46 @@
             </div>
         </div>
         <div v-else>
-            <div class=" flex md:flex-row flex-col justify-around gap-10 md:gap-20 md:h-[180px] w-full pt-20 md:pt-0 px-7">
+            <!-- //pageName Mobile -->
+            <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-14 md:mt-0">
+                <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
+                    <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
+                    <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                        <div v-for="(link, index) in links" :key="index">
+                            <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                            <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class=" flex md:flex-row flex-col justify-around gap-5 lg:gap-10 md:gap-5 md:h-[180px] w-full md:pt-0 md:px-7">
                 <div class=" flex justify-center items-center w-full h-full bg-white rounded">
                     <div>
-                        <label class=" text-[24px] font-[500] text-gray-500">Total Gaji</label>
+                        <label class=" text-[21px] md:text-[22px] lg:text-[25px] font-[500] text-gray-500">Total
+                            Gaji</label>
                         <p class=" my-4 md:my-6 text-[24px] font-[600]">Rp {{ totalGaji }}</p>
                     </div>
                 </div>
                 <div class=" flex justify-center items-center w-full h-full bg-white rounded">
                     <div>
-                        <label class=" text-[24px] font-[500] text-gray-500">Total SHU</label>
+                        <label class="text-[21px] md:text-[22px] lg:text-[25px] font-[500] text-gray-500">Total SHU</label>
                         <p class=" my-4 md:my-6 text-[24px] font-[600]">Rp {{ totalShu }}</p>
                     </div>
                 </div>
                 <div class=" flex justify-center items-center w-full h-full bg-white rounded">
                     <div>
-                        <label class=" text-[24px] font-[500] text-gray-500">Total Pendapatan</label>
+                        <label class=" text-[21px] md:text-[22px] lg:text-[25px] font-[500] text-gray-500">Total
+                            Pendapatan</label>
                         <p class=" my-4 md:my-6 text-[24px] font-[600]">Rp {{ totalPendapatan }}</p>
                     </div>
                 </div>
 
             </div>
-            <div class=" flex flex-col md:flex-row gap-12 md:h-[500px] w-full mt-8 px-8">
+            <div class=" flex flex-col md:flex-row gap-5 lg:gap-12 md:h-[500px] w-full mt-8 lg:px-10">
                 <!-- gaji -->
-                <div class="h-full w-full bg-white p-4 px-5 md:p-7 md:px-11 rounded-md">
-                    <h1 class=" text-2xl md:text-4xl font-bold mb-4">Gaji</h1>
+                <div class="h-full w-full bg-white p-4 lg:p-7 lg::px-11 rounded-md">
+                    <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600] mb-4">Gaji</h1>
                     <table class="w-full md:mt-9">
                         <thead>
                             <tr class=" py-3 md:py-4">
@@ -70,8 +85,8 @@
                     </table>
                 </div>
                 <!-- SHU -->
-                <div class="h-full w-full bg-white p-4 px-5 md:p-7 md:px-11 rounded-md">
-                    <h1 class=" text-2xl md:text-4xl font-bold mb-4">SHU</h1>
+                <div class="h-full w-full bg-white p-4  lg:px-11 rounded-md">
+                    <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600] mb-4">SHU</h1>
                     <table class="w-full md:mt-9">
                         <thead>
                             <tr class=" py-3 md:py-4">
@@ -99,7 +114,7 @@
             </div>
         </div>
     </div>
-    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
+    <div class=" w-full text-start p-5 pl-[60px] lg:pl-[65px] shadow-sm bg-slate-200">
         <span>
             © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
             reserved.</span>

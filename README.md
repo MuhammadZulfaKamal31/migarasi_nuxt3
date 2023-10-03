@@ -61,3 +61,25 @@ yarn preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+
+
+<template>
+    <div class="w-full h-full flex" v-if="cekToken">
+        <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class=" z-10">
+        </Sidebar>
+        <div :class="{
+            'md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
+            'w-full duration-300': !openSideBar.openSideBar
+        }">
+            <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
+                :openSideBar="openSideBar.openSideBar"
+                :class="openSideBar.openSideBar ? ' max-w-max: duration-300' : 'max-2xl duration-300'" />
+            <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
+                class=" md:hidden "></TopBarResponsif>
+            <div @click="toggleCloseBar">
+                <router-view></router-view>
+            </div>
+        </div>
+    </div>
+</template>

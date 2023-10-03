@@ -1,19 +1,7 @@
 <template>
     <div>
-        <div class='w-full h-screen md:h-[564px] bg-slate-200 px-7 md:px-0 rounded-md overflow-auto pt-20 md:pt-4'
-            :class="sideBar.openSideBar ? ' md:pr-[37px] md:pl-10 duration-300' : ' md:px-[90px] duration-300'">
-            <!-- PageName desktop -->
-            <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
-                :class="sideBar.openSideBar ? ' duration-300 md:ml-4 md:w-[1020px]' : 'duration-300  md:ml-[15px] md:w-[1220px]'">
-                <span class=" text-2xl font-[500]">Circle</span>
-                <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
-                    <div v-for="(link, index) in links" :key="index">
-                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                        <!-- {{ link === links[links.length - 1] }} -->
-                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
-                    </div>
-                </div>
-            </div>
+        <div class='w-full h-screen md:h-screen lg:h-[564px] bg-slate-200 px-7 md:px-0 rounded-md overflow-auto pt-20 md:pt-4'
+            :class="sideBar.openSideBar ? 'md:pl-6 md:pr-7 lg:pr-[37px] lg:pl-10 duration-300' : 'md:px-[5%] lg:px-[90px] duration-300'">
             <!-- loading -->
             <div v-if="loading" class="h-[700px] md:h-full flex justify-center py-40 bg-slate-200"
                 :class="sideBar.openSideBar ? ' w-[100%] ' : ' w-full'">
@@ -23,7 +11,6 @@
                         class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
                 </div>
             </div>
-
             <!-- //pageName Mobile -->
             <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0">
                 <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible "
@@ -39,7 +26,7 @@
             </div>
             <div v-show="loading == false" class="flex flex-wrap md:mx-4 bg-white p-10 rounded-md">
                 <!-- {{ circle }} -->
-                <div v-for="i in circle" class=" w-1/2 md:w-1/5 px-4 mb-4">
+                <div v-for="i in circle" class=" w-1/2 md:w-1/2 lg:w-1/5 px-4 mb-4">
                     <router-link :to="`/circle/${i.circle.id}`" exact-active-class>
                         <div class=" h-full border rounded-md overflow-hidden shadow-xl">
                             <img :src="`${baseImageUrl}` + i.circle.circle_logo" alt="" class="object-cover w-full">
@@ -49,9 +36,8 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200 -mt-16 md:mt-0">
+    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200 -mt-20 lg:mt-0">
         <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
             reserved.</span>
     </div>
@@ -75,7 +61,6 @@ async function getCircle() {
     console.log(token)
     const url = `${import.meta.env.VITE_BASE_API_URL}/circle`;
     loading.value = true
-
 
     await useFetch(url, {
         method: "get",

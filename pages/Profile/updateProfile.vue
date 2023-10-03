@@ -1,8 +1,8 @@
 <template>
-    <div class="w-full h-full flex justify-center items-center font-inter bg-slate-200"
-        :class="sideBar.openSideBar ? ' duration-300' : 'duration-300'">
+    <div class=" h-full flex justify-center items-center font-inter bg-slate-200"
+        :class="sideBar.openSideBar ? ' duration-300' : ' md:px-[1%] duration-300'">
         <!-- pageName -->
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
+        <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[995px]' : 'duration-300 md:w-[1200px]'">
             <span class=" text-2xl font-[500]">Profile</span>
             <div class=" flex flex-row  space-x-2 font-semibold text-sm text-red-500 ">
@@ -13,89 +13,104 @@
                     </nuxt-link>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- loading -->
-        <div v-if="loading" class=" w-[78%] h-[520px] flex justify-center py-40 bg-slate-200">
+        <div v-if="loading" class=" w-[78%] h-screen lg:h-[520px] flex justify-center py-40 bg-slate-200">
             <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                 role="status">
                 <span
                     class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
             </div>
         </div>
-        <div v-else class="md:h-full w-[90%] md:w-[900px] border border-slate-300 rounded-md md:p-10 p-3 bg-white my-20">
-            <form action="" @submit.prevent="update">
-                <h1 class="text-2xl font-semibold pb-10">Update Profile</h1>
-                <!-- Alamat -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">Alamat</label>
-                    <input v-model="alamat" type="text" placeholder="Alamat"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
-                </div>
-                <!-- Telephone -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">Nomor Telephone</label>
-                    <input v-model="telephone" type="text" placeholder="No."
-                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
-                </div>
 
-                <!-- Profile Picture (Input Tipe File) -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">Profile Picture</label>
-                    <input type="file" ref="fileInput" @change="handleFileUpload">
+        <div v-else>
+            <!-- //pageName Mobile -->
+            <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-14 md:mt-0">
+                <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
+                    <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
+                    <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                        <div v-for="(link, index) in links" :key="index">
+                            <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                            <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="md:h-full w-full lg:w-[900px] border border-slate-300 rounded-md md:p-10 p-3 bg-white lg:my-10">
+                <form action="" @submit.prevent="update">
+                    <h1 class="text-2xl font-semibold pb-10">Update Profile</h1>
+                    <!-- Alamat -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">Alamat</label>
+                        <input v-model="alamat" type="text" placeholder="Alamat"
+                            class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                    </div>
+                    <!-- Telephone -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">Nomor Telephone</label>
+                        <input v-model="telephone" type="text" placeholder="No."
+                            class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                    </div>
 
-                <!-- Nama Lengkap -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">Nama Lengkap</label>
-                    <input v-model="namaLengkap" type="text" placeholder="Nama Lengkap"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
-                </div>
+                    <!-- Profile Picture (Input Tipe File) -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">Profile Picture</label>
+                        <input type="file" ref="fileInput" @change="handleFileUpload">
+                    </div>
 
-                <!-- Jenis Kelamin -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">Jenis Kelamin</label>
-                    <select class="h-12 bg-[#FAFAFA] text-[16px] border outline-none" v-model="jenisKelamin">
-                        <option value="L">Laki-laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                </div>
+                    <!-- Nama Lengkap -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">Nama Lengkap</label>
+                        <input v-model="namaLengkap" type="text" placeholder="Nama Lengkap"
+                            class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                    </div>
 
-                <!-- Tanggal Lahir -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">Tanggal Lahir</label>
-                    <input v-model="tanggaLahir" type="date" placeholder="YYYY-MM-DD"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
-                </div>
+                    <!-- Jenis Kelamin -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">Jenis Kelamin</label>
+                        <select class="h-12 bg-[#FAFAFA] text-[16px] border outline-none" v-model="jenisKelamin">
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                    </div>
 
-                <!-- Tempat Lahir -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">Tempat Lahir</label>
-                    <input v-model="tempatLahir" type="text" placeholder="Tempat Lahir"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
-                </div>
+                    <!-- Tanggal Lahir -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">Tanggal Lahir</label>
+                        <input v-model="tanggaLahir" type="date" placeholder="YYYY-MM-DD"
+                            class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                    </div>
 
-                <!-- NPWP -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">NPWP</label>
-                    <input v-model="npwp" type="text" placeholder="NPWP"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
-                </div>
+                    <!-- Tempat Lahir -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">Tempat Lahir</label>
+                        <input v-model="tempatLahir" type="text" placeholder="Tempat Lahir"
+                            class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                    </div>
 
-                <!-- No. KTP -->
-                <div class="flex flex-col py-2 gap-3">
-                    <label for="" class="text-[18px] font-[500]">No.Ktp</label>
-                    <input v-model="noKtp" type="text" placeholder="No.Ktp"
-                        class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
-                </div>
-                {{ error }}
+                    <!-- NPWP -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">NPWP</label>
+                        <input v-model="npwp" type="text" placeholder="NPWP"
+                            class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                    </div>
 
-                <!-- Tombol Update -->
-                <div class="flex justify-start pt-10">
-                    <button type="submit" class="p-2 bg-red-600 text-white w-28 rounded-md">
-                        Update
-                    </button>
-                </div>
-            </form>
+                    <!-- No. KTP -->
+                    <div class="flex flex-col py-2 gap-3">
+                        <label for="" class="text-[18px] font-[500]">No.Ktp</label>
+                        <input v-model="noKtp" type="text" placeholder="No.Ktp"
+                            class="h-12 bg-[#FAFAFA] text-[15px] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                    </div>
+                    {{ error }}
+
+                    <!-- Tombol Update -->
+                    <div class="flex justify-start pt-10">
+                        <button type="submit" class="p-2 bg-red-600 text-white w-28 rounded-md">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[65px] shadow-sm py-10 bg-slate-200">

@@ -1,16 +1,36 @@
 <template>
     <div class="w-full h-full flex" v-if="cekToken">
-        <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class=" z-10">
+        <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
         </Sidebar>
         <div :class="{
-            'md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
+            ' md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
             'w-full duration-300': !openSideBar.openSideBar
         }">
+            <div class=" hidden md:block">
+                <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
+                    'ml-[2%] md:w-[70%] lg:w-[69%] xl:w-[74%] duration-300': openSideBar.openSideBar,
+                    ' ml-[5%] w-[90%]  duration-300': !openSideBar.openSideBar
+                }">
+                    <div
+                        class="bg-white shadow-xl w-full md:h-16 lg:h-20 rounded-xl flex flex-row justify-between items-center px-5">
+                        <h2 class="text-2xl font-bold">{{ activeLink }}</h2>
+                        <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                            <div v-for="(link, index) in links " :key="index">
+                                <nuxt-link :to="generateLink(index)" class=" hover:text-black">
+                                    {{ capitalizeFirstLetter(link) }}
+                                    <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
+                                </nuxt-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
                 :openSideBar="openSideBar.openSideBar"
-                :class="openSideBar.openSideBar ? ' max-w-max: duration-300' : 'max-2xl duration-300'" />
+                :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
+
             <div @click="toggleCloseBar">
                 <router-view></router-view>
             </div>
@@ -42,9 +62,11 @@ const toggleCloseBar = () => {
 
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+const router = useRouter();
+const links = ref([]);
+const activeLink = ref('Dashboard');
 
 const cekToken = ref(null);
-const router = useRouter();
 const cekRoute = () => {
     if (process.client) {
         const token = localStorage.getItem('token');
@@ -57,11 +79,33 @@ const cekRoute = () => {
     }
 };
 
+//=====================breadCrumb===================
+const makeBreadcrumbs = () => {
+    const routeName = useRoute().path;
+    links.value = routeName.split("/").filter((i) => i != "");
+}
+
+const generateLink = (index) => {
+    const subLinks = links.value.slice(0, index + 1)
+    // console.log(subLinks)
+    return '/' + subLinks.join("/");
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 onMounted(() => {
     cekRoute();
+    makeBreadcrumbs();
+    activeLink.value = sessionStorage.getItem('activeLink') ?? 'dashboard';
 });
+onUpdated(() => {
+    activeLink.value = sessionStorage.getItem('activeLink') ?? 'dashboard';
+    makeBreadcrumbs();
+});
+
 
 </script>
   
 <style></style>
-  

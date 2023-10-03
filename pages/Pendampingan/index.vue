@@ -1,21 +1,10 @@
 <template>
     <div>
-        <div class='w-full h-screen md:h-[564px] bg-slate-200  rounded-md overflow-auto pt-20 md:pt-4 px-7'
-            :class="sideBar.openSideBar ? ' md:pr-[45px] md:pl-10' : 'md:px-20'">
-            <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
-                :class="sideBar.openSideBar ? ' duration-300 md:ml-4 md:w-[1020px]' : 'duration-300  md:ml-4 md:w-[1250px]'">
-                <span class=" text-2xl font-[500]">Pendampingan</span>
-                <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
-                    <div v-for="(link, index) in links" :key="index">
-                        <nuxt-link :href="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                        <!-- {{ link === links[links.length - 1] }} -->
-                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
-                    </div>
-                </div>
-            </div>
+        <div class='w-full h-screen lg:h-[564px] bg-slate-200  rounded-md overflow-auto pt-20 md:pt-4 px-7'
+            :class="sideBar.openSideBar ? 'md:pr-[5%] lg:pr-[45px] lg:pl-10 duration-300' : 'md:px-14 lg:px-20 duration-300'">
             <!-- loading -->
-            <div v-if="loading" class="h-[700px] md:h-full flex justify-center py-40 bg-slate-200"
-                :class="sideBar.openSideBar ? ' w-[100%] ' : ' w-full'">
+            <div v-if="loading" class=" h-screen lg:h-[700px] md:h-full flex justify-center py-40 bg-slate-200"
+                :class="sideBar.openSideBar ? ' w-[100%] duration-300 ' : ' w-full f'">
                 <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status">
                     <span
@@ -37,7 +26,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap md:mx-4 bg-white p-10 rounded-md">
-                <div v-for="i in pendamping" class=" w-1/2 md:w-1/5 px-4 mb-4">
+                <div v-for="i in pendamping" class=" w-3/5 md:w-2/5 lg:w-1/5 px-4 mb-4">
                     <nuxt-link :to="`/Pendampingan/${i.business_id.business_slug}`">
                         <div class="h-full border rounded-md overflow-hidden shadow-xl">
                             <img :src="`${baseImageUrl}` + i.business_id.business_logo" alt="" class="object-cover w-full">
@@ -83,7 +72,7 @@ async function getPendamping() {
             console.log(res.data)
             pendamping.value = res.data.value.data;
             loading.value = false
-        }, 700)
+        }, 1000)
 
     }).catch(err => {
         console.log(err)

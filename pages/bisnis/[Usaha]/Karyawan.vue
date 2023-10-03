@@ -1,7 +1,7 @@
 <template >
-    <div class=" w-full h-full md:p-11 px-7 pt-24 md:pt-14 flex flex-col md:flex-row gap-7 bg-slate-200"
-        :class="sideBar.openSideBar ? ' md:pr-[65px] duration-300' : ' md:px-24 duration-300'">
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
+    <div class=" w-full h-full md:p-11 px-7 pt-14 md:pt-14 flex flex-col md:flex-row gap-7 bg-slate-200"
+        :class="sideBar.openSideBar ? ' md:px-[6%] lg:pl-[5%] duration-300' : ' md:px-16 lg:px-24 duration-300'">
+        <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1020px]' : 'duration-300  md:w-[1240px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
             <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
@@ -12,7 +12,7 @@
                     </nuxt-link>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- loading -->
         <div v-if="loading" class="h-[450px] flex justify-center py-40 bg-slate-200"
@@ -23,14 +23,27 @@
                     class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
             </div>
         </div>
-        <div v-else class=" md:w-[90%] h-full flex flex-col gap-10">
+
+        <div v-else class=" md:w-[90%] h-full flex flex-col gap-7 lg:gap-10">
+            <!-- //pageName Mobile -->
+            <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 md:mt-0 md:hidden">
+                <div class="h-10 bg-white rounded-md flex items-center justify-between px-2  ">
+                    <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
+                    <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                        <div v-for="(link, index) in links" :key="index">
+                            <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                            <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- karyawan -->
-            <div class="w-full h-[428px] bg-white p-10 rounded-md">
-                <h1 class=" text-[32px] font-[600]">Karyawan</h1>
+            <div class="w-full h-[428px] bg-white p-5 md:p-7 lg:p-10 rounded-md">
+                <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Karyawan</h1>
                 <table class=" w-full mt-10">
                     <thead>
                         <tr class="">
-                            <td class=" py-5 text-[17px] font-[600]">Name</td>
+                            <td class=" md:py-2 lg:py-5 text-[17px] font-[600]">Name</td>
                         </tr>
                     </thead>
                     <tbody v-for=" i in karyawanDetail">
@@ -49,39 +62,43 @@
                 </table>
             </div>
             <!-- detil karyawan -->
-            <div v-show="tampilDetail" class=" w-full h-full bg-white p-10 rounded-md">
+            <div v-show="tampilDetail" class=" w-full h-full bg-white p-7 lg:p-10 rounded-md">
                 <div v-for="i in karyawanDetail">
-                    <h1 class=" text-[32px] font-[600]"> Detil Karyawan</h1>
-                    <div class=" md:pl-7 mt-7">
-                        <div class=" w-[241px] h-[241px] rounded-full bg-[#D9D9D9]">
+                    <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]"> Detil Karyawan</h1>
+                    <div class=" md:pl-0 pl-7 lg:pl-7 mt-7">
+                        <div class=" w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full bg-[#D9D9D9]">
                             <img :src="`${baseImageUrl}` + i.employee_user.user_profile_picture" alt="">
                         </div>
                         <div class=" flex md:justify-start">
                             <div class=" py-10 flex flex-col items-center ">
-                                <h2 class=" text-[29px] font-[500] py-2">{{ i.employee_user.username }}</h2>
-                                <p class="text-[13px] font-[500]"> {{ i.employee_user.email }}</p>
+                                <h2 class=" text-[22px] md:text-[23px] lg:text-[29px] font-[500] py-2">{{
+                                    i.employee_user.username }} Comming Soon
+                                </h2>
+                                <p class="text-[13px] font-[500]"> {{ i.employee_user.email }} Comming Soon</p>
                             </div>
                         </div>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Posisi</label>
-                        <p class=" text-[29px] font-[600]">{{ i.employee_position }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">{{ i.employee_position }}</p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Gaji Pokok</label>
-                        <p class=" text-[29px] font-[600]">{{ i.employee_salary }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">{{ i.employee_salary }}</p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Uang Makan</label>
-                        <p class=" text-[29px] font-[600]">Rp500.000,00</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">Rp500.000,00</p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Tahun Masuk</label>
-                        <p class=" text-[29px] font-[600]">{{ i.employee_join_date }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">{{ i.employee_join_date }}</p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Jumlah Kesehatan</label>
-                        <p class=" text-[29px] font-[600]"> {{ i.employee_bpjs_ketenagakerjaan }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]"> {{
+                            i.employee_bpjs_ketenagakerjaan
+                        }}</p>
                     </div>
 
                 </div>
@@ -90,7 +107,7 @@
         </div>
         <!-- Tambah Karyawan -->
         <div v-show="loading == false" class=" w-full h-full bg-white p-10 rounded-md">
-            <h1 class=" text-[32px] font-[500] pb-5">Tambah Karyawan</h1>
+            <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600] lg:pb-5">Tambah Karyawan</h1>
             <form action="">
                 <div class=" py-4">
                     <input placeholder=" Pilih User" type="text"

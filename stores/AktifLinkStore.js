@@ -9,7 +9,7 @@ export const useAktifLinkStore = defineStore('aktifLinkStore', {
       if (process.client) {
           sessionStorage.setItem('activeLink', route);
           this.$state.aktifLink  = sessionStorage.getItem('activeLink');
-          console.log(coba.value);
+          // console.log(coba.value);
       }}
     },
   },

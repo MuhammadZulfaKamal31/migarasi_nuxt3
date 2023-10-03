@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class=" md:w-[100%] lgw-[100%] xl:w-[100%]">
         <!-- topbar -->
-        <div class=" h-[190px] md:w-full bg-red-500 md:flex items-center md:flex-col pt-7 md: px-7 lg:px-10 ">
-            <div class=" w-full mb-14 flex justify-between mx-7">
+        <div class=" h-[190px] bg-red-500 pt-7 md:px-6 lg:px-10 ">
+            <div class=" w-max mb-14 flex justify-between mx-7">
                 <div class=" flex md:gap-5 lg:gap-10 items-center">
                     <i @click="toggleSideBar" class="fa-solid fa-bars text-white text-2xl"></i>
                     <input type="text"
@@ -11,9 +11,9 @@
                 </div>
                 <!-- profile -->
                 <div @click="toggleDropDown"
-                    class="md:h-[60px] md:w-[60px] lg:h-[73px] lg:w-[73px] bg-white rounded-full flex items-center justify-center mr-[38px] absolute md:right-4 lg:right-7">
+                    class="md:h-[60px] md:w-[60px] lg:h-[73px] lg:w-[73px] bg-white rounded-full flex items-center justify-center mr-[38px] absolute right-7">
                     <img :src="`${baseImageUrl}` + fotoProfile" alt=""
-                        class="md:w-[60px] md:h-[60px] lg:h-[73px] lg:w-[73px] rounded-full object-cover" />
+                        class="md:h-[60px] md:w-[60px] lg:h-[73px] lg:w-[73px] rounded-full object-cover" />
                 </div>
             </div>
             <div>

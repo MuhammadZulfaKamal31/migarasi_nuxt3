@@ -1,7 +1,7 @@
 <template>
-    <div class=" h-full w-full pt-20 px-7  md:p-14  gap-6 flex flex-col bg-slate-200 "
-        :class="sideBar.openSideBar ? 'md:pr-[65px] duration-300' : ' md:px-24 duration-300'">
-        <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
+    <div class=" h-full w-full md:h-screen pt-14 md:pt-0 px-7  md:px-14  gap-6 flex flex-col bg-slate-200 "
+        :class="sideBar.openSideBar ? 'md:p-[7%] lg:pr-[65px] duration-300' : ' lg:px-24 duration-300'">
+        <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1245px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
             <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
@@ -12,9 +12,9 @@
                     </nuxt-link>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- loading -->
-        <div v-if="loading" class="h-[440px] flex justify-center py-40 bg-slate-200"
+        <div v-if="loading" class="h-screen lg:h-[440px] flex justify-center py-40 bg-slate-200"
             :class="sideBar.openSideBar ? ' w-full duration-300' : 'w-full duration-300'">
             <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                 role="status">
@@ -22,11 +22,23 @@
                     class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
             </div>
         </div>
-        <div v-show="loading == false" class=" md:h-[487px] w-full flex flex-col md:flex-row gap-10">
+        <!-- //pageName Mobile -->
+        <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 md:mt-0">
+            <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
+                <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
+                <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                    <div v-for="(link, index) in links" :key="index">
+                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
+                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-show="loading == false" class=" md:h-[487px] w-full flex flex-col md:flex-row gap-7 lg:gap-10">
             <!-- Pendamping -->
-            <div class="h-full  w-full bg-white p-8 rounded-md">
+            <div class="h-full  w-full bg-white p-5 lg:p-8 rounded-md">
                 <div class=" flex justify-between">
-                    <h1 class=" text-[29px] md:text-[32px] font-semibold">Pendamping</h1>
+                    <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Pendamping</h1>
                     <i class="fa-solid fa-up-right-from-square text-xl"></i>
                 </div>
                 <table class="w-full mt-9">
@@ -50,8 +62,8 @@
                 </table>
             </div>
             <!-- Tambah Pendamping -->
-            <div class=" h-full w-full bg-white p-8 rounded-md">
-                <h1 class=" text-[29px] md:text-[32px] font-semibold"> Tambah Pendamping</h1>
+            <div class=" h-full w-full bg-white p-5 lg:p-8 rounded-md">
+                <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]"> Tambah Pendamping</h1>
                 <form action="">
                     <div class=" py-4 pt-12">
                         <input type="text" placeholder=" Pilih User"
@@ -61,11 +73,11 @@
                         <input type="text" placeholder=" Pilih User"
                             class="h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
                     </div>
-                    <div class=" flex items-center gap-2 py-3">
+                    <div class=" flex items-center gap-2 py-1 md:py-2 lg:py-3">
                         <input type="radio" class=" h-[17px] w-[17px]">
                         <span class=" text-[#A3A3A3] text-[13px] font-medium"> Aktif</span>
                     </div>
-                    <div class=" flex items-center gap-2 py-3">
+                    <div class=" flex items-center gap-2 py-1 md:py-2 lg:py-3">
                         <input type="radio" class=" h-[17px] w-[17px]">
                         <span class=" text-[#A3A3A3] text-[13px] font-medium"> Tidak Aktif</span>
                     </div>
@@ -80,11 +92,11 @@
         <div v-show="tampilDetail" class=" flex md:w-[48%] h-[600px] gap-10">
             <div class=" h-full w-full bg-white p-8 rounded-md">
                 <div class=" flex flex-col items-center" v-for="i in pendamping">
-                    <h1 class=" text-[29px] md:text-[32px] font-semibold py-6">Detail Pendamping</h1>
+                    <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Detail Pendamping</h1>
                     <div class=" py-5">
-                        <div class=" h-[241px] w-[241px] bg-[#D9D9D9] rounded-full">
+                        <div class=" h-[200px] w-[200px] lg:h-[241px] lg:w-[241px] bg-[#D9D9D9] rounded-full">
                             <img :src="`${baseImageUrl}` + i.companion_user.user_profile_picture" alt=""
-                                class=" rounded-full h-[241px] w-[241px] object-cover">
+                                class=" rounded-full h-[200px] w-[200px] lg:h-[241px] lg:w-[241px] object-cover">
                         </div>
                     </div>
                     <div class=" flex flex-col items-center pt-6">
@@ -96,7 +108,7 @@
             </div>
         </div>
     </div>
-    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
+    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200 pt-16">
         <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
             reserved.</span>
     </div>
@@ -161,8 +173,8 @@ onBeforeMount(async () => {
 //==========================================BreadCrumb ==========================================
 const links = ref([]);
 const makeBreadcrumbs = () => {
-    const routeName = useRoute().name;
-    links.value = routeName.split("-");
+    const routeName = useRoute().path;
+    links.value = routeName.split("/").filter((i) => i !== "");
 }
 
 const generateLink = (index) => {
