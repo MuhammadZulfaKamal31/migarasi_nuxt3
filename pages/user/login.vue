@@ -1,5 +1,10 @@
 <template>
-    <div class="h-full w-screen flex justify-between items-center">
+    <div v-if="loading" class="h-screen bg-white">
+        <div class="flex justify-center items-center h-full">
+            <img class="h-16 w-16" src="https://icons8.com/preloaders/preloaders/1488/Iphone-spinner-2.gif" alt="">
+        </div>
+    </div>
+    <div v-else class="h-full w-screen flex justify-between items-center">
         <div class=" mt-[100px]">
             <div class=" border border-red-600 md:border-none m-7 md:m-0 p-5 md:p-0">
                 <!-- form -->
@@ -62,13 +67,15 @@ const userName = ref("");
 const password = ref("");
 const error = ref("");
 
+const loading = ref(false);
+
 onMounted(() => {
-        console.log("Check Mounted")
+    console.log("Check Mounted")
+    console.log("token", localStorage.getItem('token'))
+    if (localStorage.getItem('token')) {
         console.log("token", localStorage.getItem('token'))
-        if (localStorage.getItem('token')) {
-            console.log("token", localStorage.getItem('token'))
-            router.push({ path: "/dashboard" });
-        }
+        router.push({ path: "/dashboard" });
+    }
 });
 
 const login = async () => {
@@ -77,6 +84,7 @@ const login = async () => {
         error.value = "Username dan Password harus di isi";
     } else {
         try {
+            loading.value = true
             const response = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/user/signin`, {
                 method: "POST",
                 headers: {
@@ -85,23 +93,26 @@ const login = async () => {
                 body: JSON.stringify({
                     username: userName.value,
                     password: password.value,
-                }),
+                })
             });
 
             const token = response.data._rawValue.access;
             console.log(token)
             localStorage.setItem('token', token);
 
-            router.push({ path: "/dashboard" });
+            //loading
+            setTimeout(() => {
+                router.push({ path: "/dashboard" });
+            }, 3000)
+
         } catch (err) {
+            loading.value = false
             error.value = "Login gagal. Periksa username dan password Anda.";
             console.error(err);
         }
     }
 
-    
 
-    
 }
 </script>
 

@@ -75,7 +75,8 @@
                     <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
                             class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
-                            JRUWORK
+                            Comming Soon
+                            <!-- JRUWORK -->
                         </span>
                     </router-link>
                 </div>

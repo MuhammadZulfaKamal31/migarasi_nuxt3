@@ -40,11 +40,6 @@
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200 -mt-20 lg:mt-0">
-        <!-- <div class="h-screen bg-white">
-            <div class="flex justify-center items-center h-full">
-                <img class="h-16 w-16" src="https://icons8.com/preloaders/preloaders/1488/Iphone-spinner-2.gif" alt="">
-            </div>
-        </div> -->
         <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
             reserved.</span>
     </div>
