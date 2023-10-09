@@ -53,7 +53,7 @@ const toggleDropDown = () => {
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 const fotoProfile = ref(null);
 
-async function getCircle() {
+async function getProfile() {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile`;
 
@@ -80,8 +80,10 @@ const logout = () => {
     router.push('/user/login'); // Jika Anda menggunakan Vue Router
 }
 
-onBeforeMount(async () => {
-    await getCircle();
+onBeforeMount(() => {
+    setTimeout(() => {
+        getProfile();
+    }, 200)
 })
 
 </script>

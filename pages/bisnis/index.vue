@@ -74,7 +74,7 @@ async function getDetailCircle() {
             console.log(res.data)
             bisnis.value = res.data.value.data
             loading.value = false
-        }, 700)
+        }, 500)
     }).catch(err => {
         console.log(err)
     })

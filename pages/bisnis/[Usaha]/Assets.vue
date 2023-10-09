@@ -1,6 +1,6 @@
 <template >
-    <div class=" h-full w-full p-7 pt-20 md:p-14 flex flex-col gap-8 bg-slate-200"
-        :class="sideBar.openSideBar ? 'md:pr-[63px] duration-300 ' : ' md:px-14 md lg:px-24 duration-300'">
+    <div class="h-full w-full p-7 pt-20 lg:pt-14 md:p-9 flex flex-col gap-8 bg-slate-200"
+        :class="sideBar.openSideBar ? 'lg:pr-[6%] lg:pl-[5%] md:pr-[8%] duration-300 ' : ' md:px-14 md lg:px-24 duration-300'">
         <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1240px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div v-else class=" h-full lg:h-[855px] w-full flex flex-col md:flex-row gap-5 lg:gap-8">
+        <div v-else class=" h-full lg:h-[855px] w-full flex flex-col lg:flex-row gap-5 lg:gap-8">
             <!-- //pageName Mobile -->
             <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 md:mt-0 md:hidden">
                 <div class="h-10 bg-white rounded-md flex items-center justify-between px-2  ">
@@ -54,10 +54,12 @@
                     <tbody v-for="i in assetDetail">
                         <tr class="">
                             <td @click="tampilkan"
-                                class=" py-4 pt-8  flex items-center gap-3 text-red-600 text-[15px] font-[600] cursor-pointer">
+                                class=" py-4 pt-8  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full" :src="`${baseImageUrl}` + i.asset_photo"
                                     alt="">
-                                {{ i.asset_name }}
+                                <span @click="indexTampil(i.id)" class=" cursor-pointer">
+                                    {{ i.asset_name }}
+                                </span>
                             </td>
                             <td class="text-[15px] font-[600] text-end">{{ i.asset_condition }}</td>
                         </tr>
@@ -114,55 +116,59 @@
             </div>
         </div>
         <!-- Detail Asset -->
-        <div v-show="tampilDetail" class=" md:h-full w-full bg-white rounded-md p-5 lg:p-10">
+        <div v-show="tampilDetail" class=" md:h-full w-full bg-white rounded-md p-5 lg:p-10" ref="section">
             <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]"> Detail Asset</h1>
             <div class=" h-full w-full flex justify-between md:gap-10">
-                <div v-for="i in assetDetail" class=" w-full h-full">
+                <div class=" w-full h-full">
                     <div class=" my-10 mb-[80px] md:mb-0">
                         <label for="" class=" text-[14px] font-semibold py-5"> Nama Asset</label>
-                        <p class=" text-[25px] md:text-[32px] font-semibold"> {{ i.asset_name }}</p>
+                        <p class=" text-[25px] md:text-[32px] font-semibold"> {{ detailNamaAsset }}</p>
                     </div>
                     <div class=" my-10">
                         <label for="" class=" text-[14px] font-semibold py-5"> Kondisi</label>
-                        <p class=" text-[25px] md:text-[32px] font-semibold"> {{ i.asset_condition }}</p>
+                        <p class=" text-[25px] md:text-[32px] font-semibold">
+                            {{ detailKondisiAsset }}
+                        </p>
                     </div>
                     <div class=" my-10">
                         <label for="" class=" text-[14px] font-semibold py-5"> Jumlah Asset</label>
-                        <p class=" text-[25px] md:text-[32px] font-semibold"> {{ i.asset_quantity }} </p>
+                        <p class=" text-[25px] md:text-[32px] font-semibold">
+                            {{ detailJumlahAsset }}
+                        </p>
                     </div>
                     <div class=" my-10">
                         <label for="" class=" text-[14px] font-semibold py-5"> Tanggal Pembelian</label>
-                        <p class=" text-[19px] md:text-[27px] lg:text-[32px] font-semibold"> {{ formatDate }}
+                        <p class=" text-[19px] md:text-[27px] lg:text-[32px] font-semibold">
+                            {{ formatDate }}
                         </p>
                     </div>
                 </div>
-                <div v-for="i in assetDetail" class=" h-full w-full">
+                <div class=" h-full w-full">
                     <div>
                         <p class=" text-[14px] font-semibold my-9"> Foto Nota Pembelian</p>
-                        <img :src="`${baseImageUrl}` + i.asset_receipt" alt=""
+                        <img :src="`${baseImageUrl}` + detailAssetReceipt" alt=""
                             class="w-[140px] h-[90px] md:w-[160px] md:h-[120px] lg:w-[170px] lg:h-[125px]">
                     </div>
                     <div>
                         <p class=" text-[14px] font-semibold my-9"> Foto Asset</p>
                         <div class=" flex flex-wrap overflow-auto gap-7 lg:gap-10">
-                            <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
+                            <img :src="`${baseImageUrl}` + detailAssetPhoto" alt=""
                                 class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
-                            <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
+                            <img :src="`${baseImageUrl}` + detailAssetPhoto" alt=""
                                 class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
-                            <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
+                            <img :src="`${baseImageUrl}` + detailAssetPhoto" alt=""
                                 class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
-                            <img :src="`${baseImageUrl}` + i.asset_photo" alt=""
+                            <img :src="`${baseImageUrl}` + detailAssetPhoto" alt=""
                                 class=" w-[100px] h-[70px] md:w-[155px] md:h-[105px] lg:w-[170px] lg:h-[125px]">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
-            <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All
-                rights reserved.</span>
-        </div>
+    </div>
+    <div class=" w-full text-start md:pb-[20px] pl-[60px] lg:pl-[65px] shadow-sm bg-slate-200">
+        <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All
+            rights reserved.</span>
     </div>
 </template>
 <script setup>
@@ -173,29 +179,22 @@ import { useSidebarStore } from '../../stores/Store';
 import { useDateFormat } from '@vueuse/core'
 
 
-
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 const sideBar = useSidebarStore();
 
-const tanggalPembelian = ref(null);
-const formatDate = useDateFormat(tanggalPembelian, 'DD MMMM YYYY');
 
-//menyembunykan Detail
+//menyembunykan dan menampilakan Detail
 const tampilDetail = ref(false);
+const section = ref(null);
+
 const tampilkan = () => {
-    tampilDetail.value = true
+    if (section.value) {
+        console.log(" section " + section.value)
+        section.value.scrollIntoView({ behavior: 'smooth' });
+    }
+    tampilDetail.value = true;
 }
 
-//===================================== useFetch API =====================================
-
-// const id_business = route.params.DetailAsset;
-
-// const { data: asset } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/assets`, {
-//     method: "GET",
-//     headers: {
-//         'Authorization': `Bearer ${localStorage.getItem('token')}`
-//     }
-// });
 
 //================================= useFetch Api =============================================
 import { useRoute } from 'vue-router';
@@ -219,7 +218,6 @@ async function getBisnis() {
         setTimeout(() => {
             assetDetail.value = res.data.value.data;
             pageName.value = res.data.value.business;
-            tanggalPembelian.value = res.data.value.data.map(item => item.asset_buy_date)
             loading.value = false
         }, 1000);
 
@@ -229,8 +227,35 @@ async function getBisnis() {
 }
 
 onBeforeMount(async () => {
-    await getBisnis();
+    setTimeout(() => {
+        getBisnis();
+    }, 300)
 });
+
+//===========================Get Data Detail Asset ===============================
+
+const detailNamaAsset = ref(null);
+const detailKondisiAsset = ref(null);
+const detailJumlahAsset = ref(null);
+const detailAssetReceipt = ref(null);
+const detailAssetPhoto = ref(null);
+const detailTanggalAsset = ref(null);
+const formatDate = useDateFormat(detailTanggalAsset, 'DD MMMM YYYY');
+
+const indexTampil = (id) => {
+    assetDetail.value.map(element => {
+        if (element.id === id) {
+            detailNamaAsset.value = element.asset_name;
+            detailKondisiAsset.value = element.asset_condition;
+            detailJumlahAsset.value = element.asset_quantity;
+            detailTanggalAsset.value = element.asset_buy_date;
+            detailAssetReceipt.value = element.asset_receipt;
+            detailAssetPhoto.value = element.asset_photo;
+        }
+
+    })
+}
+
 
 //=========================================BreadCrumb =============================
 
@@ -239,9 +264,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const currentPath = router.currentRoute.value.path;
-console.log("cureant " + currentPath);
 const breadcrumb = ref(currentPath.split("/").filter((i) => i != ""));
-console.log("hiya hiya " + breadcrumb)
 
 const generateBreadcrumb = (index) => {
     let link = "";

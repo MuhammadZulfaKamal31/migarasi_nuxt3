@@ -18,7 +18,7 @@
             </div> -->
 
             <!-- loading -->
-            <div v-if="loading" class=" w-full h-[700px] md:h-[510px] flex justify-center py-40 bg-slate-200">
+            <div v-if="loading" class=" w-full h-screen md:h-[510px] flex justify-center py-40 bg-slate-200">
                 <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status">
                     <span
@@ -111,9 +111,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class=' h-[552px] w-full bg-white rounded-md'>
-                <h1 class=" text-xl p-7">History</h1>
-            </div> -->
         </div>
     </div>
     <div class=" w-full text-start p-5 pl-[65px] shadow-sm py-10 bg-slate-200">

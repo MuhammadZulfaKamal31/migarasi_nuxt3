@@ -48,9 +48,10 @@
                     </thead>
                     <tbody v-for=" i in karyawanDetail">
                         <tr class="">
-                            <td @click="tampil" class=" py-3 text-red-600 text-[15px] font-[600] cursor-pointer">{{
-                                i.employee_user.user_full_name }}</td>
-                            <!-- <td class=" font-[600] text-[15px]">{{ i.employee_position }}</td> -->
+                            <td @click="tampil" class=" py-3 text-red-600 text-[15px] font-[600]">
+                                <span @click="indexTampil(i.id)" class=" cursor-pointer"> {{ i.employee_user.user_full_name
+                                }} </span>
+                            </td>
                             <td>
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </td>
@@ -62,43 +63,56 @@
                 </table>
             </div>
             <!-- detil karyawan -->
-            <div v-show="tampilDetail" class=" w-full h-full bg-white p-7 lg:p-10 rounded-md">
-                <div v-for="i in karyawanDetail">
+            <div v-show="tampilDetail" class=" w-full h-full bg-white p-7 lg:p-10 rounded-md" ref="scroll">
+                <div>
                     <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]"> Detil Karyawan</h1>
                     <div class=" md:pl-0 pl-7 lg:pl-7 mt-7">
-                        <div class=" w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full bg-[#D9D9D9]">
-                            <img :src="`${baseImageUrl}` + i.employee_user.user_profile_picture" alt="">
+                        <div class=" lg:pl-8">
+                            <div class=" w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full bg-[#D9D9D9]">
+                                <img :src="`${baseImageUrl}` + detailGambarKaryawan"
+                                    class="w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full object-cover" alt="">
+                            </div>
                         </div>
                         <div class=" flex md:justify-start">
                             <div class=" py-10 flex flex-col items-center ">
-                                <h2 class=" text-[22px] md:text-[23px] lg:text-[29px] font-[500] py-2">{{
-                                    i.employee_user.username }} Comming Soon
+                                <h2 class=" text-[22px] md:text-[23px] lg:text-[29px] font-[500] py-2">
+                                    {{ detailNamaKaryawan }}
                                 </h2>
-                                <p class="text-[13px] font-[500]"> {{ i.employee_user.email }} Comming Soon</p>
+                                <p class="text-[13px] font-[500]">
+                                    {{ detailEmailKaryawan }}
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Posisi</label>
-                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">{{ i.employee_position }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
+                            <!-- {{ i.employee_position }} -->
+                            Comming Soon
+                        </p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Gaji Pokok</label>
-                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">{{ i.employee_salary }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
+                            Rp.
+                            {{ detailGajiKaryawan }}
+                        </p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Uang Makan</label>
-                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">Rp500.000,00</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]"> Comming Soon</p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Tahun Masuk</label>
-                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">{{ i.employee_join_date }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
+                            {{ formatDate }}
+                        </p>
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Jumlah Kesehatan</label>
-                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]"> {{
-                            i.employee_bpjs_ketenagakerjaan
-                        }}</p>
+                        <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
+                            {{ detailBpjsKaryawan }}
+                        </p>
                     </div>
 
                 </div>
@@ -153,29 +167,24 @@ definePageMeta({
     layout: "layouts"
 })
 import { useSidebarStore } from '../../stores/Store';
-
+import { useDateFormat } from '@vueuse/core'
 
 const sideBar = useSidebarStore();
 
-
-const tampilDetail = ref(false)
+//menempilkan menyembunyikan detail
+const tampilDetail = ref(false);
+const scroll = ref(null)
 const tampil = () => {
     tampilDetail.value = true
+    if (scroll.value) {
+        scroll.value.scrollIntoView({ behavior: 'smooth' })
+    }
 }
 
-//=====================================USEfETCH API ==========================
-// const route = useRoute();
-// const id_business = route.params.DetailKaryawan;
+const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
-// const { data: karyawan } = await useFetch(`${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_business}/employees`, {
-//     method: "GET",
-//     headers: {
-//         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4MDQ0MzM4LCJpYXQiOjE2OTI4NDg0MTEsImp0aSI6IjJmMjQ0ODU2OTE1ODQ2Y2U5NWMxMjgzZDY5OWZlZWZjIiwidXNlcl9pZCI6MX0.VgqE4tN8lrZIPUGq8UjURZXigpdF7z5MvUsh5_cRqB0`,
-//     },
-// })
 
 //=================================== UsefeFetch API =================================
-
 const loading = ref(false);
 
 import { useRoute } from 'vue-router';
@@ -200,18 +209,40 @@ async function getBisnis() {
             karyawanDetail.value = res.data.value.data;
             pageName.value = res.data.value.business;
             loading.value = false
-            console.log(res.data)
-        }, 1000)
-
+            console.log(res.data);
+        }, 500)
     }).catch(err => {
         console.log(err)
     })
 }
 
-onBeforeMount(async () => {
-    await getBisnis();
+onBeforeMount(() => {
+    setTimeout(() => {
+        getBisnis();
+    }, 200)
 })
+//================= Get Detail Karyawan ======================================================
 
+const detailNamaKaryawan = ref(null);
+const detailEmailKaryawan = ref(null);
+const detailGajiKaryawan = ref(null);
+const detailMasukKaryawan = ref(null);
+const detailBpjsKaryawan = ref(null);
+const detailGambarKaryawan = ref(null);
+const formatDate = useDateFormat(detailMasukKaryawan, 'DD MMMM YYYY');
+
+const indexTampil = (id) => {
+    karyawanDetail.value.map(element => {
+        if (element.id === id) {
+            detailNamaKaryawan.value = element.employee_user.user_full_name;
+            detailEmailKaryawan.value = element.employee_user.user.email;
+            detailGajiKaryawan.value = element.employee_salary;
+            detailMasukKaryawan.value = element.employee_join_date;
+            detailBpjsKaryawan.value = element.employee_bpjs_ketenagakerjaan;
+            detailGambarKaryawan.value = element.employee_user.user_profile_picture;
+        }
+    })
+}
 //==========================================BreadCrumb ==========================================
 const links = ref([]);
 const makeBreadcrumbs = () => {

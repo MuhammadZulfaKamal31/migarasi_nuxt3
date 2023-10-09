@@ -1,6 +1,6 @@
 <template>
-    <div class=" h-full w-full md:h-full pt-14 md:pt-0 px-7  md:px-14  gap-6 flex flex-col bg-slate-200 "
-        :class="sideBar.openSideBar ? 'md:p-[7%] lg:pr-[65px] duration-300' : ' lg:px-24 duration-300'">
+    <div class=" h-full w-full md:pb-28 md:h-full lg:h-full pt-14 md:pt-0 px-7  gap-6 flex flex-col bg-slate-200 "
+        :class="sideBar.openSideBar ? ' md:px-12: lg:pl-12 lg:pr-16 duration-300' : ' md:px-14 lg:px-24 duration-300'">
         <!-- <div class=" h-[77px]  bg-white rounded-md flex items-center justify-between px-6 absolute md:top-36 invisible md:visible"
             :class="sideBar.openSideBar ? ' duration-300 md:w-[1010px]' : 'duration-300  md:w-[1245px]'">
             <span class=" text-2xl font-[500]">{{ pageName }}</span>
@@ -51,10 +51,12 @@
                     <tbody v-for="i in pendamping">
                         <tr class="">
                             <td @click="tampilkan"
-                                class=" py-4 pt-6  flex items-center gap-3 text-red-600 text-[15px] font-[600] cursor-pointer">
+                                class=" py-4 pt-6  flex items-center gap-3 text-red-600 text-[15px] font-[600]">
                                 <img class=" w-[40px] h-[40px] rounded-full"
                                     :src="`${baseImageUrl}` + i.companion_user.user_profile_picture" alt="">
-                                {{ i.companion_user.user_full_name }}
+                                <span @click="indexTampil(i.id)" class=" cursor-pointer ">
+                                    {{ i.companion_user.user_full_name }}
+                                </span>
                             </td>
                             <td class="text-[15px] font-[600]">{{ i.companion_as.name }}</td>
                         </tr>
@@ -89,20 +91,23 @@
             </div>
         </div>
         <!-- Detail Pendamping -->
-        <div v-show="tampilDetail" class=" flex md:w-[48%] h-[600px] gap-10">
+        <div v-show="tampilDetail" class=" flex md:w-[48%] h-[600px] gap-10" ref="section">
             <div class=" h-full w-full bg-white p-8 rounded-md">
-                <div class=" flex flex-col items-center" v-for="i in pendamping">
+                <div class=" flex flex-col items-center">
                     <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Detail Pendamping</h1>
                     <div class=" py-5">
                         <div class=" h-[200px] w-[200px] lg:h-[241px] lg:w-[241px] bg-[#D9D9D9] rounded-full">
-                            <img :src="`${baseImageUrl}` + i.companion_user.user_profile_picture" alt=""
+                            <img :src="`${baseImageUrl}` + detailGambarPendamping" alt=""
                                 class=" rounded-full h-[200px] w-[200px] lg:h-[241px] lg:w-[241px] object-cover">
                         </div>
                     </div>
                     <div class=" flex flex-col items-center pt-6">
-                        <h1 class=" text-[29px] md:text-[32px]  font-semibold"> {{ i.companion_user.user_full_name }}
+                        <h1 class=" text-[29px] md:text-[32px]  font-semibold">
+                            {{ detailNamaPendamping }}
                         </h1>
-                        <p class=" text-[20px]">{{ i.companion_as.name }}</p>
+                        <p class=" text-[20px]">
+                            {{ detailSebagaiPendamping }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -124,10 +129,14 @@ import { useSidebarStore } from '../../stores/Store';
 const sideBar = useSidebarStore();
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
-//memnyembunyikan detail
+//memnyembunyikan dan menapilkan detail
 const tampilDetail = ref(false);
+const section = ref(null)
 const tampilkan = () => {
     tampilDetail.value = true;
+    if (section.value) {
+        section.value.scrollIntoView({ behavior: 'smooth' });
+    }
 }
 
 
@@ -159,7 +168,7 @@ async function getBisnis() {
             pendamping.value = res.data.value.data
             pageName.value = res.data.value.business;
             loading.value = false
-        }, 1000);
+        }, 700);
 
     }).catch(err => {
         console.log(err);
@@ -167,8 +176,24 @@ async function getBisnis() {
 }
 
 onBeforeMount(async () => {
-    await getBisnis();
+    setTimeout(() => getBisnis(), 500)
 });
+
+//====================Get detail Pendampiing ===================================================
+const detailNamaPendamping = ref(null);
+const detailSebagaiPendamping = ref(null)
+const detailGambarPendamping = ref(null);
+
+const indexTampil = (id) => {
+    pendamping.value.map(element => {
+        if (element.id === id) {
+            detailNamaPendamping.value = element.companion_user.user_full_name;
+            detailGambarPendamping.value = element.companion_user.user_profile_picture
+            detailSebagaiPendamping.value = element.companion_as.name
+        }
+    }
+    )
+}
 
 //==========================================BreadCrumb ==========================================
 const links = ref([]);

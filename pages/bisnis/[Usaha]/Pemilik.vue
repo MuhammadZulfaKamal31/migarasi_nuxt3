@@ -16,6 +16,7 @@
         </div> -->
         <!-- loading -->
         <!-- //pageName Mobile -->
+        <!-- {{ loading }} -->
         <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-7 md:mt-0">
             <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:hidden ">
                 <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
@@ -84,7 +85,7 @@
                 </form>
             </div>
         </div>
-        <div v-show="loading == false" class="  w-full h-[691px] gap-5 lg:gap-10 flex flex-col md:flex-row">
+        <div v-if="!loading" class="  w-full h-[691px] gap-5 lg:gap-10 flex flex-col md:flex-row">
             <!-- Pemilik -->
             <div class=" md:w-full h-[487px] bg-white p-7 lg:p-10 rounded-md">
                 <div class=" flex justify-between">
@@ -101,8 +102,11 @@
                         </thead>
                         <tbody v-for=" i in owner">
                             <tr class="">
-                                <td @click="tampilkan" class=" py-3 text-red-600 text-[15px] font-[600]">{{
-                                    i.owner_user.user_full_name }}</td>
+                                <td @click="tampilkan" class=" py-3 text-red-600 text-[15px] font-[600]">
+                                    <span @click=" indexTampil(i.id)" class=" cursor-pointer">
+                                        {{ i.owner_user.user_full_name }}
+                                    </span>
+                                </td>
                                 <td class=" font-[600] text-[15px]">{{ i.owner_shares }}%</td>
                                 <td>
                                     <span class="fa-solid fa-pen-to-square"></span>
@@ -116,22 +120,24 @@
                 </div>
             </div>
             <!-- Detail pemilik -->
-            <div v-show="tampilDetail" class=" lg:w-[108%] h-full bg-white p-7 lg:p-10 rounded-md">
+            <div v-show="tampilDetail" class=" lg:w-[108%] h-full bg-white p-7 lg:p-10 rounded-md" ref="scroll">
                 <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Detail Pemilik</h1>
-                <div v-for=" i in owner" class=" lg:pl-10 mt-14 flex flex-col items-center md:items-start ">
+                <div class=" lg:pl-10 mt-14 flex flex-col items-center md:items-start ">
                     <div class=" w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full bg-[#D9D9D9]">
-                        <img :src="`${baseImageUrl}` + i.owner_user.user_profile_picture" alt=""
-                            class=" md:w-[200px] md:h-[200px] lg:w-[241px] lg:h-[241px] rounded-full">
+                        <img :src="`${baseImageUrl}` + detailGambarPemilik" alt=""
+                            class=" w-[200px] h-[200px] lg:w-[241px] lg:h-[241px] rounded-full">
                     </div>
                     <div class=" flex justify-start">
                         <div class=" py-10 flex flex-col items-center">
-                            <h2 class=" text-[25px] md:text-[29px] font-[500] py-2">{{ i.owner_user.user_full_name }}
+                            <h2 class=" text-[25px] md:text-[29px] font-[500] py-2">
+                                {{ detailNamaPemilik }}
                             </h2>
-                            <p class="text-[13px] font-[500]">{{ i.owner_user.user.email }}</p>
+                            <p class="text-[13px] font-[500]">
+                                {{ detailEmailPemilik }}
+                            </p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -150,11 +156,19 @@ import { ref, computed, onMounted } from "vue"
 import { DoughnutChart } from "vue-chart-3"
 import { Chart, DoughnutController, ArcElement, Title, Tooltip } from "chart.js"
 
-//memnyembunyikan detail
+//memnyembunyikan dan menampilakan detail
 const tampilDetail = ref(false);
+const scroll = ref(null);
 const tampilkan = () => {
     tampilDetail.value = true;
+    if (scroll.value) {
+        scroll.value.scrollIntoView({ behavior: 'smooth' });
+    }
 }
+
+
+
+
 
 //=======================penyesuaian tampilan=======================================
 import { useSidebarStore } from '../../stores/Store';
@@ -165,14 +179,16 @@ const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 // Mendaftarkan modul Chart.js yang dibutuhkan
 Chart.register(DoughnutController, ArcElement, Title, Tooltip)
 // Data nilai-nilai
-const dataValues = ref([])
+const dataValues = ref([]);
+const colors = ["#ff7f50", "#ff7350", "#ff6450", "#ff5f50", "#ff6d50"];
+const lastColor = "#ffffff";
 // Menyiapkan data untuk grafik Donut
 const data = computed(() => ({
     labels: dataValues.value.map(value => `${value}%`),
     datasets: [
         {
             data: dataValues.value,
-            backgroundColor: ["#ff7f50", "#ffffff", "#f5afa3"]
+            backgroundColor: colors.slice(0, dataValues.value.length - 1).concat(lastColor)
         }
     ],
 }));
@@ -214,16 +230,15 @@ const onInputChange = () => {
 
 //===========================================useFetch Api=========================================
 import { useAktifLinkStore } from "~/stores/AktifLinkStore";
-
 const aktifLink = useAktifLinkStore();
-
 
 const loading = ref(false)
 
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const id_bisnis = route.params.Usaha;
-const owner = ref([]);
+const owner = ref();
+const ownerCoba = ref([])
 
 const namaBisnis = ref([]);
 const deskripsiBisnis = ref([])
@@ -231,21 +246,24 @@ const gambarBisnis = ref([]);
 // const pageName = ref([]);
 
 async function getBisnis() {
+    loading.value = true;
     const token = localStorage.getItem("token");
     console.log(token);
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}/owners`;
-    loading.value = true;
     await useFetch(url, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`
         }
     }).then(res => {
-
-        setTimeout(() => {
-            // console.log(res.data._rawValue.business);
-            owner.value = res.data.value.data;
-            gambarBisnis.value = res.data.value
+        // console.log(res.status)
+        if (res.status.value == 'success') {
+            // console.log(res.data)
+            console.log("Berhasil masuk success")
+            loading.value = false
+            console.log(res.data.value.data)
+            owner.value = res.data.value.data
+            gambarBisnis.value = res.data.value;
             namaBisnis.value = res.data.value.data;
             deskripsiBisnis.value = res.data.value;
             aktifLink.setActive(res.data._rawValue.business);
@@ -253,18 +271,32 @@ async function getBisnis() {
             //dougnut chart
             dataValues.value = res.data.value.data.map(owner => parseFloat(owner.owner_shares));
             dataValues.value.push(parseFloat(res.data.value.empty_shares));
-            loading.value = false
-
-        }, 700);
+        }
 
     }).catch(err => {
         console.log(err);
     })
 }
-
 onBeforeMount(async () => {
-    await getBisnis();
+
 });
+
+//=====================Get Detail Pemilik ==============================
+const detailNamaPemilik = ref(null);
+const detailEmailPemilik = ref(null);
+const detailGambarPemilik = ref(null);
+
+
+const indexTampil = (id) => {
+    owner.value.map(element => {
+        if (element.id === id) {
+            detailNamaPemilik.value = element.owner_user.user_full_name;
+            detailEmailPemilik.value = element.owner_user.user.email;
+            detailGambarPemilik.value = element.owner_user.user_profile_picture;
+
+        }
+    });
+}
 
 //==========================================BreadCrumb ==========================================
 const links = ref([]);
@@ -275,12 +307,12 @@ const makeBreadcrumbs = () => {
 
 const generateLink = (index) => {
     const subLinks = links.value.slice(0, index + 1)
-    console.log(subLinks)
     return '/' + subLinks.join("/");
 }
 onMounted(() => {
+    setTimeout(() => getBisnis(), 200)
     makeBreadcrumbs()
-})
+});
 
 
 </script>

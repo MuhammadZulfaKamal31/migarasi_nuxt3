@@ -2,6 +2,7 @@
 <template>
     <div class=" h-full pt-20 md:pt-12 lg:pt-16  flex flex-col gap-8 flex-wrap bg-slate-200"
         :class="openSideBar.openSideBar ? 'p-7  md:p-11 lg:pl-[50px] lg:pr-[60px]  duration-300' : ' p-7 md:px-16 lg:p-20 lg:px-24 duration-300 '">
+
         <!-- PageName Mobile -->
         <div v-show="loading == false" class=" pt-4 md:pt-0 w-full md:w-0 md:hidden">
             <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible "
@@ -25,6 +26,7 @@
                 </span>
             </div>
         </div>
+
         <!-- crackinCode -->
         <div v-else class=" w-full h-full md:h-full bg-white rounded-md p-5 md:p-7">
             <div class=" flex justify-between">
@@ -95,7 +97,7 @@
                                     {{ i.companion_user.user_full_name }}
                                 </span>
                             </td>
-                            <td class="md:text-[12px] lg:text-[15px] font-[600]">{{ i.companion_as.name }}</td>
+                            <td class=" text-[15px] md:text-[12px] lg:text-[15px] font-[600]">{{ i.companion_as.name }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -168,7 +170,7 @@
                     <tr class=" py-4">
                         <th class=" text-[17px] md:text-[20px] font-[600] text-start ">Deskripsi</th>
                         <th class=" text-[17px] md:text-[20px] font-[600] text-start ">Target</th>
-                        <th class="text-[17px] md:text-[20px] font-[600] text-start">Share</th>
+                        <th class="text-[17px] md:text-[20px] font-[600] text-start">Status</th>
                     </tr>
                 </thead>
                 <tbody v-for=" i in target">
@@ -176,16 +178,20 @@
                         <td class=" py-4  flex items-center gap-3 text-[14px] md:text-[15px] font-[600]">
                             {{ i.target_description }}
                         </td>
-                        <td class="text-[14px] md:text-[15px] font-[600]"> {{ i.target_end_date }}</td>
+                        <td class="text-[14px] md:text-[15px] font-[600]"> {{ formatDatee(i.target_end_date) }}</td>
                         <td class="text-[14px] md:text-[15px] font-[600]">
-                            <span class=" bg-[#00FFFF] p-2">{{ i.target_status.name }}</span>
+                            <!-- <span class="p-2" :style="{ backgroundColor: statusColor(i.target_status.name) }"> -->
+                            <span :class="statusColor(i.target_status.name)" class="p-2 rounded-sm">
+                                {{ i.target_status.name }}
+                            </span>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class=" w-full text-start p-5 pl-[65px] shadow-sm bg-slate-200 ">
+    <div class=" w-full text-start p-5 pl-[65px] shadow-sm bg-slate-200 bg-ye">
+        {{ date }}
         <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
             reserved.
         </span>
@@ -197,10 +203,27 @@ definePageMeta({
 })
 
 import { useSidebarStore } from '../../../stores/Store';
+import { formatDate, useDateFormat } from '@vueuse/core'
 
-// import DetailAsset from './detailasset/[DetailAsset].vue';
 
 const openSideBar = useSidebarStore();
+import { ref, defineProps } from 'vue';
+
+
+const statusColor = (statusName) => {
+    if (statusName === "Berlangsung") {
+        return "bg-blue-400"
+        // return "#00FFFF";
+    } else if (statusName === "Selesai") {
+        return "bg-yellow-400";
+    } else if (statusName === "Batal") {
+        return "bg-red-500";
+    } else {
+        return "transparent"; // Atur warna default sesuai kebutuhan
+    }
+};
+
+
 
 //==============================Usefect Data =======================================
 const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
@@ -221,9 +244,13 @@ const pemilik = ref(null)
 const pendamping = ref([]);
 const karyawan = ref([]);
 const asset = ref([]);
-const target = ref([])
+const target = ref([]);
 
-async function getDetailCircle() {
+const formatDatee = (date) => {
+    return useDateFormat(date, 'DD MMMM YYYY').value
+}
+
+async function getDetailBisnis() {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/business/detail/${id_bisnis}`;
     loading.value = true
@@ -251,15 +278,18 @@ async function getDetailCircle() {
             asset.value = res.data.value.data.business_assets;
             //terget
             target.value = res.data.value.data.business_target;
+
             loading.value = false
-        }, 1000)
+        }, 500)
     }).catch(err => {
         console.log(err)
     })
 }
 
 onBeforeMount(async () => {
-    await getDetailCircle();
+    setTimeout(() => {
+        getDetailBisnis();
+    }, 200)
 })
 
 //==================================================Breadcrumb ================================
@@ -267,7 +297,6 @@ onBeforeMount(async () => {
 const links = ref([]);
 const makeBreadcrumbs = () => {
     const routeName = useRoute().path;
-
     links.value = routeName.split("/").filter((i) => i != "");
 }
 
@@ -284,8 +313,6 @@ onMounted(() => {
 <style >
 .active-link {
     background-color: #007bff;
-    /* Atur warna latar belakang untuk tautan yang aktif */
     color: #fff;
-    /* Atur warna teks untuk tautan yang aktif */
 }
 </style>
