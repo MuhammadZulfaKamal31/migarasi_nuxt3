@@ -8,10 +8,12 @@
             <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible "
                 :class="openSideBar.openSideBar ? ' duration-300 md:ml-4 md:w-[960px]' : 'duration-300  md:ml-4 md:w-[1250px]'">
                 <span class=" text-[15px] md:text-2xl font-[500]">Bisnis Saya</span>
-                <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                <div class=" text-[70%]  flex flex-row space-x-1 font-semibold text-sm text-red-500">
                     <div v-for="(link, index) in links" :key="index">
-                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                        <nuxt-link :to="generateLink(index)"
+                            class="hover:text-gray-800 hover:bg-gray-800 hover:bg-opacity-10 p-1 rounded-sm">
+                            {{ link }}</nuxt-link>
+                        <span v-if="!(link === links[links.length - 1])" class="">/</span>
                     </div>
                 </div>
             </div>

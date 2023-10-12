@@ -54,7 +54,7 @@
                 <div class=" mx-5 my-5 text-[11px] w-[59px] text-[#A3A3A3] font-[500] flex flex-row items-center gap-1">
                     JRUHUB</div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis">
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/avoidPages">
                         <i class="fa-solid fa-briefcase hidden md:block"></i>
                         <span>
                             Comming Soon
@@ -63,8 +63,8 @@
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
-                            class="fa-solid fa-gauge hidden md:block"></span>
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
+                        to="/avoidPages"><span class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             Comming Soon
                             <!-- JRU INSTITUT -->
@@ -72,8 +72,8 @@
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
-                            class="fa-solid fa-gauge hidden md:block"></span>
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
+                        to="/avoidPages"><span class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             Comming Soon
                             <!-- JRUWORK -->
@@ -81,7 +81,7 @@
                     </router-link>
                 </div>
                 <div class=" my-3">
-                    <nuxt-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
+                    <nuxt-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/avoidPages"><span
                             class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             Comming Soon
@@ -90,8 +90,8 @@
                     </nuxt-link>
                 </div>
                 <div class=" my-3">
-                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1" to="/Bisnis"><span
-                            class="fa-solid fa-gauge hidden md:block"></span>
+                    <router-link class=" mx-5 text-[14px] font-[600] flex flex-row items-center gap-1"
+                        to="/avoidPages"><span class="fa-solid fa-gauge hidden md:block"></span>
                         <span>
                             Comming Soon
                             <!-- Stok Undangan -->

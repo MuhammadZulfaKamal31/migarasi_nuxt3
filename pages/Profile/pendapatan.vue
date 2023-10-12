@@ -26,10 +26,12 @@
             <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-14 md:mt-0">
                 <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
                     <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
-                    <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                    <div class=" text-[70%]  flex flex-row space-x-1 font-semibold text-sm text-red-500">
                         <div v-for="(link, index) in links" :key="index">
-                            <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                            <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                            <nuxt-link :to="generateLink(index)"
+                                class="hover:text-gray-800 hover:bg-gray-800 hover:bg-opacity-10 p-1 rounded-sm">
+                                {{ link }}</nuxt-link>
+                            <span v-if="!(link === links[links.length - 1])" class="">/</span>
                         </div>
                     </div>
                 </div>
@@ -40,26 +42,33 @@
                     <div>
                         <label class=" text-[21px] md:text-[22px] lg:text-[25px] font-[500] text-gray-500">Total
                             Gaji</label>
-                        <p class=" my-4 md:my-6 text-[24px] font-[600]">Rp {{ totalGaji }}</p>
+                        <p class=" my-4 md:my-6 text-[24px] font-[600]">{{ formatIdr(totalGaji) }}</p>
                     </div>
                 </div>
                 <div class=" flex justify-center items-center w-full h-full bg-white rounded">
                     <div>
                         <label class="text-[21px] md:text-[22px] lg:text-[25px] font-[500] text-gray-500">Total SHU</label>
-                        <p class=" my-4 md:my-6 text-[24px] font-[600]">Rp {{ totalShu }}</p>
+                        <p class=" my-4 md:my-6 text-[24px] font-[600]">{{ formatIdr(totalShu) }}</p>
+                    </div>
+                </div>
+                <div class=" flex justify-center items-center w-full h-full bg-white rounded">
+                    <div>
+                        <label class=" text-[21px] md:text-[22px] lg:text-[25px] font-[500] text-gray-500">Total
+                            Pendamping</label>
+                        <p class=" my-4 md:my-6 text-[24px] font-[600]"> {{ formatIdr(totalPendamping) }}</p>
                     </div>
                 </div>
                 <div class=" flex justify-center items-center w-full h-full bg-white rounded">
                     <div>
                         <label class=" text-[21px] md:text-[22px] lg:text-[25px] font-[500] text-gray-500">Total
                             Pendapatan</label>
-                        <p class=" my-4 md:my-6 text-[24px] font-[600]">Rp {{ totalPendapatan }}</p>
+                        <p class=" my-4 md:my-6 text-[24px] font-[600]"> {{ formatIdr(totalPendapatan) }}</p>
                     </div>
                 </div>
 
             </div>
             <div class=" flex flex-col md:flex-row gap-5 lg:gap-12 md:h-[500px] w-full mt-8 lg:px-10">
-                <!-- gaji  -->
+                <!-- gaji Pendamping -->
                 <div class="h-full w-full bg-white p-4 lg:p-7 lg::px-11 rounded-md">
                     <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600] mb-4">Gaji Pendamping</h1>
                     <table class="w-full md:mt-9">
@@ -72,16 +81,17 @@
                         </thead>
                         <tbody v-for=" i in gaji">
                             <tr>
-                                <!-- <td
+                                <td
                                     class=" py-3 md:py-4  flex items-center  md:gap-3 text-red-600 text-[15px] font-[600] md:hidden lg:inline">
                                     <img class=" h-[30px] w-[30px] md:w-[40px] md:h-[40px] rounded-full inline"
-                                        :src="`${baseImageUrl}` + i.companion_user.user_profile_picture" alt="">
+                                        :src="`${baseImageUrl}` + i.business_id.business_logo" alt="">
                                     <span class=" text-[13px] md:text-[15px] px-1">
-                                        {{ i.companion_user.user_full_name }}
+                                        {{ i.business_id.business_name }}
                                     </span>
-                                </td> -->
-                                <td class=" text-[13px] md:text-[15px] font-[600]">{{ i.business_id.business_name }}</td>
-                                <td class=" text-[13px] md:text-[15px] font-[600]">Rp {{ i.companion_salary }}</td>
+                                </td>
+                                <!-- <td class=" text-[13px] md:text-[15px] font-[600]">{{ i.business_id.business_name }}</td> -->
+                                <td class=" text-[13px] md:text-[15px] font-[600]"> {{ formatIdr(i.companion_salary) }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -99,19 +109,19 @@
                         </thead>
                         <tbody v-for=" i in shu">
                             <tr class="">
-                                <!-- <td
+                                <td
                                     class=" py-3 md:py-4  flex items-center gap-1 md:gap-3 text-red-600 text-[15px] font-[600] md:hidden lg:inline">
                                     <img class=" h-[30px] w-[30px] md:w-[40px] md:h-[40px] rounded-full inline"
-                                        :src="`${baseImageUrl}` + i.owner_user.user_profile_picture" alt="">
+                                        :src="`${baseImageUrl}` + i.business_id.business_logo" alt="">
                                     <span class=" text-[13px] md:text-[15px] overflow-auto px-1">
-                                        {{ i.owner_user.user_full_name }}
+                                        {{ i.business_id.business_name }}
                                     </span>
+                                </td>
+                                <!-- <td class=" text-[13px] md:text-[15px] font-[600]">
+                                    {{ i.business_id.business_name }}
                                 </td> -->
                                 <td class=" text-[13px] md:text-[15px] font-[600]">
-                                    {{ i.business_id.business_name }}
-                                </td>
-                                <td class=" text-[13px] md:text-[15px] font-[600]">
-                                    Rp.{{ menghitungPersen(i.owner_shares, i.business_id.business_shu) }}
+                                    {{ formatIdr(menghitungPersen(i.owner_shares, i.business_id.business_shu)) }}
                                 </td>
                             </tr>
                         </tbody>
@@ -132,19 +142,20 @@
                         </thead>
                         <tbody v-for="i in gajiKaryawan">
                             <tr>
-                                <!-- <td
+                                <td
                                     class=" py-3 md:py-4  flex items-center gap-1 md:gap-3 text-red-600 text-[15px] font-[600] md:hidden lg:inline">
-                                    <img class=" h-[30px] w-[30px] md:w-[40px] md:h-[40px] rounded-full inline" alt="">
+                                    <img class=" h-[30px] w-[30px] md:w-[40px] md:h-[40px] rounded-full inline"
+                                        :src="`${baseImageUrl}` + i.business_id.business_logo" alt="">
                                     <span class=" text-[13px] md:text-[15px] px-1">
-                                        {{ i.employee_user.user_full_name }}
+                                        {{ i.business_id.business_name }}
                                     </span>
-                                </td> -->
-                                <td class=" text-[13px] md:text-[15px] font-[600]">
-                                    {{ i.business_id.business_name }}
                                 </td>
+                                <!-- <td class=" text-[13px] md:text-[15px] font-[600]">
+                                    {{ i.business_id.business_name }}
+                                </td> -->
 
-                                <td class=" text-[13px] md:text-[15px] font-[600]">Rp
-                                    {{ i.employee_salary }}
+                                <td class=" text-[13px] md:text-[15px] font-[600]">
+                                    {{ formatIdr(i.employee_salary) }}
                                 </td>
                             </tr>
                         </tbody>
@@ -167,28 +178,35 @@ definePageMeta({
 })
 import { useSidebarStore } from '../../stores/Store';
 
-const sideBar = useSidebarStore();
 
-//========================================Get useFetch Api Pendapatan=====================
+//========================================useFetch Api Pendapatan=====================
+const sideBar = useSidebarStore();
 
 const baseImageUrl = `${import.meta.env.VITE_BASE_IMAGE_URL}`
 const loading = ref(false);
 
 const totalGaji = ref(null);
 const totalShu = ref(null);
-const totalPendapatan = ref(null)
+const totalPendamping = ref(null);
+const totalPendapatan = ref(null);
 
 const gaji = ref([]);
 const gajiKaryawan = ref([]);
-const shu = ref([])
+const shu = ref([]);
+
+const formatIdr = (value) => {
+    return parseFloat(value).toLocaleString('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+    });
+};
 
 const menghitungPersen = (persen, shu) => {
     console.log("persen " + persen, " shu " + shu)
     const hasil = (persen / 100) * shu;
     return hasil;
 };
-
-//============================== useFetch =================================================
+//-------------------------------------Get Pendapatan -------------------------------
 const getPendapatan = async () => {
     const token = localStorage.getItem("token");
     const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile/income`;
@@ -203,7 +221,9 @@ const getPendapatan = async () => {
         setTimeout(() => {
             totalGaji.value = res.data.value.data.total_employee_salary;
             totalShu.value = res.data.value.data.total_shu;
-            totalPendapatan.value = res.data.value.data.total_companion_salary;
+            totalPendamping.value = res.data.value.data.total_companion_salary;
+            totalPendapatan.value = res.data.value.data.total_income;
+
             //gaji Pendamping
             gaji.value = res.data.value.data.companion_salaries;
             //Shu
@@ -211,7 +231,7 @@ const getPendapatan = async () => {
 
             //Gaji Karyawan
             gajiKaryawan.value = res.data.value.data.employee_salaries;
-            loading.value = false
+            loading.value = false;
         }, 1000)
     })
 }

@@ -28,11 +28,13 @@
             <!-- //pageName Mobile -->
             <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 md:mt-0 md:hidden">
                 <div class="h-10 bg-white rounded-md flex items-center justify-between px-2  ">
-                    <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
-                    <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                    <span class=" text-[15px] md:text-2xl font-[500]">{{ pageName }}</span>
+                    <div class=" text-[70%]  flex flex-row space-x-1 font-semibold text-sm text-red-500">
                         <div v-for="(link, index) in links" :key="index">
-                            <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                            <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                            <nuxt-link :to="generateLink(index)"
+                                class="hover:text-gray-800 hover:bg-gray-800 hover:bg-opacity-10 p-1 rounded-sm">{{
+                                    link }}</nuxt-link>
+                            <span v-if="!(link === links[links.length - 1])" class="">/</span>
                         </div>
                     </div>
                 </div>
@@ -85,23 +87,23 @@
                         </div>
                     </div>
                     <div class=" py-5">
-                        <label for="" class=" text-[14px] font-[500]"> Posisi</label>
+                        <!-- <label for="" class=" text-[14px] font-[500]"> Posisi</label>
                         <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
-                            <!-- {{ i.employee_position }} -->
+                            {{ i.employee_position }}
                             Comming Soon
-                        </p>
+                        </p> -->
                     </div>
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Gaji Pokok</label>
                         <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
-                            Rp.
-                            {{ detailGajiKaryawan }}
+
+                            {{ formatIdr(detailGajiKaryawan) }}
                         </p>
                     </div>
-                    <div class=" py-5">
+                    <!-- <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Uang Makan</label>
                         <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]"> Comming Soon</p>
-                    </div>
+                    </div> -->
                     <div class=" py-5">
                         <label for="" class=" text-[14px] font-[500]"> Tahun Masuk</label>
                         <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
@@ -109,12 +111,11 @@
                         </p>
                     </div>
                     <div class=" py-5">
-                        <label for="" class=" text-[14px] font-[500]"> Jumlah Kesehatan</label>
+                        <label for="" class=" text-[14px] font-[500]"> Jumlah BPJS</label>
                         <p class=" text-[22px] md:text-[23px] lg:text-[29px] font-[600]">
                             {{ detailBpjsKaryawan }}
                         </p>
                     </div>
-
                 </div>
 
             </div>
@@ -185,6 +186,8 @@ const baseImageUrl = import.meta.env.VITE_BASE_IMAGE_URL;
 
 
 //=================================== UsefeFetch API =================================
+
+
 const loading = ref(false);
 
 import { useRoute } from 'vue-router';
@@ -223,6 +226,7 @@ onBeforeMount(() => {
 })
 //================= Get Detail Karyawan ======================================================
 
+
 const detailNamaKaryawan = ref(null);
 const detailEmailKaryawan = ref(null);
 const detailGajiKaryawan = ref(null);
@@ -230,6 +234,13 @@ const detailMasukKaryawan = ref(null);
 const detailBpjsKaryawan = ref(null);
 const detailGambarKaryawan = ref(null);
 const formatDate = useDateFormat(detailMasukKaryawan, 'DD MMMM YYYY');
+const formatIdr = (value) => {
+    return parseFloat(value).toLocaleString('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+    });
+};
+
 
 const indexTampil = (id) => {
     karyawanDetail.value.map(element => {

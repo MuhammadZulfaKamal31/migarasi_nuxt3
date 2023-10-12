@@ -25,21 +25,24 @@
         <!-- //pageName Mobile -->
         <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 md:mt-0">
             <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
-                <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
-                <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                <span class=" text-[15px] md:text-2xl font-[500]"> {{ pageName }}</span>
+                <div class=" text-[70%]  flex flex-row space-x-1 font-semibold text-sm text-red-500">
                     <div v-for="(link, index) in links" :key="index">
-                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                        <nuxt-link :to="generateLink(index)"
+                            class="hover:text-gray-800 hover:bg-gray-800 hover:bg-opacity-10 p-1 rounded-sm">
+                            {{ link }}</nuxt-link>
+                        <span v-if="!(link === links[links.length - 1])" class="">/</span>
                     </div>
                 </div>
             </div>
         </div>
+
         <div v-show="loading == false" class=" md:h-[487px] w-full flex flex-col md:flex-row gap-7 lg:gap-10">
             <!-- Pendamping -->
             <div class="h-full  w-full bg-white p-5 lg:p-8 rounded-md">
                 <div class=" flex justify-between">
                     <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Pendamping</h1>
-                    <i class="fa-solid fa-up-right-from-square text-xl"></i>
+                    <!-- <i class="fa-solid fa-up-right-from-square text-xl"></i> -->
                 </div>
                 <table class="w-full mt-9">
                     <thead>
@@ -68,8 +71,14 @@
                 <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]"> Tambah Pendamping</h1>
                 <form action="">
                     <div class=" py-4 pt-12">
-                        <input type="text" placeholder=" Pilih User"
+                        <input @input="onInputChange" v-model="searchQuery" type="text" placeholder=" Pilih User"
                             class="h-[58px] w-full bg-[#FAFAFA] border-2 outline-none px-2 focus:border-red-500 rounded-md">
+                        <ul v-if="showUserList" class=" mt-2 absolute md:w-60 w-lg:w-[550px] z-10">
+                            <li class=" bg-opacity-70 bg-black text-white rounded-b-sm p-2 cursor-pointer"
+                                v-for=" user in filteredUsers" :key="user.id" @click="selectUser(user)">
+                                {{ user.name }}
+                            </li>
+                        </ul>
                     </div>
                     <div class=" py-4">
                         <input type="text" placeholder=" Pilih User"
@@ -137,6 +146,35 @@ const tampilkan = () => {
     if (section.value) {
         section.value.scrollIntoView({ behavior: 'smooth' });
     }
+}
+
+//============================= Search Filter List ==================================
+const users = ref([
+    { id: 1, name: 'Muhammad Zulfa Kamal' },
+    { id: 2, name: 'Muhammad aufil lana kamalsyahsdsad' },
+    { id: 3, name: 'Mutiara dewi' },
+    { id: 4, name: 'Abdul Aziz' },
+    { id: 5, name: 'Spongebob' },
+]);
+
+const searchQuery = ref('');
+const showUserList = ref(false);
+
+const filteredUsers = computed(() => {
+    return users.value.filter(user => {
+        return user.name.toLowerCase().includes(searchQuery.value.toLowerCase()
+        )
+    }
+    )
+})
+
+const selectUser = (user) => {
+    searchQuery.value = user.name;
+    showUserList.value = false
+}
+
+const onInputChange = () => {
+    showUserList.value = !!searchQuery.value;
 }
 
 

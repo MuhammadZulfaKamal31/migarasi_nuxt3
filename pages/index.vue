@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar />
+        <LandingPageNavbar />
         <landingPageHero />
         <landingPageAbout />
         <landingPageCarousel />

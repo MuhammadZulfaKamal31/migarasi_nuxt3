@@ -16,10 +16,11 @@
                         <h2 class="text-2xl font-bold">{{ activeLink }}</h2>
                         <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
                             <div v-for="(link, index) in links " :key="index">
-                                <nuxt-link :to="generateLink(index)" class=" hover:text-black">
+                                <nuxt-link :to="generateLink(index)"
+                                    class=" hover:text-gray-800 hover:bg-gray-600 hover:bg-opacity-10 p-1 rounded-sm">
                                     {{ capitalizeFirstLetter(link) }}
-                                    <span v-if="!(link === links[links.length - 1])" class=" ml-2">/</span>
                                 </nuxt-link>
+                                <span v-if="!(link === links[links.length - 1])" class=" ml-1">/</span>
                             </div>
                         </div>
                     </div>
@@ -99,10 +100,10 @@ function capitalizeFirstLetter(string) {
 onMounted(() => {
     cekRoute();
     makeBreadcrumbs();
-    activeLink.value = sessionStorage.getItem('activeLink') ?? 'dashboard';
+    activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
 });
 onUpdated(() => {
-    activeLink.value = sessionStorage.getItem('activeLink') ?? 'dashboard';
+    activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
     makeBreadcrumbs();
 });
 

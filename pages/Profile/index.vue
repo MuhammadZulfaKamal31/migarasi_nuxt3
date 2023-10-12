@@ -30,11 +30,12 @@
                 <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-14 md:mt-0">
                     <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible ">
                         <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
-                        <div
-                            class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
+                        <div class=" text-[70%]  flex flex-row space-x-1 font-semibold text-sm text-red-500">
                             <div v-for="(link, index) in links" :key="index">
-                                <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                                <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                                <nuxt-link :to="generateLink(index)"
+                                    class="hover:text-gray-800 hover:bg-gray-800 hover:bg-opacity-10 p-1 rounded-sm">
+                                    {{ link }}</nuxt-link>
+                                <span v-if="!(link === links[links.length - 1])" class="">/</span>
                             </div>
                         </div>
                     </div>
@@ -81,15 +82,19 @@
                             </div>
                             <div class="m-1">
                                 <label class=" font-[500] text-[13px] text-slate-400" for="">Gaji</label>
-                                <p class=" text-[15px] font-[700]"> Rp {{ totalGaji }}</p>
+                                <p class=" text-[15px] font-[700]"> {{ formatIdr(gaji) }}</p>
                             </div>
                             <div class="m-1">
                                 <label class=" font-[500] text-[13px] text-slate-400" for="">SHU</label>
-                                <p class=" text-[15px] font-[700]">RP {{ shu }}</p>
+                                <p class=" text-[15px] font-[700]"> {{ formatIdr(shu) }}</p>
+                            </div>
+                            <div class="m-1">
+                                <label class=" font-[500] text-[13px] text-slate-400" for=""> Gaji Pendamping</label>
+                                <p class=" text-[15px] font-[700]"> {{ formatIdr(gajiPendamping) }}</p>
                             </div>
                             <div class="m-1">
                                 <label class=" font-[500] text-[13px] text-slate-400" for="">Total Pendapatan</label>
-                                <p class=" text-[15px] font-[700]">RP {{ totalPendapatan }}</p>
+                                <p class=" text-[15px] font-[700]"> {{ formatIdr(totalPendapatan) }}</p>
                             </div>
                         </div>
                     </div>
@@ -97,7 +102,8 @@
                     <div class=" h-full w-full bg-white mb-10 rounded-md p-4 lg:p-6">
                         <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Circle</h1>
                         <div class=" flex items-center my-3 justify-between">
-                            <div class="h-[90px] w-[190px] md:hidden lg:block">
+                            <span class=" text-xl font-medium text-gray-700"> Masih belum ada circle</span>
+                            <!-- <div class="h-[90px] w-[190px] md:hidden lg:block">
                                 <img class=" h-[70px] w-[70px] rounded-full object-cover"
                                     :src="`${baseImageUrl}` + circleLogo" alt="">
                             </div>
@@ -106,7 +112,7 @@
                                 <p class=" text-[13px] font-[500]">
                                     {{ circleAlamat }}
                                 </p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -151,7 +157,7 @@ const circleLogo = ref(null)
 
 async function getProfile() {
     const token = localStorage.getItem("token");
-    console.log(token)
+    console.log(token);
     const url = `${import.meta.env.VITE_BASE_API_URL}/user/my-profile`;
     loading.value = true
 
@@ -177,18 +183,25 @@ async function getProfile() {
             circleLogo.value = res.data.value.circle.circle_id.circle_logo;
 
             loading.value = false
-        }, 2000)
+        }, 1000)
 
     }).catch(err => {
         console.log(err);
     })
 }
 
-
 //================================ Get Usefetch API Pendapatan====================
 
-const totalGaji = ref(null);
+const formatIdr = (value) => {
+    return parseFloat(value).toLocaleString('id-ID', {
+        style: 'currency',
+        currency: 'IDR'
+    })
+}
+
+const gaji = ref(null);
 const shu = ref(null);
+const gajiPendamping = ref(null);
 const totalPendapatan = ref(null);
 
 const getPendapatan = async () => {
@@ -202,15 +215,18 @@ const getPendapatan = async () => {
             'Authorization': `Bearer ${token}`,
         }
     }).then(res => {
-        totalGaji.value = res.data.value.data.total_employee_salary;
+        gaji.value = res.data.value.data.total_employee_salary;
         shu.value = res.data.value.data.total_shu;
-        totalPendapatan.value = res.data.value.data.total_companion_salary;
+        gajiPendamping.value = res.data.value.data.total_companion_salary;
+        totalPendapatan.value = res.data.value.data.total_income;
     })
 }
 
-onBeforeMount(async () => {
-    await getProfile();
-    await getPendapatan();
+onBeforeMount(() => {
+    setTimeout(() => {
+        getProfile();
+        getPendapatan();
+    }, 300)
 })
 
 //=====================================BreadCrumbs ==================================
@@ -218,6 +234,7 @@ onBeforeMount(async () => {
 import { useRoute } from '#vue-router';
 
 const links = ref([]);
+
 const makeBreadcrumbs = () => {
     const routeName = useRoute().name;
     links.value = routeName.split("-");

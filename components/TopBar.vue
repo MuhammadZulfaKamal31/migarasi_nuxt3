@@ -1,13 +1,13 @@
 <template>
-    <div class=" md:w-[100%] lgw-[100%] xl:w-[100%]">
+    <div class=" md:w-[100%] lg:w-[100%] xl:w-[100%]">
         <!-- topbar -->
         <div class=" h-[190px] bg-red-500 pt-7 md:px-6 lg:px-10 ">
             <div class=" w-max mb-14 flex justify-between mx-7">
                 <div class=" flex md:gap-5 lg:gap-10 items-center">
                     <i @click="toggleSideBar" class="fa-solid fa-bars text-white text-2xl"></i>
-                    <input type="text"
+                    <!-- <input type="text"
                         class="md:w-[300px] lg:w-[375px] md:h-[50px] lg:h-[55px] border-2 outline-none px-2 focus:border-red-400 focus:rounded-md "
-                        placeholder="Search">
+                        placeholder="Search"> -->
                 </div>
                 <!-- profile -->
                 <div @click="toggleDropDown"
@@ -16,14 +16,13 @@
                         class="md:h-[60px] md:w-[60px] lg:h-[73px] lg:w-[73px] rounded-full object-cover" />
                 </div>
             </div>
-            <div>
-            </div>
         </div>
         <!-- dropdown profile -->
         <div v-show="showDropDown" class=" absolute right-[40px] top-[6.5rem] z-10 mt-2 w-[119px] origin-top-right rounded-md bg-white shadow-lg ring-1
                 ring-black ring-opacity-5 focus:outline-none">
             <div class="py-1 text-left">
-                <a href="/Profile" class=" block px-4 py-2 text-sm" role="menuitem" id=" menu-item-2">
+                <a href="/Profile" class=" block px-4 py-2 text-sm" role="menuitem" id=" menu-item-2"
+                    @click="aktifLink.setActive('Profile')">
                     <i class="fa-solid fa-user"></i> Pofile</a>
                 <form @submit.prevent="logout" action="" role="none">
                     <button type="submit" class=" block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1"
@@ -36,13 +35,15 @@
 
 <script setup>
 import { defineProps, ref } from 'vue';
-// import { useRoute } from 'vue-router';
+import { useAktifLinkStore } from '../stores/AktifLinkStore'
+
 
 const props = defineProps({
     toggleSideBar: Function,
     openSideBar: Boolean
 });
 
+const aktifLink = useAktifLinkStore();
 const showDropDown = ref(false);
 
 const toggleDropDown = () => {

@@ -19,11 +19,15 @@
         <!-- {{ loading }} -->
         <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0 mt-7 md:mt-0">
             <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:hidden ">
-                <span class=" text-[15px] md:text-2xl font-[500]"> Update Profile</span>
+                <span class=" text-[15px] md:text-2xl font-[500]"> {{ pageName }}</span>
                 <div class=" text-[0.7rem] md:text-[15px] flex flex-row space-x-2 font-semibold text-sm text-red-500">
-                    <div v-for="(link, index) in links" :key="index">
-                        <nuxt-link :to="generateLink(index)" class="hover:text-black">{{ link }}</nuxt-link>
-                        <span v-if="!(link === links[links.length - 1])" class="ml-2">/</span>
+                    <div class=" text-[70%]  flex flex-row space-x-1 font-semibold text-sm text-red-500">
+                        <div v-for="(link, index) in links" :key="index">
+                            <nuxt-link :to="generateLink(index)"
+                                class="hover:text-gray-800 hover:bg-gray-800 hover:bg-opacity-10 p-1 rounded-sm">{{
+                                    link }}</nuxt-link>
+                            <span v-if="!(link === links[links.length - 1])" class="">/</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,7 +65,7 @@
                     <div class=" my-8 md">
                         <input @input="onInputChange" v-model="searchQuery" placeholder=" Pilih User" type="text"
                             class=" border-2 outline-none px-2 focus:border-red-500 rounded-md w-full h-[57px] bg-[#FAFAFA]">
-                        <ul v-if="showUserList" class=" mt-2 absolute w-[450px] z-10">
+                        <ul v-if="showUserList" class=" mt-2 absolute md:w-60 w-lg:w-[550px] z-10">
                             <li class=" bg-opacity-70 bg-black text-white rounded-b-sm p-2 cursor-pointer"
                                 v-for="user in filteredUsers" :key="user.id" @click="selectUser(user)">{{ user.name }}
                             </li>
@@ -90,7 +94,7 @@
             <div class=" md:w-full h-[487px] bg-white p-7 lg:p-10 rounded-md">
                 <div class=" flex justify-between">
                     <h1 class=" text-[21px] md:text-[25px] lg:text-[32px] font-[600]">Pemilik</h1>
-                    <i class="fa-solid fa-up-right-from-square text-[20px] md:text-[25px]"></i>
+                    <!-- <i class="fa-solid fa-up-right-from-square text-[20px] md:text-[25px]"></i> -->
                 </div>
                 <div>
                     <table class=" w-full mt-10">
@@ -229,8 +233,8 @@ const onInputChange = () => {
 };
 
 //===========================================useFetch Api=========================================
-import { useAktifLinkStore } from "~/stores/AktifLinkStore";
-const aktifLink = useAktifLinkStore();
+// import { useAktifLinkStore } from "~/stores/AktifLinkStore";
+// const aktifLink = useAktifLinkStore();
 
 const loading = ref(false)
 
@@ -243,7 +247,7 @@ const ownerCoba = ref([])
 const namaBisnis = ref([]);
 const deskripsiBisnis = ref([])
 const gambarBisnis = ref([]);
-// const pageName = ref([]);
+const pageName = ref([]);
 
 async function getBisnis() {
     loading.value = true;
@@ -266,7 +270,8 @@ async function getBisnis() {
             gambarBisnis.value = res.data.value;
             namaBisnis.value = res.data.value.data;
             deskripsiBisnis.value = res.data.value;
-            aktifLink.setActive(res.data._rawValue.business);
+            pageName.value = res.data.value.business;
+            // aktifLink.setActive(res.data._rawValue.business);
 
             //dougnut chart
             dataValues.value = res.data.value.data.map(owner => parseFloat(owner.owner_shares));
