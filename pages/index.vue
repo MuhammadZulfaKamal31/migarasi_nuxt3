@@ -2,9 +2,9 @@
     <div>
         <LandingPageNavbar />
         <landingPageHero />
+        <landingPageRecentPost />
         <landingPageAbout />
         <landingPageCarousel />
-        <landingPageRecentPost />
         <Footer />
     </div>
 </template>
