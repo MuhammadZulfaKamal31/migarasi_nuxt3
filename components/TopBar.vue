@@ -40,7 +40,7 @@ import { useAktifLinkStore } from '../stores/AktifLinkStore'
 
 const props = defineProps({
     toggleSideBar: Function,
-    openSideBar: Boolean
+    // openSideBar: Boolean
 });
 
 const aktifLink = useAktifLinkStore();
