@@ -1,5 +1,5 @@
 <template>
-    <div class=" md:w-[100%] lg:w-[100%] xl:w-[full]">
+    <div class=" md:w-[100%] lg:w-[100%] xl:w-full">
         <!-- topbar -->
         <div class=" h-[190px] bg-red-500 pt-7 md:px-6 lg:px-10 ">
             <div class=" mb-14 flex justify-between mx-7">
