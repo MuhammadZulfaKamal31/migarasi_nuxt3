@@ -31,7 +31,6 @@ export const useSidebarStore = defineStore('sidebar', {
   },
 });
 
-
 //======================= Highlight Menu sideBar ====================================
 
 // import { defineStore } from 'pinia'

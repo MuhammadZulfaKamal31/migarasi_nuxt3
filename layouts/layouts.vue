@@ -1,11 +1,22 @@
 <template>
+    <p class=" flex justify-center">
+        test
+        {{ openSideBar.openSideBar }}
+        test
+    </p>
     <div class="w-full h-full flex" v-if="cekToken">
+
         <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
         </Sidebar>
         <div :class="{
             ' md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
             'w-full duration-300': !openSideBar.openSideBar
         }">
+            <p class=" flex justify-center">
+                test
+                {{ openSideBar.openSideBar }}
+                test
+            </p>
             <div class=" hidden md:block">
                 <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
                     'ml-[2%] md:w-[70%] lg:w-[69%] xl:w-[74%] duration-300': openSideBar.openSideBar,
@@ -26,6 +37,11 @@
                     </div>
                 </div>
             </div>
+            <p class=" flex justify-center">
+                test
+                {{ openSideBar.openSideBar }}
+                test
+            </p>
             <!-- :openSideBar="openSideBar.openSideBar" -->
             <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSidebar"
                 :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
@@ -35,6 +51,11 @@
             <div @click="toggleCloseBar">
                 <router-view></router-view>
             </div>
+            <p class=" flex justify-center">
+                test
+                {{ openSideBar.openSideBar }}
+                test
+            </p>
         </div>
     </div>
 </template>
