@@ -16,6 +16,21 @@ export const useSidebarStore = defineStore('sidebar', () => {
   return { openSideBar, toggleSideBar, closeSideBar };
 });
 
+// import { defineStore } from 'pinia';
+
+// export const useAuthStore = defineStore('auth', {
+//   state: () => ({
+//     PageName: null,
+//   }),
+//   actions: {
+//     logout() {
+//       this.token = null; // Atur token menjadi null
+//       sessionStorage.setItem('token'); // Hapus token dari localStorage
+//     },
+//   },
+// });
+
+
 //======================= Highlight Menu sideBar ====================================
 
 // import { defineStore } from 'pinia'
