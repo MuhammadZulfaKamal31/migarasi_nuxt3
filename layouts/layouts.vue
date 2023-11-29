@@ -28,8 +28,7 @@
                 </div>
             </div>
             <!-- :openSideBar="openSideBar.openSideBar" -->
-            <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
-                :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
+            <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
 
