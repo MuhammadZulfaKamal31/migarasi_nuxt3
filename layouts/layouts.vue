@@ -6,8 +6,7 @@
             ' md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
             'w-full duration-300': !openSideBar.openSideBar
         }" -->
-        <div
-            :class="openSideBar.openSideBar == true ? 'md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300'">
+        <div :class="openSideBar.openSideBar ? 'md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300'">
             <div class=" hidden md:block">
                 <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
                     'ml-[2%] md:w-[70%] lg:w-[69%] xl:w-[74%] duration-300': openSideBar.openSideBar,
