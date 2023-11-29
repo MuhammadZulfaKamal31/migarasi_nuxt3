@@ -1,8 +1,8 @@
 <template>
-    <div class=" md:w-[100%] lg:w-[100%] xl:w-[100%]">
+    <div class=" md:w-[100%] lg:w-[100%] xl:w-[full]">
         <!-- topbar -->
         <div class=" h-[190px] bg-red-500 pt-7 md:px-6 lg:px-10 ">
-            <div class=" w-max mb-14 flex justify-between mx-7">
+            <div class=" mb-14 flex justify-between mx-7">
                 <div class=" flex md:gap-5 lg:gap-10 items-center">
                     <i @click="toggleSideBar" class="fa-solid fa-bars text-white text-2xl"></i>
                     <!-- <input type="text"
