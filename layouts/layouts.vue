@@ -1,12 +1,13 @@
 <template>
-    <div class="w-full h-full flex" v-if="cekToken">
+    <!-- class="w-full h-full flex" -->
+    <div :class="openSideBar.openSideBar ? 'w-full duration-300' : 'w-full duration-300'" v-if="cekToken">
         <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
         </Sidebar>
         <!-- :class="{
-            ' md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
+            '  w-full duration-300': openSideBar.openSideBar,
             'w-full duration-300': !openSideBar.openSideBar
         }" -->
-        <div :class="openSideBar.openSideBar ? 'md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300'">
+        <div :class="openSideBar.openSideBar ? 'md:ml-[200px] lg:ml-[300px] duration-300' : 'duration-300'">
             <div class=" hidden md:block">
                 <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
                     'ml-[2%] md:w-[70%] lg:w-[69%] xl:w-[74%] duration-300': openSideBar.openSideBar,
@@ -28,7 +29,8 @@
                 </div>
             </div>
             <!-- :openSideBar="openSideBar.openSideBar" -->
-            <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar" />
+            <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
+                :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
 
