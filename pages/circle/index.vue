@@ -10,7 +10,7 @@
                     <span
                         class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
                 </div>
-            </div>run dev
+            </div>
             <!-- //pageName Mobile -->
             <div v-show="loading == false" class="py-[30px] md:py-0 w-full md:w-0">
                 <div class="h-10 bg-white rounded-md flex items-center justify-between px-2 md:invisible "
