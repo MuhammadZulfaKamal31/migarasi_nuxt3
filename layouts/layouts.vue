@@ -5,7 +5,9 @@
         </Sidebar>
 
         <p class="flex items-center justify-center">
+            cek
             {{ openSideBar.openSideBar }}
+            cek
         </p>
         <!-- :class="{
             '  w-full duration-300': openSideBar.openSideBar,
@@ -37,6 +39,12 @@
                 :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
+            =========
+            <p class="flex items-center justify-center">
+                cek
+                {{ openSideBar.openSideBar }}
+                cek
+            </p>
 
             <div @click="toggleCloseBar">
                 <router-view></router-view>
