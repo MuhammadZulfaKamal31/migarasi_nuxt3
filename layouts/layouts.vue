@@ -3,6 +3,10 @@
     <div :class="openSideBar.openSideBar ? 'w-full duration-300' : 'w-full duration-300'" v-if="cekToken">
         <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
         </Sidebar>
+
+        <p class="flex items-center justify-center">
+            {{ openSideBar.openSideBar }}
+        </p>
         <!-- :class="{
             '  w-full duration-300': openSideBar.openSideBar,
             'w-full duration-300': !openSideBar.openSideBar
