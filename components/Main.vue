@@ -39,7 +39,7 @@ const props = defineProps({
     // generateLink: Function,
     // capitalizeFirstLetter: Function,
     // links: Array,
-    // activeLink: String
+    activeLink: String
 });
 
 import { useSidebarStore } from '../stores/Store';
