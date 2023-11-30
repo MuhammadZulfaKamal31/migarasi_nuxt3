@@ -25,19 +25,21 @@
 
 const props = defineProps({
     dataOpenSideBar: Boolean,
-    activeLink: String
+    activeLink: String,
+    links: Array,
+    generateLink: Function,
+    capitalizeFirstLetter: Function
 })
 
-const links = ["home", "products", "about", "contact"];
 
-const generateLink = (index) => {
-    const subLinks = links.slice(0, index + 1);
-    return '/' + subLinks.join("/");
-};
+// const generateLink = (index) => {
+//     const subLinks = links.slice(0, index + 1);
+//     return '/' + subLinks.join("/");
+// };
 
-const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-};
+// const capitalizeFirstLetter = (string) => {
+//     return string.charAt(0).toUpperCase() + string.slice(1);
+// };
 
 
 </script>

@@ -6,6 +6,7 @@
         <Main :dataOpenSideBar="openSideBar.openSideBar" :generateLink="generateLink"
             :capitalizeFirstLetter="capitalizeFirstLetter" :links="links" :activeLink="activeLink">
         </Main>
+
     </div>
 </template>
 

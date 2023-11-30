@@ -1,12 +1,12 @@
 <template>
     <div :class="dataOpenSideBar ? 'md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300'">
-        <Pagename :dataOpenSideBar="dataOpenSideBar" :activeLink="activeLink" />
+        <Pagename :dataOpenSideBar="dataOpenSideBar" :activeLink="activeLink" :links="links" :generateLink="generateLink"
+            :capitalizeFirstLetter="capitalizeFirstLetter" />
         <!-- :openSideBar="openSideBar.openSideBar" -->
         <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
             :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
         <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
             class=" md:hidden "></TopBarResponsif>
-
         <div @click="toggleCloseBar">
             <router-view></router-view>
         </div>
@@ -18,13 +18,13 @@
 const props = defineProps({
     dataOpenSideBar: Boolean,
     activeLink: String,
-    // generateLink: Function,
-    // capitalizeFirstLetter: Function,
-    // links: Array,
+    generateLink: Function,
+    capitalizeFirstLetter: Function,
+    links: Array,
 });
 
 import { useSidebarStore } from '../stores/Store';
-const openSideBar = useSidebarStore()
+const openSideBar = useSidebarStore();
 
 // menutup layar mobile satu arah saja
 const toggleCloseBar = () => {
