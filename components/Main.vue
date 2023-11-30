@@ -1,6 +1,4 @@
 <template>
-    <div>
-    </div>
     <div :class="dataOpenSideBar ? 'md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300'">
         <div class=" hidden md:block">
             <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
@@ -41,7 +39,7 @@ const props = defineProps({
     generateLink: Function,
     capitalizeFirstLetter: Function,
     links: Array,
-    activeLink: String
+    // activeLink: String
 });
 
 import { useSidebarStore } from '../stores/Store';
