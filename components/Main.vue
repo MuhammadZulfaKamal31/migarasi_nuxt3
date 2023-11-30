@@ -36,9 +36,9 @@
 
 const props = defineProps({
     dataOpenSideBar: Boolean,
-    // generateLink: Function,
+    generateLink: Function,
     // capitalizeFirstLetter: Function,
-    // links: Array,
+    links: null,
     activeLink: String
 });
 
