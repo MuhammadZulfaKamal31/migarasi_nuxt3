@@ -1,22 +1,10 @@
 <template>
-    <p class=" flex justify-center">
-        test
-        {{ openSideBar.openSideBar }}
-        test
-    </p>
     <div class="w-full h-full flex" v-if="cekToken">
-
-        <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
-        </Sidebar>
-        <div :class="{
+        <!-- :class="{
             ' md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
             'w-full duration-300': !openSideBar.openSideBar
-        }">
-            <p class=" flex justify-center">
-                test
-                {{ openSideBar.openSideBar }}
-                test
-            </p>
+        }" -->
+        <div :class="openSideBar.openSideBar ? ' md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300'">
             <div class=" hidden md:block">
                 <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
                     'ml-[2%] md:w-[70%] lg:w-[69%] xl:w-[74%] duration-300': openSideBar.openSideBar,
@@ -37,26 +25,18 @@
                     </div>
                 </div>
             </div>
-            <p class=" flex justify-center">
-                test
-                {{ openSideBar.openSideBar }}
-                test
-            </p>
             <!-- :openSideBar="openSideBar.openSideBar" -->
-            <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSidebar"
-                :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
+            <!-- :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" -->
+            <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSidebar" />
             <TopBarResponsif :toggleSideBar="openSideBar.toggleSidebar" :openSideBar="openSideBar.openSideBar"
                 class=" md:hidden "></TopBarResponsif>
 
             <div @click="toggleCloseBar">
                 <router-view></router-view>
             </div>
-            <p class=" flex justify-center">
-                test
-                {{ openSideBar.openSideBar }}
-                test
-            </p>
         </div>
+        <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
+        </Sidebar>
     </div>
 </template>
 
@@ -66,7 +46,8 @@ import TopBarResponsif from '../../components/TopBarResponsif.vue';
 import Sidebar from '../../components/SideBar.vue'
 import { useSidebarStore } from '../stores/Store';
 
-const openSideBar = useSidebarStore()
+const openSideBar = useSidebarStore();
+const toggleSideBar = openSideBar.openSideBar
 
 // menutup layar mobile satu arah saja
 const toggleCloseBar = () => {
