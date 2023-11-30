@@ -83,3 +83,6 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
         </div>
     </div>
 </template>
+
+        <div :class="openSideBar.openSideBar ? ' md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300' >
+

@@ -25,7 +25,7 @@ export const useSidebarStore = defineStore('sidebar', {
     closeSideBar() {
       this.$state.openSideBar = false;
     },
-    toggleSidebar() {
+    toggleSideBar() {
       this.$state.openSideBar = !this.$state.openSideBar
     }
   },
