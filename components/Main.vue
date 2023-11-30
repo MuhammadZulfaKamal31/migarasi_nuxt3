@@ -36,10 +36,10 @@
 
 const props = defineProps({
     dataOpenSideBar: Boolean,
-    generateLink: Function,
+    activeLink: String,
+    // generateLink: Function,
     // capitalizeFirstLetter: Function,
-    links: null,
-    activeLink: String
+    // links: Array,
 });
 
 import { useSidebarStore } from '../stores/Store';
@@ -58,6 +58,17 @@ if (process.client) {
         openSideBar.openSideBar = false;
     }
 }
+
+const links = ["home", "products", "about", "contact"];
+
+const generateLink = (index) => {
+    const subLinks = links.slice(0, index + 1);
+    return '/' + subLinks.join("/");
+};
+
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 </script>
 
