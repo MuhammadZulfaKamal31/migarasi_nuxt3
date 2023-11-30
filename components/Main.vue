@@ -1,10 +1,6 @@
 <template>
     <div>
     </div>
-    <!-- :class="{
-    ' md:ml-[200px] lg:ml-[300px] w-full duration-300': openSideBar.openSideBar,
-    'w-full duration-300': !openSideBar.openSideBar
-    }"> -->
     <div :class="dataOpenSideBar ? 'md:ml-[200px] lg:ml-[300px] w-full duration-300' : 'w-full duration-300'">
         <div class=" hidden md:block">
             <div class="  md:flex top-36 flex flex-row absolute justify-center px-50 px-5" :class="{
@@ -41,8 +37,12 @@
 <script setup>
 
 const props = defineProps({
-    dataOpenSideBar: Boolean
-})
+    dataOpenSideBar: Boolean,
+    generateLink: Function,
+    capitalizeFirstLetter: Function,
+    links: Array,
+    activeLink: String
+});
 
 import { useSidebarStore } from '../stores/Store';
 const openSideBar = useSidebarStore()
@@ -60,6 +60,7 @@ if (process.client) {
         openSideBar.openSideBar = false;
     }
 }
+
 </script>
 
 <style lang="scss" scoped></style>

@@ -3,22 +3,18 @@
         <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
         </Sidebar>
 
-        <Main :dataOpenSideBar="openSideBar.openSideBar">
-
+        <Main :dataOpenSideBar="openSideBar.openSideBar" :generateLink="generateLink"
+            :capitalizeFirstLetter="capitalizeFirstLetter" :links="links" :activeLink="activeLink">
         </Main>
-
     </div>
 </template>
 
 <script setup>
-import TopBar from '../../components/TopBar.vue'
-import TopBarResponsif from '../../components/TopBarResponsif.vue';
+
 import Sidebar from '../../components/SideBar.vue'
 import { useSidebarStore } from '../stores/Store';
 
 const openSideBar = useSidebarStore()
-
-
 
 //=========================================Protect Route ==========================================
 import { ref, onMounted } from 'vue';
