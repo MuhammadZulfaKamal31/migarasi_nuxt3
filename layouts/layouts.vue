@@ -57,6 +57,7 @@ onMounted(() => {
     makeBreadcrumbs();
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
 });
+
 onUpdated(() => {
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
     makeBreadcrumbs();
