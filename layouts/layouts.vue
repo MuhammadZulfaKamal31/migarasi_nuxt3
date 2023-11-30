@@ -2,11 +2,9 @@
     <div class="w-full h-full flex" v-if="cekToken">
         <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
         </Sidebar>
-
-        <Main :dataOpenSideBar="openSideBar.openSideBar" :generateLink="generateLink"
+        <Main :dataOpenSideBar="openSideBar?.openSideBar" :generateLink="generateLink"
             :capitalizeFirstLetter="capitalizeFirstLetter" :links="links" :activeLink="activeLink">
         </Main>
-
     </div>
 </template>
 
@@ -40,7 +38,7 @@ const cekRoute = () => {
 //=====================breadCrumb=====================================
 const makeBreadcrumbs = () => {
     const routeName = useRoute().path;
-    links.value = routeName.split("/").filter((i) => i != "");
+    links.value = routeName?.split("/").filter((i) => i != "");
 }
 
 const generateLink = (index) => {
@@ -58,7 +56,6 @@ onMounted(() => {
     makeBreadcrumbs();
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
 });
-
 onUpdated(() => {
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
     makeBreadcrumbs();

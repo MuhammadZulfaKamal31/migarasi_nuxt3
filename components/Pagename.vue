@@ -23,6 +23,7 @@
 
 <script setup>
 
+
 const props = defineProps({
     dataOpenSideBar: Boolean,
     activeLink: String,
@@ -30,6 +31,14 @@ const props = defineProps({
     generateLink: Function,
     capitalizeFirstLetter: Function
 })
+
+// const links = ref([]);
+// const makeBreadcrumbs = () => {
+//     const routeName = useRoute().path;
+//     links.value = routeName.split("/").filter((i) => i != "");
+// }
+
+// const links = ["home", "products", "about", "contact"];
 
 
 // const generateLink = (index) => {
@@ -40,6 +49,14 @@ const props = defineProps({
 // const capitalizeFirstLetter = (string) => {
 //     return string.charAt(0).toUpperCase() + string.slice(1);
 // };
+
+// onMounted(() => {
+//     makeBreadcrumbs()
+// })
+
+// onUpdated(() => {
+//     makeBreadcrumbs()
+// })
 
 
 </script>
