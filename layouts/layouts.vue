@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full flex" v-if="cekToken">
-        <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
+        <Sidebar :dataOpenSideBar="openSideBar?.openSideBar" class="z-10">
         </Sidebar>
         <Main :dataOpenSideBar="openSideBar?.openSideBar" :generateLink="generateLink"
             :capitalizeFirstLetter="capitalizeFirstLetter" :links="links" :activeLink="activeLink">
@@ -51,16 +51,21 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const onMountedAsync = async () => {
+// const onMountedAsync = async () => {
+//     cekRoute();
+//     await makeBreadcrumbs();
+//     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
+// };
+
+// onMountedAsync();
+
+onMounted(async () => {
     cekRoute();
     await makeBreadcrumbs();
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
-};
-
-onMountedAsync();
-
-onUpdated(() => {
-    makeBreadcrumbs();
+});
+onUpdated(async () => {
+    await makeBreadcrumbs();
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
 });
 
