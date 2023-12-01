@@ -36,9 +36,9 @@ const cekRoute = () => {
 };
 
 //=====================breadCrumb=====================================
-const makeBreadcrumbs = () => {
+const makeBreadcrumbs = async () => {
     const routeName = useRoute().path;
-    links.value = routeName?.split("/").filter((i) => i != "");
+    links.value = routeName.split("/").filter((i) => i != "");
 }
 
 const generateLink = (index) => {
@@ -51,14 +51,17 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-onMounted(() => {
+const onMountedAsync = async () => {
     cekRoute();
-    makeBreadcrumbs();
+    await makeBreadcrumbs();
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
-});
+};
+
+onMountedAsync();
+
 onUpdated(() => {
-    activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
     makeBreadcrumbs();
+    activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
 });
 
 
