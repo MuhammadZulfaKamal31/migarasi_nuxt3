@@ -1,8 +1,8 @@
 <template>
     <div class="w-full h-full flex" v-if="cekToken">
-        <Sidebar :dataOpenSideBar="openSideBar?.openSideBar" class="z-10">
+        <Sidebar :dataOpenSideBar="openSideBar.openSideBar" class="z-10">
         </Sidebar>
-        <Main :dataOpenSideBar="openSideBar?.openSideBar" :generateLink="generateLink"
+        <Main :dataOpenSideBar="openSideBar.openSideBar" :generateLink="generateLink"
             :capitalizeFirstLetter="capitalizeFirstLetter" :links="links" :activeLink="activeLink">
         </Main>
     </div>
