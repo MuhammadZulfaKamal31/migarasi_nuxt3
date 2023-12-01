@@ -8,7 +8,7 @@
                 class="bg-white shadow-xl w-full md:h-16 lg:h-20 rounded-xl flex flex-row justify-between items-center px-5">
                 <h2 class="text-2xl font-bold">{{ activeLink }}</h2>
                 <div class="flex flex-row space-x-2 font-semibold text-sm text-red-500">
-                    <div v-for="(link, index) in links " :key="index">
+                    <!-- <div v-for="(link, index) in links " :key="index">
                         <nuxt-link :to="generateLink(index)"
                             class=" hover:text-gray-800 hover:bg-gray-600 hover:bg-opacity-10 p-1 rounded-sm">
                             {{
@@ -17,7 +17,7 @@
                             }}
                         </nuxt-link>
                         <span v-if="!(link === links[links.length - 1])" class=" ml-1">/</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -36,27 +36,26 @@ const props = defineProps({
 })
 
 //==============================Breadcrumb=====================
-import { useRoute } from '#vue-router'
-const links = ref([]);
-const makeBreadcrumbs = async () => {
-    const routeName = useRoute().path;
-    links.value = routeName.split("/").filter((i) => i != "");
-}
+// import { useRoute } from '#vue-router'
+// const links = ref([]);
+// const makeBreadcrumbs = async () => {
+//     const routeName = useRoute().path;
+//     links.value = routeName.split("/").filter((i) => i != "");
+// }
 
-const generateLink = async (index) => {
-    const subLinks = links.value.slice(0, index + 1)
-    // console.log(subLinks)
-    return '/' + subLinks.join("/");
-}
+// const generateLink = async (index) => {
+//     const subLinks = links.value.slice(0, index + 1)
+//     // console.log(subLinks)
+//     return '/' + subLinks.join("/");
+// }
 
 
-onUpdated(() => {
-    makeBreadcrumbs();
-})
-onMounted(() => {
-    makeBreadcrumbs();
-})
-
+// onUpdated(() => {
+//     makeBreadcrumbs();
+// })
+// onMounted(() => {
+//     makeBreadcrumbs();
+// })
 
 </script>
 
