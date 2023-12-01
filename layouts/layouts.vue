@@ -36,10 +36,10 @@ const cekRoute = () => {
 };
 
 //=====================breadCrumb=====================================
-const makeBreadcrumbs = async () => {
-    const routeName = useRoute().path;
-    links.value = routeName.split("/").filter((i) => i != "");
-}
+// const makeBreadcrumbs = async () => {
+//     const routeName = useRoute().path;
+//     links.value = routeName.split("/").filter((i) => i != "");
+// }
 
 const generateLink = (index) => {
     const subLinks = links.value.slice(0, index + 1)
@@ -61,11 +61,11 @@ function capitalizeFirstLetter(string) {
 
 onMounted(async () => {
     cekRoute();
-    await makeBreadcrumbs();
+    // await makeBreadcrumbs();
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
 });
 onUpdated(async () => {
-    await makeBreadcrumbs();
+    // await makeBreadcrumbs();
     activeLink.value = sessionStorage.getItem('activeLink') ?? 'Dashboard';
 });
 
