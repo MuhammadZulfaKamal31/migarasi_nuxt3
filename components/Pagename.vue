@@ -11,7 +11,10 @@
                     <div v-for="(link, index) in links " :key="index">
                         <nuxt-link :to="generateLink(index)"
                             class=" hover:text-gray-800 hover:bg-gray-600 hover:bg-opacity-10 p-1 rounded-sm">
-                            {{ capitalizeFirstLetter(link) }}
+                            {{
+                                // capitalizeFirstLetter(link)
+                                link
+                            }}
                         </nuxt-link>
                         <span v-if="!(link === links[links.length - 1])" class=" ml-1">/</span>
                     </div>
@@ -28,35 +31,31 @@ const props = defineProps({
     dataOpenSideBar: Boolean,
     activeLink: String,
     // links: Array,
-    generateLink: Function,
-    capitalizeFirstLetter: Function
+    // generateLink: Function,
+    // capitalizeFirstLetter: Function
 })
 
-// const links = ref([]);
-// const makeBreadcrumbs = () => {
-//     const routeName = useRoute().path;
-//     links.value = routeName.split("/").filter((i) => i != "");
-// }
+//==============================Breadcrumb=====================
+import { useRoute } from '#vue-router'
+const links = ref([]);
+const makeBreadcrumbs = async () => {
+    const routeName = useRoute().path;
+    links.value = routeName.split("/").filter((i) => i != "");
+}
 
-// const links = ["home", "products", "about", "contact"];
+const generateLink = async (index) => {
+    const subLinks = links.value.slice(0, index + 1)
+    // console.log(subLinks)
+    return '/' + subLinks.join("/");
+}
 
 
-// const generateLink = (index) => {
-//     const subLinks = links.slice(0, index + 1);
-//     return '/' + subLinks.join("/");
-// };
-
-// const capitalizeFirstLetter = (string) => {
-//     return string.charAt(0).toUpperCase() + string.slice(1);
-// };
-
-// onMounted(() => {
-//     makeBreadcrumbs()
-// })
-
-// onUpdated(() => {
-//     makeBreadcrumbs()
-// })
+onUpdated(() => {
+    makeBreadcrumbs();
+})
+onMounted(() => {
+    makeBreadcrumbs();
+})
 
 
 </script>

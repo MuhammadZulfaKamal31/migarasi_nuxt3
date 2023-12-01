@@ -41,15 +41,15 @@ const cekRoute = () => {
 //     links.value = routeName.split("/").filter((i) => i != "");
 // }
 
-const generateLink = (index) => {
-    const subLinks = links.value.slice(0, index + 1)
-    // console.log(subLinks)
-    return '/' + subLinks.join("/");
-}
+// const generateLink = (index) => {
+//     const subLinks = links.value.slice(0, index + 1)
+//     // console.log(subLinks)
+//     return '/' + subLinks.join("/");
+// }
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+// function capitalizeFirstLetter(string) {
+//     return string.charAt(0).toUpperCase() + string.slice(1);
+// }
 
 // const onMountedAsync = async () => {
 //     cekRoute();
