@@ -18,9 +18,9 @@
 const props = defineProps({
     dataOpenSideBar: Boolean,
     activeLink: String,
-    generateLink: Function,
-    capitalizeFirstLetter: Function,
-    links: Array,
+    // generateLink: Function,
+    // capitalizeFirstLetter: Function,
+    // links: Array,
 });
 
 import { useSidebarStore } from '../stores/Store';

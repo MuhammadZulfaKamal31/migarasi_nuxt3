@@ -24,7 +24,7 @@
                 <a href="/Profile" class=" block px-4 py-2 text-sm" role="menuitem" id=" menu-item-2"
                     @click="aktifLink.setActive('Profile')">
                     <i class="fa-solid fa-user"></i> Pofile</a>
-                <form @submit.prevent="logout" action="" role="none">
+                <form @submit="logout" action="" role="none">
                     <button type="submit" class=" block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1"
                         id="menu-item-3"><i class="fa-solid fa-power-off"></i> Log Out</button>
                 </form>

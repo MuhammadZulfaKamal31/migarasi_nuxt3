@@ -42,7 +42,7 @@
                 </div>
                 <span class="fa-solid fa-pen-to-square md:text-[25px]"></span>
             </div>
-            <p class=" text-[14px] md:text-[17px] p-2 md:p-9 w-full">
+            <p class=" text-[16px] md:text-[17px] font-[600] p-2 md:p-9 w-full">
                 {{ deskripsiBisnis }}
             </p>
         </div>

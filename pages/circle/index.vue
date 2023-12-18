@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class='w-full h-screen md:h-screen lg:h-screen bg-slate-200 px-7 md:px-0 rounded-md overflow-auto pt-20 md:pt-4'
+        <div class='w-full h-full bg-slate-200 px-7 md:px-0 rounded-md pt-20 md:pt-4'
             :class="sideBar.openSideBar ? 'md:pl-6 md:pr-7 lg:pr-[5%] lg:pl-10 duration-300' : 'md:px-[5%] lg:px-[90px] duration-300'">
             <!-- loading -->
-            <div v-if="loading" class="h-[700px] md:h-full flex justify-center py-40 bg-slate-200"
+            <div v-if="loading" class="h-[700px] md:h-screen flex justify-center py-40 bg-slate-200"
                 :class="sideBar.openSideBar ? ' w-[100%] ' : ' w-full'">
                 <div class="inline-block h-14 w-14 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status">
@@ -30,16 +30,16 @@
                 <!-- {{ circle }} -->
                 <div v-for="i in circle" class=" w-1/2 md:w-1/2 lg:w-1/5 px-4 mb-4">
                     <router-link :to="`/circle/${i.circle.id}`" exact-active-class>
-                        <div class=" h-full border rounded-md overflow-hidden shadow-xl">
+                        <div class=" h-[150px] border rounded-md overflow-hidden shadow-xl p-2 ">
                             <img :src="`${baseImageUrl}` + i.circle.circle_logo" alt="" class="object-cover w-full">
-                            <h5 class="p-4 text-[14px] font-semibold">{{ i.circle.circle_name }}</h5>
+                            <h5 class="p-4 text-[16px] font-semibold text-center pt-6">{{ i.circle.circle_name }}</h5>
                         </div>
                     </router-link>
                 </div>
             </div>
         </div>
     </div>
-    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200 -mt-20 ">
+    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200 ">
         <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
             reserved.</span>
     </div>

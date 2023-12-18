@@ -32,16 +32,17 @@
             <div class="flex flex-wrap md:mx-4 bg-white p-10 rounded-md">
                 <div v-for="i in bisnis" :key="i" class=" w-1/2 md:h-1/2 lg:w-1/5 px-4 mb-4">
                     <router-link :to="`/Bisnis/${i.business_slug}`">
-                        <div class="h-full w-full border rounded-md line-clamp-3 shadow-xl">
+                        <div class="h-[150px] w-full border rounded-md line-clamp-3 shadow-xl p-2 flex-col items-stretch">
                             <img :src="`${baseImageUrl}` + i.business_logo" alt="" class="object-cover w-full">
-                            <h5 class="md:p-4 px-2 py-4 text-[14px] font-semibold">{{ i.business_name }}</h5>
+                            <h5 class=" py-6 text-[16px] font-semibold text-center">{{ i.business_name }}</h5>
                         </div>
                     </router-link>
                 </div>
             </div>
         </div>
     </div>
-    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200 -mt-20 lg:mt-0">
+
+    <div class=" w-full text-start p-5 pl-[60px] md:pl-[65px] shadow-sm bg-slate-200">
         <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[14px]">jruhub.com.</router-link> All rights
             reserved.</span>
     </div>
