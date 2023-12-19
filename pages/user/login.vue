@@ -63,7 +63,7 @@
                 </form>
             </div>
             <div class=" w-full text-center md:pt-24 py-7 shadow-sm text-[14px]">
-                <span> © 2023 <router-link to="/dashboard" class=" text-red-500 text-[13px]">jruhub.com.</router-link> All
+                <span> © 2023 <router-link to="/" class=" text-red-500 text-[13px]">jruhub.com.</router-link> All
                     rights reserved.</span>
             </div>
         </div>

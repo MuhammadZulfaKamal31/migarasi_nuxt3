@@ -1,7 +1,8 @@
 <template>
     <div class=" px-6 md:px-32 pt-32">
         <div class="flex flex-wrap md:flex-row justify-around mt-8 ml-4 ">
-            <div class=" w-full md:w-[320px]">
+            <div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000"
+                class=" w-full md:w-[320px]">
                 <div class="bg-white shadow-lg overflow-hidden mb-5 border-2 rounded-2xl">
                     <div class="p-4 py-[4.1rem]">
                         <div class="flex justify-center items-center">
@@ -14,7 +15,8 @@
                     </div>
                 </div>
             </div>
-            <div class=" w-full md:w-[320px]">
+            <div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000"
+                class=" w-full md:w-[320px]">
                 <div class="bg-white shadow-lg overflow-hidden mb-5 border-2 rounded-2xl">
                     <div class="p-4 py-14">
                         <div class="flex justify-center items-center">
@@ -28,7 +30,8 @@
                     </div>
                 </div>
             </div>
-            <div class=" w-full md:w-[320px]">
+            <div data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000"
+                class=" w-full md:w-[320px]">
                 <div class="bg-white shadow-lg overflow-hidden mb-5 border-2 rounded-2xl">
                     <div class="p-4 py-16">
                         <div class="flex justify-center items-center">

@@ -4,7 +4,13 @@
         <div class=" h-[190px] bg-red-500 pt-7 md:px-6 lg:px-10 ">
             <div class=" mb-14 flex justify-between mx-7">
                 <div class=" flex md:gap-5 lg:gap-10 items-center">
-                    <i @click="toggleSideBar" class="fa-solid fa-bars text-white text-2xl"></i>
+                    <!-- <i @click="toggleSideBar" class="fa-solid fa-bars text-white text-2xl"></i> -->
+                    <div @click="toggleSideBar" class="tham tham-e-arrow-alt tham-w-6"
+                        :class="openSideBar ? '' : 'tham-active'">
+                        <div class="tham-box ">
+                            <div class="tham-inner bg-white" />
+                        </div>
+                    </div>
                     <!-- <input type="text"
                         class="md:w-[300px] lg:w-[375px] md:h-[50px] lg:h-[55px] border-2 outline-none px-2 focus:border-red-400 focus:rounded-md "
                         placeholder="Search"> -->
@@ -40,7 +46,7 @@ import { useAktifLinkStore } from '../stores/AktifLinkStore'
 
 const props = defineProps({
     toggleSideBar: Function,
-    // openSideBar: Boolean
+    openSideBar: Boolean
 });
 
 const aktifLink = useAktifLinkStore();

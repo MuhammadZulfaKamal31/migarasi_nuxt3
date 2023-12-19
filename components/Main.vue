@@ -3,7 +3,7 @@
         <Pagename :dataOpenSideBar="dataOpenSideBar" :activeLink="activeLink" :links="links" :generateLink="generateLink"
             :capitalizeFirstLetter="capitalizeFirstLetter" />
         <!-- :openSideBar="openSideBar.openSideBar" -->
-        <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar"
+        <TopBar class=" hidden md:block" :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
             :class="openSideBar.openSideBar ? 'w-[1135px] duration-300' : 'w-[1425px] duration-300'" />
         <TopBarResponsif :toggleSideBar="openSideBar.toggleSideBar" :openSideBar="openSideBar.openSideBar"
             class=" md:hidden "></TopBarResponsif>

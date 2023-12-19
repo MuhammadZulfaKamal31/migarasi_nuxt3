@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   modules: [
     "@pinia/nuxt",
-    "vue3-carousel-nuxt"
+    "vue3-carousel-nuxt",
   ],
   postcss: {
     plugins: {
@@ -17,5 +17,4 @@ export default defineNuxtConfig({
       link: [{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css' }]
     }
   }
-
 })

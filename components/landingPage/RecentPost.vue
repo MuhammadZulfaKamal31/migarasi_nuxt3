@@ -5,7 +5,7 @@
             <div class=" text-[33px] md:text-[40px] font-[500] md:ml-10 ">
                 Tentang Kami
             </div>
-            <div class="max-w-screen-md mx-auto text-center py-4">
+            <div data-aos="fade-up" data-aos-duration="3000" class="max-w-screen-md mx-auto text-center py-4">
                 <p>
                     Jaringan RumahUSAHA, sebuah komunitas berbasis kewirausahaan yang bertujuan mengembangkan Sumber Daya
                     Manusia melalui media bisnis. Kami hadir dengan komitmen kuat untuk memberdayakan dan meningkatkan
@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex flex-wrap md:flex-row justify-around mt-8 mx-3 md:ml-4 ">
-            <div class=" w-full md:w-[240px]">
+            <div data-aos="fade-up" data-aos-duration="3000" class=" w-full md:w-[240px]">
                 <div class="bg-white shadow-lg overflow-hidden mb-5 border-2 rounded-2xl">
                     <div class="p-4">
                         <h3 class="text-[15px] md:text-xl font-semibold text-center">Inkubasi dan Pendampingan</h3>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" w-full md:w-[240px]">
+            <div data-aos="fade-up" data-aos-duration="3000" class=" w-full md:w-[240px]">
                 <div class="bg-white shadow-lg overflow-hidden mb-5 border-2 rounded-2xl">
                     <div class="p-4">
                         <h3 class="text-[15px] md:text-xl font-semibold text-center">Pengembangan Kecerdasan</h3>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" w-full md:w-[240px]">
+            <div data-aos="fade-up" data-aos-duration="3000" class=" w-full md:w-[240px]">
                 <div class="bg-white shadow-lg overflow-hidden mb-5 border-2 rounded-2xl">
                     <div class="p-4">
                         <h3 class="text-[15px] md:text-xl font-semibold text-center">Industri Visual dan Digital</h3>
@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div class=" w-full md:w-[240px]">
+            <div data-aos="fade-up" data-aos-duration="3000" class=" w-full md:w-[240px]">
                 <div class="bg-white shadow-lg overflow-hidden mb-5 border-2 rounded-2xl">
                     <div class="p-4">
                         <h3 class="text-[15px] md:text-xl font-semibold text-center">Nilai Inti Saling Berguru</h3>

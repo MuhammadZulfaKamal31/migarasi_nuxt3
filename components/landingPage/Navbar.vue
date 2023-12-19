@@ -7,8 +7,14 @@
                     <div>
                         <img src="../../assets/image1.png" alt="" class="h-[28px] w-[100px]" />
                     </div>
-                    <div class=" md:hidden visible">
+                    <!-- <div class=" md:hidden visible">
                         <i @click="togle" class="fa-solid fa-bars text-black text-2xl"></i>
+                    </div> -->
+                    <div @click="togle" class="md:hidden visible tham tham-e-squeeze tham-w-6"
+                        :class="dropDown ? '' : 'tham-active'">
+                        <div class="tham-box">
+                            <div class="tham-inner" />
+                        </div>
                     </div>
                 </div>
 
